@@ -272,15 +272,21 @@ void free_blockchain(BlockchainPtr blockchain) {
   }
 }
 
+
 //main function to test above functions
-int main() {
-  BlockchainPtr blockchain = BlockchainConstructor();
-  if(blockchain != NULL) {
-    printf("Blockchain successfully created\n");
-  }
-  else {
-    printf("Blockchain creation failed\n");
-  }
-  BlockchainDestructor(blockchain);
-  return 0;
-}
+// int main() {
+//   BlockchainPtr blockchain = blockchainConstructor();
+//   blockchainInitialize(blockchain);
+
+//   if(blockchain != NULL) {
+//     printf("Blockchain successfully created\n");
+//   }
+//   else {
+//     printf("Blockchain creation failed\n");
+//   }
+
+//   printf("blockchain num nodes: %d\n", blockchain->get_num_nodes(blockchain));
+//   printf("blockchain sync state: %c\n", blockchain->get_sync_state(blockchain));
+//   blockchainDestructor(blockchain);
+//   return 0;
+// }
