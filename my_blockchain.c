@@ -5,23 +5,6 @@
 
 #include "helpers.h"
 
-#ifndef BLOCKCHAIN
-#define BLOCKCHAIN
-typedef struct s_blockchain {
-  int num_nodes;
-  char sync_status;
-} Blockchain;
-#endif
-
-#ifndef BLOCK
-#define BLOCK
-typedef struct s_block {
-  int nid;
-  char *bid;
-  
-} block;
-#endif
-
 void print_prompt(int num_nodes, char sync_status) {
   char *char_num_nodes = signed_decimal(num_nodes);
   int num_digits = get_int_len(num_nodes);
