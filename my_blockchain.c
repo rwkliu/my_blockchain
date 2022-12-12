@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "helpers.h"
+#include "blockchain.h"
 
 void print_prompt(int num_nodes, char sync_status) {
   char *char_num_nodes = signed_decimal(num_nodes);

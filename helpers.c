@@ -14,7 +14,6 @@ int get_int_len(int n) {
     return int_len;
 }
 
-//Return string version of signed decimal
 char *signed_decimal(int s_int) {
   int n_len = get_int_len(s_int);
   char *decimal = malloc(n_len *sizeof(char));
