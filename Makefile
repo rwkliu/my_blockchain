@@ -20,9 +20,3 @@ fclean: clean
 	rm -f test_blockchain
 
 re: all clean
-
-debug: $(TARGET)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJFILES) $(LDFLAGS)
-
-test_blockchain: test_blockchain.o blockchain.o node.o block.o helpers.o arguments_blockchain.o 
-	gcc -o test_blockchain test_blockchain.o blockchain.o node.o block.o helpers.o arguments_blockchain.o $(CFLAGS) $(LDFLAGS)
