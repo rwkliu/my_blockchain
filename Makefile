@@ -14,4 +14,7 @@ $(TARGET): $(OBJFILES)
 clean:
 	rm -rvf $(OBJFILES)
 
+fclean: clean
+	rm my_blockchain
+
 re: all clean
