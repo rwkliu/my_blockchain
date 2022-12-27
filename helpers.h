@@ -11,3 +11,6 @@ int my_getchar();
 
 //Read from stdin
 char *read_input(char *read_buffer);
+
+//Print my_blockchain prompt
+void print_prompt(int num_nodes, char sync_status); 

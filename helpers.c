@@ -52,3 +52,15 @@ char *read_input(char *read_buffer) {
   }
   return read_buffer;
 }
+
+void print_prompt(int num_nodes, char sync_status) {
+  char *char_num_nodes = signed_decimal(num_nodes);
+  int num_digits = get_int_len(num_nodes);
+  
+  write(1, "[", 1);
+  write(1, &sync_status, 1);
+  write(1, char_num_nodes, num_digits);
+  write(1, "]> ", 3);
+
+  free(char_num_nodes);
+}
