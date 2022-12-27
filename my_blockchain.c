@@ -19,18 +19,12 @@ void print_prompt(int num_nodes, char sync_status) {
 }
 
 int main() {
-  int num_nodes = 15;
+  int num_nodes = 0;
   char sync_status = 's';
-  char read_buffer[20];
+  char read_buffer[READ_BUFFER_SIZE] = {0};
+
   print_prompt(num_nodes, sync_status);
-  int bytes_read = read(0, &read_buffer, 20);
-
-  if(bytes_read > 20) {
-    printf("Input too long. Try again\n");
-    bytes_read = read(0, &read_buffer, 20);
-  }
-  read_buffer[bytes_read] = '\0';
-
+  read_input(read_buffer);
   printf("Input read into buffer: %s\n", read_buffer);
   return 0;
 }
