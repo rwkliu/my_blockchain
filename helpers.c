@@ -8,12 +8,12 @@ int get_int_len(int n) {
     int int_len = 1;
 
     if(n < 0) {
-        n = -n;
+      n = -n;
     }
     
     while(n > 9) {
-        int_len++;
-        n = n / 10;
+      int_len++;
+      n = n / 10;
     }
     return int_len;
 }
@@ -34,7 +34,7 @@ char *signed_decimal(int s_int) {
 }
 
 int my_getchar() {
-  int char_buffer;
+  int char_buffer = 0;
   read(0, &char_buffer, 1);
   return char_buffer;
 }
