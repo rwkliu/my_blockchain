@@ -5,17 +5,17 @@
 #include "helpers.h"
 
 int get_int_len(int n) {
-    int int_len = 1;
+  int int_len = 1;
 
-    if(n < 0) {
-      n = -n;
-    }
-    
-    while(n > 9) {
-      int_len++;
-      n = n / 10;
-    }
-    return int_len;
+  if(n < 0) {
+    n = -n;
+  }
+  
+  while(n > 9) {
+    int_len++;
+    n = n / 10;
+  }
+  return int_len;
 }
 
 char *signed_decimal(int s_int) {
