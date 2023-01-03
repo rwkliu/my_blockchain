@@ -1,0 +1,7 @@
+blockchain
+my_blockchain
+.helpers.c.un~
+.helpers.h.un~
+*.swp
+*.un~
+*~
