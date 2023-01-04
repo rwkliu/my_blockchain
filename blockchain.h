@@ -17,8 +17,8 @@ typedef struct s_blockchain {
   char sync_state;
   BlockPtr first_block;
 
-  int (*get_num_nodes)(struct s_blockchain *Blockchain_ptr);
-  char (*get_sync_state)(struct s_blockchain *Blockchain_ptr);
+  int (*getNumNodes)(struct s_blockchain *Blockchain_ptr);
+  char (*getSyncState)(struct s_blockchain *Blockchain_ptr);
 } Blockchain;
 #endif
 
