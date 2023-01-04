@@ -8,14 +8,14 @@
 #include "arguments_blockchain.h"
 
 int main() {
-  int num_nodes = 0;
-  char sync_status = 's';
+  BlockchainPtr blockchain = blockchainConstructor();
   ArgumentsPtr args = argumentsConstructor();
 
-  print_prompt(num_nodes, sync_status);
+  print_prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
   args->readInput(args->read_buffer);
   printf("Input read into buffer: %s\n", args->read_buffer);
 
+  blockchainDestructor(blockchain);
   argumentsDestructor(args);
   return 0;
 }
