@@ -5,14 +5,17 @@
 
 #include "helpers.h"
 #include "blockchain.h"
+#include "arguments_blockchain.h"
 
 int main() {
   int num_nodes = 0;
   char sync_status = 's';
-  char read_buffer[READ_BUFFER_SIZE] = {0};
+  ArgumentsPtr args = argumentsConstructor();
 
   print_prompt(num_nodes, sync_status);
-  read_input(read_buffer);
-  printf("Input read into buffer: %s\n", read_buffer);
+  args->readInput(args->read_buffer);
+  printf("Input read into buffer: %s\n", args->read_buffer);
+
+  argumentsDestructor(args);
   return 0;
 }
