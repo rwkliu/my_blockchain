@@ -17,6 +17,11 @@ int argumentsDestructor(ArgumentsPtr args) {
 }
 
 int argumentsInitialize(ArgumentsPtr args) {
+  args->commands[0] = "add";
+  args->commands[1] = "rm";
+  args->commands[2] = "ls";
+  args->commands[3] = "sync";
+  args->commands[4] = "quit";
   args->readInput = read_input;
 }
 
@@ -51,8 +56,14 @@ char *read_input(char *read_buffer) {
 //     printf("Arguments creation failed\n");
 //   }
 
+//   //Read stdin and print read_buffer
 //   args->readInput(args->read_buffer);
 //   printf("read_buffer: %s\n", args->read_buffer);
+
+//   //Print the contents of command array
+//   for(int i = 0; i < 5; i++) {
+//     printf("command #%d: %s\n", i, args->commands[i]);
+//   }
 
 //   argumentsDestructor(args);
 //   return 0;
