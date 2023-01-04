@@ -16,6 +16,30 @@ int argumentsDestructor(ArgumentsPtr args) {
   return 0;
 }
 
+int my_getchar() {
+  int char_buffer = 0;
+  read(0, &char_buffer, 1);
+  return char_buffer;
+}
+
+char *read_input(char *read_buffer) {
+  int ch;
+  int index = 0;
+
+  while((ch = my_getchar()) != '\n' && ch != EOF) {
+    if(ch == 0) {
+      read_buffer[0] = '\0';
+      return read_buffer;
+    }
+    if(index == READ_BUFFER_SIZE) {
+      continue;
+    }
+    read_buffer[index] = ch;
+    index++;
+  }
+  return read_buffer;
+}
+
 int argumentsInitialize(ArgumentsPtr args) {
   args->commands[0] = "add";
   args->commands[1] = "rm";
@@ -28,26 +52,6 @@ int argumentsInitialize(ArgumentsPtr args) {
     args->read_buffer[i] = '\0';
   }
   return 0;
-}
-
-int my_getchar() {
-  int char_buffer = 0;
-  read(0, &char_buffer, 1);
-  return char_buffer;
-}
-
-char *read_input(char *read_buffer) {
-  int ch;
-  int index = 0;
-
-  while((ch = my_getchar()) != '\n' && ch != EOF) {
-    if(index == READ_BUFFER_SIZE) {
-      continue;
-    }
-    read_buffer[index] = ch;
-    index++;
-  }
-  return read_buffer;
 }
 
 //main function to test above functions
