@@ -23,6 +23,11 @@ int argumentsInitialize(ArgumentsPtr args) {
   args->commands[3] = "sync";
   args->commands[4] = "quit";
   args->readInput = read_input;
+
+  for(int i = 0; i < READ_BUFFER_SIZE; i++) {
+    args->read_buffer[i] = '\0';
+  }
+  return 0;
 }
 
 int my_getchar() {
