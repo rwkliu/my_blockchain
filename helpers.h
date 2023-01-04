@@ -1,5 +1,3 @@
-#define READ_BUFFER_SIZE 20
-
 //Get number of digits in n
 int get_int_len(int n);
 
