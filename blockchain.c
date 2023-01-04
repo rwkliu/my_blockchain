@@ -15,6 +15,7 @@ char getSyncState(BlockchainPtr this) {
 
 BlockchainPtr blockchainConstructor(void) {
   BlockchainPtr blockchain = malloc(sizeof(Blockchain));
+  blockchainInitialize(blockchain);
   return blockchain;
 }
 
@@ -27,15 +28,14 @@ int blockchainInitialize(BlockchainPtr blockchain) {
   blockchain->num_nodes = 0;
   blockchain->sync_state = 's';
   blockchain->first_block = NULL;
-  blockchain->get_num_nodes = getNumNodes;
-  blockchain->get_sync_state = getSyncState;
+  blockchain->getNumNodes = getNumNodes;
+  blockchain->getSyncState = getSyncState;
   return 0;
 }
 
 //main function to test above functions
 // int main() {
 //   BlockchainPtr blockchain = blockchainConstructor();
-//   blockchainInitialize(blockchain);
 
 //   if(blockchain != NULL) {
 //     printf("Blockchain successfully created\n");
@@ -44,8 +44,8 @@ int blockchainInitialize(BlockchainPtr blockchain) {
 //     printf("Blockchain creation failed\n");
 //   }
 
-//   printf("blockchain num nodes: %d\n", blockchain->get_num_nodes(blockchain));
-//   printf("blockchain sync state: %c\n", blockchain->get_sync_state(blockchain));
+//   printf("blockchain num nodes: %d\n", blockchain->getNumNodes(blockchain));
+//   printf("blockchain sync state: %c\n", blockchain->getSyncState(blockchain));
 //   blockchainDestructor(blockchain);
 //   return 0;
 // }
