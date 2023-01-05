@@ -5,17 +5,6 @@
 
 #include "arguments_blockchain.h"
 
-ArgumentsPtr argumentsConstructor(void) {
-  ArgumentsPtr args = malloc(sizeof(Arguments));
-  argumentsInitialize(args);
-  return args;
-}
-
-int argumentsDestructor(ArgumentsPtr args) {
-  free(args);
-  return 0;
-}
-
 int my_getchar() {
   int char_buffer = 0;
   read(0, &char_buffer, 1);
@@ -38,6 +27,17 @@ char *read_input(char *read_buffer) {
     index++;
   }
   return read_buffer;
+}
+
+ArgumentsPtr argumentsConstructor(void) {
+  ArgumentsPtr args = malloc(sizeof(Arguments));
+  argumentsInitialize(args);
+  return args;
+}
+
+int argumentsDestructor(ArgumentsPtr args) {
+  free(args);
+  return 0;
 }
 
 int argumentsInitialize(ArgumentsPtr args) {
