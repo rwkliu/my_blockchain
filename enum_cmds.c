@@ -27,6 +27,7 @@ commands find_command(char *arg) {
   }
 }
 
+//Check if input string is a positive integer number
 int isPosNum(char *str) {
   int str_len = strlen(str);
 
@@ -91,7 +92,11 @@ int parse_node_args(char *node_args, commands command) {
       break;
     }
     case RM: {
-
+      if (isPosNum(node_args) == 0) {
+        printf("nid removed: %d\n", nid_arg);
+      } else {
+        printf("invalid node arguments\n");
+      }
       break;
     }
     default:
@@ -104,10 +109,11 @@ int parse_add_args(args_array *args, commands command) {
   if (args->size < 2) {
     return 1;
   } else if (strcmp(args->array[0], "block") == 0 && args->size == 3) {
-    printf("parse_block_args entered\n");
+    printf("Add parse_block_args entered\n");
     char *block_args[2] = {args->array[1], args->array[2]};
     parse_block_args(block_args, command);
   } else if (strcmp(args->array[0], "node") == 0 && args->size == 2) {
+    printf("Add parse_node_args entered\n");
     char *node_args = args->array[1];
     parse_node_args(node_args, command);
   } else {
@@ -117,7 +123,22 @@ int parse_add_args(args_array *args, commands command) {
   return 0;
 }
 
-int parse_rm_args() {
+//if command = RM, check subsequent arguments for correct arguments
+int parse_rm_args(args_array *args, commands command) {
+  if (args->size < 2) {
+    return 1;
+  } else if (strcmp(args->array[0], "block") == 0 && args->size == 2) {
+      printf("rm parse_block_args entered\n"); 
+      char **block_args = &args->array[1];
+      parse_block_args(block_args, command);
+  } else if ( strcmp(args->array[0], "node") == 0 && args->size == 2) {
+      printf("rm parse_node_args entered\n"); 
+      char *node_args = args->array[1];
+      parse_node_args(node_args, command);
+  } else {
+    printf("Add arguments not recognized or too many arguments are entered\n");
+    return 1;
+  }
   return 0;
 }
 
@@ -138,9 +159,9 @@ int main(int argc, char **argv) {
   args_array *args = subarray(argv, 2, argc - 1);
 
   //Print the strings stored in args
-  for (int i = 0; i < argc - 2; i++) {
-    printf("#%d: %s\n", i, args->array[i]); 
-  }
+  //for (int i = 0; i < argc - 2; i++) {
+  //  printf("#%d: %s\n", i, args->array[i]); 
+  //}
 
   if (argc > 1) {
     switch(find_command(argv[1])) {
@@ -151,7 +172,7 @@ int main(int argc, char **argv) {
       }
       case RM: {
         printf("rm command found\n");
-        //parse_rm_args();
+        parse_rm_args(args, RM);
         break;
       }
       case LS: {
