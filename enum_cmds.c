@@ -27,6 +27,17 @@ commands find_command(char *arg) {
   }
 }
 
+int isPosNum(char *str) {
+  int str_len = strlen(str);
+
+  for (int i = 0; i < str_len; i++) {
+    if (str[i] < '0' || str[i] > '9') {
+      return 1;
+    }
+  }
+  return 0;
+}
+
 //Return args_array that is a subarray of the input string array
 args_array *subarray(char **argv, int start_index, int end_index) {
   args_array *subarray = malloc(sizeof(args_array));
@@ -68,10 +79,15 @@ int parse_block_args(char **block_args, commands command) {
 }
 
 //Check subsequent arguments for correct arguments following "node"
-int parse_node_args(args_array *args, commands command) {
+int parse_node_args(char *node_args, commands command) {
+  int nid_arg = atoi(node_args);
   switch(command) {
     case ADD: {
-
+      if (isPosNum(node_args) == 0) {
+        printf("nid added: %d\n", nid_arg);
+      } else {
+        printf("invalid node arguments\n"); 
+      }
       break;
     }
     case RM: {
@@ -92,7 +108,8 @@ int parse_add_args(args_array *args, commands command) {
     char *block_args[2] = {args->array[1], args->array[2]};
     parse_block_args(block_args, command);
   } else if (strcmp(args->array[0], "node") == 0 && args->size == 2) {
-    //parse_node_args();
+    char *node_args = args->array[1];
+    parse_node_args(node_args, command);
   } else {
     printf("Add arguments not recognized or too many arguments are entered\n");
     return 1;
@@ -119,6 +136,8 @@ int parse_ls_args(args_array *args) {
 
 int main(int argc, char **argv) {
   args_array *args = subarray(argv, 2, argc - 1);
+
+  //Print the strings stored in args
   for (int i = 0; i < argc - 2; i++) {
     printf("#%d: %s\n", i, args->array[i]); 
   }
