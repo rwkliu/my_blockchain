@@ -32,12 +32,14 @@ commands find_command(char *argv) {
   }
 }
 
-char **subarray(char **argv, int start_index, int end_index) {
-  char **subarray = malloc(end_index - start_index + 1* sizeof(char *));
+args_array *subarray(char **argv, int start_index, int end_index) {
+  args_array *subarray = malloc(sizeof(args_array));
+  subarray->size = end_index - start_index + 1;
+  subarray->array = malloc(subarray->size * sizeof(char *));
   int index = 0;
 
   for (int i = start_index; i <= end_index; i++) {
-    subarray[index] = argv[i];
+    subarray->array[index] = argv[i];
     index++;
   }
   return subarray;
@@ -47,12 +49,10 @@ int main(int argc, char **argv) {
   char *bid = NULL;
   char *nid = NULL;
 
-  char **sub_args = subarray(argv, 2, argc - 1);
-  //for (int i = 0; i < argc - 2; i++) {
-  //  printf("#%d: %s\n", i, sub_args[i]);
-  //}
-
-  free(sub_args);
+  args_array *args = subarray(argv, 2, argc - 1);
+  for (int i = 0; i < argc - 2; i++) {
+    printf("#%d: %s\n", i, args->array[i]); 
+  }
 
   if (argc > 1) {
     //printf("if statement entered here\n");
@@ -84,5 +84,7 @@ int main(int argc, char **argv) {
   } else {
     printf("No commands entered\n");
   }
+
+  free(args);
   return 0;
 }

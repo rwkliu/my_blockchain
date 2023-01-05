@@ -6,3 +6,4 @@ my_blockchain
 *.un~
 *~
 args
+test
