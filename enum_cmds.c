@@ -61,17 +61,24 @@ int parse_block_args(char **block_args, commands command) {
   switch(command) {
     case ADD: {
       if (bid_arg != 0 && nid_arg != 0) {
-        printf("bid: %d\n", bid_arg); 
+        printf("Add block bid: %d\n", bid_arg); 
         if (nid_arg == '*') {
-          printf("nid: *\n");
+          printf("Add node nid: *\n");
         } else {
-          printf("nid: %d\n", nid_arg); 
+          printf("Add node nid: %d\n", nid_arg); 
         }
       }
       break;
     }
     case RM: {
-
+      if (bid_arg != 0 && nid_arg != 0) {
+        printf("Remove block bid: %d\n", bid_arg); 
+        if (nid_arg == '*') {
+          printf("Remove node nid: *\n");
+        } else {
+          printf("Remove node nid: %d\n", nid_arg); 
+        }
+      }
       break;
     }
     default:
@@ -107,6 +114,7 @@ int parse_node_args(char *node_args, commands command) {
 //if command = ADD, check subsequent arguments for correct arguments
 int parse_add_args(args_array *args, commands command) {
   if (args->size < 2) {
+    printf("Not enough arguments\n");
     return 1;
   } else if (strcmp(args->array[0], "block") == 0 && args->size == 3) {
     printf("Add parse_block_args entered\n");
@@ -126,6 +134,7 @@ int parse_add_args(args_array *args, commands command) {
 //if command = RM, check subsequent arguments for correct arguments
 int parse_rm_args(args_array *args, commands command) {
   if (args->size < 2) {
+    printf("Not enough arguments\n");
     return 1;
   } else if (strcmp(args->array[0], "block") == 0 && args->size == 2) {
       printf("rm parse_block_args entered\n"); 
