@@ -67,6 +67,8 @@ int parse_block_args(char **block_args, commands command) {
         } else {
           printf("Add node nid: %d\n", nid_arg); 
         }
+      } else {
+        printf("Invalid block arguments\n");
       }
       break;
     }
@@ -77,7 +79,9 @@ int parse_block_args(char **block_args, commands command) {
           printf("Remove node nid: *\n");
         } else {
           printf("Remove node nid: %d\n", nid_arg); 
-        }
+        } 
+      } else {
+        printf("Invalid block arguments\n");
       }
       break;
     }
@@ -111,39 +115,31 @@ int parse_node_args(char *node_args, commands command) {
   }
 }
 
-//if command = ADD, check subsequent arguments for correct arguments
-int parse_add_args(args_array *args, commands command) {
+//if command = ADD or RM, check subsequent arguments for correct arguments
+int parse_add_rm_args(args_array *args, commands command) {
   if (args->size < 2) {
     printf("Not enough arguments\n");
     return 1;
-  } else if (strcmp(args->array[0], "block") == 0 && args->size == 3) {
+  } else if (strcmp(args->array[0], "block") == 0 && args->size == 3 &&
+             command == ADD) {
     printf("Add parse_block_args entered\n");
     char *block_args[2] = {args->array[1], args->array[2]};
     parse_block_args(block_args, command);
-  } else if (strcmp(args->array[0], "node") == 0 && args->size == 2) {
+  } else if (strcmp(args->array[0], "node") == 0 && args->size == 2 && 
+             command == ADD) {
     printf("Add parse_node_args entered\n");
     char *node_args = args->array[1];
     parse_node_args(node_args, command);
-  } else {
-    printf("Add arguments not recognized or too many arguments are entered\n");
-    return 1;
-  }
-  return 0;
-}
-
-//if command = RM, check subsequent arguments for correct arguments
-int parse_rm_args(args_array *args, commands command) {
-  if (args->size < 2) {
-    printf("Not enough arguments\n");
-    return 1;
-  } else if (strcmp(args->array[0], "block") == 0 && args->size == 2) {
-      printf("rm parse_block_args entered\n"); 
-      char **block_args = &args->array[1];
-      parse_block_args(block_args, command);
-  } else if ( strcmp(args->array[0], "node") == 0 && args->size == 2) {
-      printf("rm parse_node_args entered\n"); 
-      char *node_args = args->array[1];
-      parse_node_args(node_args, command);
+  } else if (strcmp(args->array[0], "block") == 0 && args->size == 2 &&
+             command == RM) {
+    printf("rm parse_block_args entered\n"); 
+    char **block_args = &args->array[1];
+    parse_block_args(block_args, command);
+  } else if (strcmp(args->array[0], "node") == 0 && args->size == 2 && 
+             command == RM) {
+    printf("rm parse_node_args entered\n"); 
+    char *node_args = args->array[1];
+    parse_node_args(node_args, command);
   } else {
     printf("Add arguments not recognized or too many arguments are entered\n");
     return 1;
@@ -176,12 +172,12 @@ int main(int argc, char **argv) {
     switch(find_command(argv[1])) {
       case ADD: {
         printf("add command found\n");
-        parse_add_args(args, ADD);
+        parse_add_rm_args(args, ADD);
         break;
       }
       case RM: {
         printf("rm command found\n");
-        parse_rm_args(args, RM);
+        parse_add_rm_args(args, RM);
         break;
       }
       case LS: {
