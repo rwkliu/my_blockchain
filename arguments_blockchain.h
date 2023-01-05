@@ -12,6 +12,12 @@ typedef struct s_arguments {
 
 typedef Arguments *ArgumentsPtr;
 
+//Read one char from stdin
+int my_getchar();
+
+//Read from stdin
+char *read_input(char *read_buffer);
+
 //Allocate memory for Arguments struct
 ArgumentsPtr argumentsConstructor(void);
 
@@ -20,9 +26,3 @@ int argumentsDestructor(ArgumentsPtr args);
 
 //Initialize Arguments members
 int argumentsInitialize(ArgumentsPtr args);
-
-//Read one char from stdin
-int my_getchar();
-
-//Read from stdin
-char *read_input(char *read_buffer);
