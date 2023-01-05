@@ -72,10 +72,14 @@ int parse_node_args(args_array *args, commands command) {
   switch(command) {
     case ADD: {
 
+      break;
     }
     case RM: {
 
+      break;
     }
+    default:
+      printf("Invalid node arguments\n");
   }
 }
 
