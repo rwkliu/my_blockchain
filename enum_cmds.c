@@ -41,25 +41,56 @@ args_array *subarray(char **argv, int start_index, int end_index) {
   return subarray;
 }
 
-int parse_block_args(args_array *args, commands command, int bid, int nid) {
+//Check subsequent arguments for correct arguments following "block"
+int parse_block_args(char **block_args, commands command) {
+  int bid_arg = atoi(block_args[0]);
+  int nid_arg = atoi(block_args[1]);
+
   switch(command) {
     case ADD: {
+      if (bid_arg != 0 && nid_arg != 0) {
+        printf("bid: %d\n", bid_arg); 
+        if (nid_arg == '*') {
+          printf("nid: *\n");
+        } else {
+          printf("nid: %d\n", nid_arg); 
+        }
+      }
+      break;
+    }
+    case RM: {
+
+      break;
+    }
+    default:
+      printf("Invalid block arguments\n");
+  }
+}
+
+//Check subsequent arguments for correct arguments following "node"
+int parse_node_args(args_array *args, commands command) {
+  switch(command) {
+    case ADD: {
+
+    }
+    case RM: {
 
     }
   }
 }
 
-int parse_node_args() {
-}
-
-int parse_add_args(args_array *args, commands command, int bid, int nid) {
+//if command = ADD, check subsequent arguments for correct arguments
+int parse_add_args(args_array *args, commands command) {
   if (args->size < 2) {
     return 1;
   } else if (strcmp(args->array[0], "block") == 0 && args->size == 3) {
-    //parse_block_args();
+    printf("parse_block_args entered\n");
+    char *block_args[2] = {args->array[1], args->array[2]};
+    parse_block_args(block_args, command);
   } else if (strcmp(args->array[0], "node") == 0 && args->size == 2) {
     //parse_node_args();
   } else {
+    printf("Add arguments not recognized or too many arguments are entered\n");
     return 1;
   }
   return 0;
@@ -83,9 +114,6 @@ int parse_ls_args(args_array *args) {
 }
 
 int main(int argc, char **argv) {
-  char *bid = NULL;
-  char *nid = NULL;
-
   args_array *args = subarray(argv, 2, argc - 1);
   for (int i = 0; i < argc - 2; i++) {
     printf("#%d: %s\n", i, args->array[i]); 
@@ -95,7 +123,7 @@ int main(int argc, char **argv) {
     switch(find_command(argv[1])) {
       case ADD: {
         printf("add command found\n");
-        //parse_add_args();
+        parse_add_args(args, ADD);
         break;
       }
       case RM: {
