@@ -218,7 +218,7 @@ int parse_ls_args(string_array *args) {
 
 //Parse arguments read from stdin
 int parse_arguments(string_array *split_strings_array) {
-  if (split_strings_array->size > 1) {
+  if (split_strings_array->size > 0) {
     string_array *args = subarray(split_strings_array->array, 1, split_strings_array->size - 1);
     switch(find_command(split_strings_array->array[0])) {
       case ADD: {
