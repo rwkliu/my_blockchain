@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "arguments_blockchain.h"
+#include "helpers.h"
 
 int my_getchar() {
   int char_buffer = 0;
@@ -47,12 +48,15 @@ int argumentsInitialize(ArgumentsPtr args) {
   args->commands[3] = "sync";
   args->commands[4] = "quit";
   args->readInput = read_input;
+  args->splitInput = my_split;
 
   for(int i = 0; i < READ_BUFFER_SIZE; i++) {
     args->read_buffer[i] = '\0';
   }
   return 0;
 }
+
+
 
 //main function to test above functions
 // int main() {
