@@ -127,12 +127,12 @@ int parse_block_args(char **block_args, commands command) {
 
   switch(command) {
     case ADD: {
-      if (nid_arg != 0) {
-        printf("Add block bid: %s\n", block_args[0]); 
+      if (nid_arg != 0 || strncmp(block_args[1], "*", 1) == 0) {
+        printf("Add block bid: %s\n", block_args[0]);
         if (nid_arg == '*') {
           printf("Add node nid: *\n");
         } else {
-          printf("Add node nid: %d\n", nid_arg); 
+          printf("Add node nid: %d\n", nid_arg);
         }
       } else {
         printf("Invalid bid and nid arguments\n");
@@ -151,10 +151,12 @@ int parse_block_args(char **block_args, commands command) {
 
 //Check subsequent arguments for correct arguments following "node"
 int parse_node_args(char *node_args, commands command) {
+  printf("node_args: %s\n", node_args);
   int nid_arg = atoi(node_args);
+  printf("nid: %d\n", nid_arg);
   switch(command) {
     case ADD: {
-      if (isPosNum(node_args) == 0) {
+      if (isPosNum(node_args) == 0 || strncmp(node_args, "*", 1) == 0) {
         printf("nid added: %d\n", nid_arg);
       } else {
         printf("invalid add nid argument\n"); 
@@ -162,7 +164,7 @@ int parse_node_args(char *node_args, commands command) {
       break;
     }
     case RM: {
-      if (isPosNum(node_args) == 0) {
+      if (isPosNum(node_args) == 0 || strncmp(node_args, "*", 1) == 0) {
         printf("nid removed: %d\n", nid_arg);
       } else {
         printf("invalid rm nid argument\n");
@@ -258,25 +260,3 @@ int parse_arguments(string_array *split_strings_array) {
   }
   return 0;
 }
-
-//main function to test above functions
-// int main() {
-//   ArgumentsPtr args = argumentsConstructor();
-
-//   if(args != NULL) {
-//     printf("Arguments successfully created\n");
-//   }
-//   else {
-//     printf("Arguments creation failed\n");
-//   }
-
-//   //Read stdin and print read_buffer
-//   args->readInput(args->read_buffer);
-//   printf("read_buffer: %s\n", args->read_buffer);
-
-//   //Print the contents of command array
-//   for(int i = 0; i < 5; i++) {
-//     printf("command #%d: %s\n", i, args->commands[i]);
-//   argumentsDestructor(args);
-//   return 0;
-// }
