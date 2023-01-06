@@ -1,3 +1,5 @@
+#include "helpers.h"
+
 #define READ_BUFFER_SIZE 21
 
 #ifndef ENUM_S_COMMANDS
@@ -17,6 +19,7 @@ typedef struct s_arguments {
   char *(*readInput)(char *);
   char *(*getReadBuffer)(struct s_arguments *);
   string_array *(*splitInput)(char *, char *);
+  int (*parseArguments)(string_array *);
 } Arguments;
 #endif
 
