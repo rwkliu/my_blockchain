@@ -17,3 +17,6 @@ void print_prompt(int num_nodes, char sync_status);
 
 //split str1 using the separator and return a string array of split strings
 string_array *my_split(char *str1, char *separator);
+
+//Check if input string is a positive integer number
+int isPosNum(char *str);
