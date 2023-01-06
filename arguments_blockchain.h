@@ -40,11 +40,8 @@ int argumentsInitialize(ArgumentsPtr args);
 //Return pointer to read_buffer
 char *getReadBuffer(ArgumentsPtr args);
 
-//Return enum command 
+//Return enum corresponding to arg
 commands find_command(char *arg);
-
-//Check if input string is a positive integer number
-int isPosNum(char *str);
 
 //Return string_array that is a subarray of the input string array
 string_array *subarray(char **argv, int start_index, int end_index);
