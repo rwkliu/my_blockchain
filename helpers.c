@@ -51,8 +51,6 @@ string_array *my_split(char *str1, char *separator) {
   int separator_len = strlen(separator);
   string_array *split_str = malloc(sizeof(string_array));
   int num_split_strings = 1;
-
-  str1 = my_strip(str1);
   
   //Return size 0 Null string array if str1 is an empty string
   if(strcmp(str1, "") == 0){
@@ -61,9 +59,8 @@ string_array *my_split(char *str1, char *separator) {
     return split_str;
   }
 
-  //Copy str1 to copied_str where the contents can be modified
-  char *copied_str = strdup(str1);
-  free(str1);
+  //Strip excess whitespace in str1 and return new string
+  char *copied_str = my_strip(str1);
   char *head_copied_str = copied_str;
 
   //Traverse copied_str and replace the separator characters with \0
