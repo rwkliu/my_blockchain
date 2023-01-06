@@ -13,6 +13,25 @@ char getSyncState(BlockchainPtr this) {
   return this->sync_state;
 }
 
+void setNumNodes(BlockchainPtr this, int num) {
+  this->num_nodes = num;
+}
+
+void setSyncState(BlockchainPtr this, sync_state state) {
+  switch(state) {
+    case SYNC: {
+      this->sync_state = 's'; 
+      break;
+    }
+    case NOT_SYNCED: {
+      this->sync_state = '-';  
+      break;
+    }
+    default:
+      printf("Incorrect sync_state input parameter\n");
+  }
+}
+
 //Allocate memory for Blockchain struct
 BlockchainPtr blockchainConstructor(void) {
   BlockchainPtr blockchain = malloc(sizeof(Blockchain));
@@ -33,6 +52,8 @@ int blockchainInitialize(BlockchainPtr blockchain) {
   blockchain->blockchain_head = NULL;
   blockchain->getNumNodes = getNumNodes;
   blockchain->getSyncState = getSyncState;
+  blockchain->setNumNodes = setNumNodes;
+  blockchain->setSyncState = setSyncState;
   return 0;
 }
 
@@ -74,6 +95,8 @@ int nodeInitialize(NodePtr node) {
 //     printf("Node creation failed\n");
 //   }
 
+//   blockchain->setNumNodes(blockchain, 5);
+//   blockchain->setSyncState(blockchain, NOT_SYNCED);
 //   printf("blockchain num nodes: %d\n", blockchain->getNumNodes(blockchain));
 //   printf("blockchain sync state: %c\n", blockchain->getSyncState(blockchain));
 //   printf("node nid: %d\n", node->nid);
