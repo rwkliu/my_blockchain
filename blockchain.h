@@ -1,3 +1,10 @@
+#ifndef ENUM_SYNC_STATE
+#define ENUM_SYNC_STATE
+typedef enum e_sync_state {
+  SYNC, NOT_SYNCED
+} sync_state;
+#endif
+
 #ifndef STRUCT_NODE
 #define STRUCT_NODE
 typedef struct s_node{
@@ -19,6 +26,8 @@ typedef struct s_blockchain {
 
   int (*getNumNodes)(struct s_blockchain *Blockchain_ptr);
   char (*getSyncState)(struct s_blockchain *Blockchain_ptr);
+  void (*setNumNodes)(struct s_blockchain *Blockchain_ptr, int);
+  void (*setSyncState)(struct s_blockchain *Blockchain_ptr, sync_state);
 } Blockchain;
 #endif
 
