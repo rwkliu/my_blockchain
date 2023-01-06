@@ -86,3 +86,15 @@ string_array *my_split(char *str1, char *separator) {
   split_str->size = num_split_strings;
   return split_str;
 }
+
+//Check if input string is a positive integer number
+int isPosNum(char *str) {
+  int str_len = strlen(str);
+
+  for (int i = 0; i < str_len; i++) {
+    if (str[i] < '0' || str[i] > '9') {
+      return 1;
+    }
+  }
+  return 0;
+}
