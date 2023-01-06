@@ -51,6 +51,8 @@ string_array *my_split(char *str1, char *separator) {
   int separator_len = strlen(separator);
   string_array *split_str = malloc(sizeof(string_array));
   int num_split_strings = 1;
+
+  str1 = my_strip(str1);
   
   //Return size 0 Null string array if str1 is an empty string
   if(strcmp(str1, "") == 0){
@@ -61,6 +63,7 @@ string_array *my_split(char *str1, char *separator) {
 
   //Copy str1 to copied_str where the contents can be modified
   char *copied_str = strdup(str1);
+  free(str1);
   char *head_copied_str = copied_str;
 
   //Traverse copied_str and replace the separator characters with \0
@@ -97,4 +100,59 @@ int isPosNum(char *str) {
     }
   }
   return 0;
+}
+
+int last_char_index(char *str) {
+  int index = strlen(str);
+  char *end = str + index;
+
+  while(end > str) {
+    if(*end != ' ' && *end != '\0'){
+      return index;
+      break;
+    }
+    end--;
+    index--;
+  }
+  return -1;
+}
+
+char *my_strip(char *str) {
+  int i = 0;
+  int last_char = last_char_index(str);
+  char *stripped_str;
+  char *last_char_string = strrchr(str, str[last_char]);
+
+  //Return an empty string if input string is empty
+  if(strcmp(str, "") == 0) {
+    return "";
+  }
+  
+  stripped_str = calloc(strlen(str) + 1 * sizeof(char), sizeof(char));
+
+  while(*str) {
+    //Add last char
+    if(strcmp(str, last_char_string) == 0) {
+      stripped_str[i] = *str;
+      break;
+    }
+    //Add char
+    if(*str != ' ') {
+      stripped_str[i] = *str;
+      i++;
+    }
+    //Add space if current char is ' ' and the char before is a char
+    //Skips all ' ' that come before the first chaR
+    else if(stripped_str[0] != 0) {
+      if(*str == ' ' && stripped_str[i-1] != ' ') {
+        stripped_str[i] = *str;
+        i++;
+      }
+    }
+    str++;
+  }
+
+  //Reallocate memory by freeing leftover memory
+  stripped_str = realloc(stripped_str, strlen(stripped_str) + 1 * sizeof(char));
+  return stripped_str;
 }

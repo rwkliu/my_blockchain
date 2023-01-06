@@ -37,6 +37,9 @@ ArgumentsPtr argumentsConstructor(void) {
 }
 
 int argumentsDestructor(ArgumentsPtr args) {
+  free(args->split_read_buffer->array[0]);
+  free(args->split_read_buffer->array);
+  free(args->split_read_buffer);
   free(args);
   return 0;
 }
@@ -50,6 +53,7 @@ int argumentsInitialize(ArgumentsPtr args) {
   args->readInput = read_input;
   args->getReadBuffer = getReadBuffer;
   args->splitInput = my_split;
+  args->parseArguments = parse_arguments;
 
   for(int i = 0; i < READ_BUFFER_SIZE; i++) {
     args->read_buffer[i] = '\0';
@@ -248,6 +252,8 @@ int parse_arguments(string_array *split_strings_array) {
         printf("Command not found\n");
         break;
     }
+    printf("free entered\n");
+    free(args->array);
     free(args);
   } else {
     printf("No commands entered\n");
@@ -274,8 +280,6 @@ int parse_arguments(string_array *split_strings_array) {
 //   //Print the contents of command array
 //   for(int i = 0; i < 5; i++) {
 //     printf("command #%d: %s\n", i, args->commands[i]);
-//   }
-
 //   argumentsDestructor(args);
 //   return 0;
 // }
