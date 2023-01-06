@@ -1,21 +1,21 @@
-#ifndef STRUCT_BLOCK
-#define STRUCT_BLOCK
-typedef struct s_block {
+#ifndef STRUCT_NODE
+#define STRUCT_NODE
+typedef struct s_node{
   int nid;
   char *bid;
-  struct s_block *next_block;
-  struct s_block *prev_block;
-} Block;
+  struct s_node *next_node;
+  struct s_node *prev_node;
+} Node;
 #endif
 
-typedef Block *BlockPtr;
+typedef Node *NodePtr;
 
 #ifndef STRUCT_BLOCKCHAIN
 #define STRUCT_BLOCKCHAIN
 typedef struct s_blockchain {
   int num_nodes;
   char sync_state;
-  BlockPtr first_block;
+  NodePtr blockchain_head;
 
   int (*getNumNodes)(struct s_blockchain *Blockchain_ptr);
   char (*getSyncState)(struct s_blockchain *Blockchain_ptr);
