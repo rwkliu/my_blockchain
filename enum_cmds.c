@@ -55,13 +55,12 @@ args_array *subarray(char **argv, int start_index, int end_index) {
 
 //Check subsequent arguments for correct arguments following "block"
 int parse_block_args(char **block_args, commands command) {
-  int bid_arg = atoi(block_args[0]);
   int nid_arg = atoi(block_args[1]);
 
   switch(command) {
     case ADD: {
-      if (bid_arg != 0 && nid_arg != 0) {
-        printf("Add block bid: %d\n", bid_arg); 
+      if (nid_arg != 0) {
+        printf("Add block bid: %s\n", block_args[0]); 
         if (nid_arg == '*') {
           printf("Add node nid: *\n");
         } else {
@@ -73,11 +72,7 @@ int parse_block_args(char **block_args, commands command) {
       break;
     }
     case RM: {
-      if (bid_arg != 0) {
-        printf("Remove block bid: %d\n", bid_arg); 
-      } else {
-        printf("Invalid bid argument\n");
-      }
+      printf("Remove block bid: %s\n", block_args[0]); 
       break;
     }
     default:
