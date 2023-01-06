@@ -12,7 +12,6 @@ typedef enum s_commands {
 #ifndef STRUCT_BLOCKCHAIN_ARGS
 #define STRUCT_BLOCKCHAIN_ARGS
 typedef struct s_arguments {
-  char *commands[5];
   char read_buffer[READ_BUFFER_SIZE];
   string_array *split_read_buffer;
 
