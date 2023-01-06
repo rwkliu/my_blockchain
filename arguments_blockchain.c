@@ -31,7 +31,7 @@ char *read_input(char *read_buffer) {
       read_buffer[0] = '\0';
       return read_buffer;
     }
-    if(index == READ_BUFFER_SIZE) {
+    if(index == READ_BUFFER_SIZE - 1) {
       continue;
     }
     read_buffer[index] = ch;
