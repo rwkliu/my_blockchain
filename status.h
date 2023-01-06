@@ -4,6 +4,7 @@
 #define NODE_NOT_FOUND "Node doesn't exist\n"
 #define BLOCK_NOT_FOUND "Block doesn't exist\n"
 #define NO_COMMAND_FOUND "Command not found\n"
+#define NO_MORE_RESOURCES "No more resources available on the computer\n"
 
 //Status messages
 #define COMMAND_SUCCESS "OK"
