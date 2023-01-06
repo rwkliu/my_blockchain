@@ -106,6 +106,7 @@ int parse_block_args(char **block_args, commands command) {
     default:
       printf("Invalid block arguments\n");
   }
+  return 0;
 }
 
 //Check subsequent arguments for correct arguments following "node"
@@ -131,6 +132,7 @@ int parse_node_args(char *node_args, commands command) {
     default:
       printf("Invalid node arguments\n");
   }
+  return 0;
 }
 
 //if command = ADD or RM, check subsequent arguments for correct arguments
@@ -174,49 +176,49 @@ int parse_ls_args(args_array *args) {
   return 0;
 }
 
-int main(int argc, char **argv) {
-  args_array *args = subarray(argv, 2, argc - 1);
+// int main(int argc, char **argv) {
+//   args_array *args = subarray(argv, 2, argc - 1);
 
-  //Print the strings stored in args
-  //for (int i = 0; i < argc - 2; i++) {
-  //  printf("#%d: %s\n", i, args->array[i]); 
-  //}
+//   //Print the strings stored in args
+//   //for (int i = 0; i < argc - 2; i++) {
+//   //  printf("#%d: %s\n", i, args->array[i]); 
+//   //}
 
-  if (argc > 1) {
-    switch(find_command(argv[1])) {
-      case ADD: {
-        printf("add command found\n");
-        parse_add_rm_args(args, ADD);
-        break;
-      }
-      case RM: {
-        printf("rm command found\n");
-        parse_add_rm_args(args, RM);
-        break;
-      }
-      case LS: {
-        printf("ls command found\n");
-        parse_ls_args(args);
-        break;
-      }
-      case SYNC: {
-        printf("sync command found\n");
-        printf("Execute sync routine\n");
-        break;
-      }
-      case QUIT: {
-        printf("quit command found\n");
-        printf("Execute quit routine\n");
-        break;
-      }
-      default:
-        printf("Command not found\n");
-        break;
-    }
-  } else {
-    printf("No commands entered\n");
-  }
+//   if (argc > 1) {
+//     switch(find_command(argv[1])) {
+//       case ADD: {
+//         printf("add command found\n");
+//         parse_add_rm_args(args, ADD);
+//         break;
+//       }
+//       case RM: {
+//         printf("rm command found\n");
+//         parse_add_rm_args(args, RM);
+//         break;
+//       }
+//       case LS: {
+//         printf("ls command found\n");
+//         parse_ls_args(args);
+//         break;
+//       }
+//       case SYNC: {
+//         printf("sync command found\n");
+//         printf("Execute sync routine\n");
+//         break;
+//       }
+//       case QUIT: {
+//         printf("quit command found\n");
+//         printf("Execute quit routine\n");
+//         break;
+//       }
+//       default:
+//         printf("Command not found\n");
+//         break;
+//     }
+//   } else {
+//     printf("No commands entered\n");
+//   }
 
-  free(args);
-  return 0;
-}
+//   free(args);
+//   return 0;
+// }
