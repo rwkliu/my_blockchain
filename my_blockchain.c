@@ -24,6 +24,7 @@ int main() {
     printf("split string #%d: %s\n", i, args->split_read_buffer->array[i]);
   }
 
+  args->parseArguments(args->split_read_buffer);
   blockchainDestructor(blockchain);
   argumentsDestructor(args);
   return 0;
