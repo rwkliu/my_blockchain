@@ -1,7 +1,7 @@
 #ifndef ENUM_SYNC_STATE
 #define ENUM_SYNC_STATE
 typedef enum e_sync_state {
-  SYNC, NOT_SYNCED
+  SYNCED, NOT_SYNCED
 } sync_state;
 #endif
 

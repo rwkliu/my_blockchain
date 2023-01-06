@@ -19,7 +19,7 @@ void setNumNodes(BlockchainPtr this, int num) {
 
 void setSyncState(BlockchainPtr this, sync_state state) {
   switch(state) {
-    case SYNC: {
+    case SYNCED: {
       this->sync_state = 's'; 
       break;
     }
