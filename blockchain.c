@@ -27,25 +27,25 @@ int blockchainDestructor(BlockchainPtr blockchain) {
 int blockchainInitialize(BlockchainPtr blockchain) {
   blockchain->num_nodes = 0;
   blockchain->sync_state = 's';
-  blockchain->first_block = NULL;
+  blockchain->blockchain_head = NULL;
   blockchain->getNumNodes = getNumNodes;
   blockchain->getSyncState = getSyncState;
   return 0;
 }
 
 //main function to test above functions
-// int main() {
-//   BlockchainPtr blockchain = blockchainConstructor();
+//  int main() {
+//    BlockchainPtr blockchain = blockchainConstructor();
 
-//   if(blockchain != NULL) {
-//     printf("Blockchain successfully created\n");
-//   }
-//   else {
-//     printf("Blockchain creation failed\n");
-//   }
+//    if(blockchain != NULL) {
+//      printf("Blockchain successfully created\n");
+//    }
+//    else {
+//      printf("Blockchain creation failed\n");
+//    }
 
-//   printf("blockchain num nodes: %d\n", blockchain->getNumNodes(blockchain));
-//   printf("blockchain sync state: %c\n", blockchain->getSyncState(blockchain));
-//   blockchainDestructor(blockchain);
-//   return 0;
-// }
+//    printf("blockchain num nodes: %d\n", blockchain->getNumNodes(blockchain));
+//    printf("blockchain sync state: %c\n", blockchain->getSyncState(blockchain));
+//    blockchainDestructor(blockchain);
+//    return 0;
+//  }
