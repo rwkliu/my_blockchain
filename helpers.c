@@ -44,3 +44,44 @@ void print_prompt(int num_nodes, char sync_status) {
 
   free(char_num_nodes);
 }
+
+//split str1 using the separator and return a string array of split strings
+string_array *my_split(char *str1, char *separator) {
+  int separator_len = strlen(separator);
+  string_array *split_str = malloc(sizeof(string_array));
+  int num_split_strings = 1;
+  
+  //Return size 0 Null string array if str1 is an empty string
+  if(strcmp(str1, "") == 0){
+    split_str->size = 0;
+    split_str->array = NULL;
+    return split_str;
+  }
+
+  //Copy str1 to copied_str where the contents can be modified
+  char *copied_str = strdup(str1);
+  char *head_copied_str = copied_str;
+
+  //Traverse copied_str and replace the separator characters with \0
+  while(*copied_str) {
+    if(strncmp(copied_str, separator, separator_len) == 0) {
+      for(int i = 0; i < separator_len; i++) {
+        copied_str[i] = '\0';
+      }
+      copied_str += separator_len;
+      num_split_strings++;
+    }
+    copied_str++;
+  }
+  
+  //Allocate memory for the split string pointers and assign the pointers
+  //to point to the split substrings
+  copied_str = head_copied_str; //Move copied_str pointer to the beginning
+  split_str->array = malloc(num_split_strings * sizeof(char *));
+  for(int i = 0; i < num_split_strings; i++) {
+    split_str->array[i] = copied_str;
+    copied_str += strlen(copied_str) + 1;
+  }
+  split_str->size = num_split_strings;
+  return split_str;
+}
