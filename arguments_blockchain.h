@@ -5,10 +5,10 @@
 typedef struct s_arguments {
   char *commands[5];
   char read_buffer[READ_BUFFER_SIZE];
-  string_array *split_read_buffer;
+  struct s_string_array *split_read_buffer;
 
   char *(*readInput)(char *);
-  string_array *(*splitInput)(char *, char *);
+  struct s_string_array *(*splitInput)(char *, char *);
 } Arguments;
 #endif
 
