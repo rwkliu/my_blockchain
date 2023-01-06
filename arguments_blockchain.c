@@ -215,8 +215,45 @@ int parse_ls_args(string_array *args) {
 }
 
 //Parse arguments read from stdin
-int parse_arguments(char *args_array) {
-  
+int parse_arguments(string_array *split_strings_array) {
+  if (split_strings_array->size > 1) {
+    string_array *args = subarray(split_strings_array->array, 2, split_strings_array->size - 1);
+    switch(find_command(split_strings_array->array[0])) {
+      case ADD: {
+        printf("add command found\n");
+        parse_add_rm_args(args, ADD);
+        break;
+      }
+      case RM: {
+        printf("rm command found\n");
+        parse_add_rm_args(args, RM);
+        break;
+      }
+      case LS: {
+        printf("ls command found\n");
+        parse_ls_args(args);
+        break;
+      }
+      case SYNC: {
+        printf("sync command found\n");
+        printf("Execute sync routine\n");
+        break;
+      }
+      case QUIT: {
+        printf("quit command found\n");
+        printf("Execute quit routine\n");
+        break;
+      }
+      default:
+        printf("Command not found\n");
+        break;
+    }
+    free(args);
+  } else {
+    printf("No commands entered\n");
+    return 1;
+  }
+  return 0;
 }
 
 //main function to test above functions
