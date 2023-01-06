@@ -20,3 +20,7 @@ string_array *my_split(char *str1, char *separator);
 
 //Check if input string is a positive integer number
 int isPosNum(char *str);
+
+int last_char_index(char *str);
+
+char *my_strip(char *str);
