@@ -68,20 +68,15 @@ int parse_block_args(char **block_args, commands command) {
           printf("Add node nid: %d\n", nid_arg); 
         }
       } else {
-        printf("Invalid block arguments\n");
+        printf("Invalid bid and nid arguments\n");
       }
       break;
     }
     case RM: {
-      if (bid_arg != 0 && nid_arg != 0) {
+      if (bid_arg != 0) {
         printf("Remove block bid: %d\n", bid_arg); 
-        if (nid_arg == '*') {
-          printf("Remove node nid: *\n");
-        } else {
-          printf("Remove node nid: %d\n", nid_arg); 
-        } 
       } else {
-        printf("Invalid block arguments\n");
+        printf("Invalid bid argument\n");
       }
       break;
     }
@@ -98,7 +93,7 @@ int parse_node_args(char *node_args, commands command) {
       if (isPosNum(node_args) == 0) {
         printf("nid added: %d\n", nid_arg);
       } else {
-        printf("invalid node arguments\n"); 
+        printf("invalid add nid argument\n"); 
       }
       break;
     }
@@ -106,7 +101,7 @@ int parse_node_args(char *node_args, commands command) {
       if (isPosNum(node_args) == 0) {
         printf("nid removed: %d\n", nid_arg);
       } else {
-        printf("invalid node arguments\n");
+        printf("invalid rm nid argument\n");
       }
       break;
     }
@@ -133,8 +128,8 @@ int parse_add_rm_args(args_array *args, commands command) {
   } else if (strcmp(args->array[0], "block") == 0 && args->size == 2 &&
              command == RM) {
     printf("rm parse_block_args entered\n"); 
-    char **block_args = &args->array[1];
-    parse_block_args(block_args, command);
+    char *block_args = args->array[1];
+    parse_block_args(&block_args, command);
   } else if (strcmp(args->array[0], "node") == 0 && args->size == 2 && 
              command == RM) {
     printf("rm parse_node_args entered\n"); 
