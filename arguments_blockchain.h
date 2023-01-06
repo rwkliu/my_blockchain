@@ -8,6 +8,7 @@ typedef struct s_arguments {
   struct s_string_array *split_read_buffer;
 
   char *(*readInput)(char *);
+  char *(*getReadBuffer)(struct s_arguments *);
   struct s_string_array *(*splitInput)(char *, char *);
 } Arguments;
 #endif
@@ -28,3 +29,6 @@ int argumentsDestructor(ArgumentsPtr args);
 
 //Initialize Arguments members
 int argumentsInitialize(ArgumentsPtr args);
+
+//Return pointer to read_buffer
+char *getReadBuffer(ArgumentsPtr args);
