@@ -13,17 +13,20 @@ char getSyncState(BlockchainPtr this) {
   return this->sync_state;
 }
 
+//Allocate memory for Blockchain struct
 BlockchainPtr blockchainConstructor(void) {
   BlockchainPtr blockchain = malloc(sizeof(Blockchain));
   blockchainInitialize(blockchain);
   return blockchain;
 }
 
+//Free allocated memory for Blockchain struct
 int blockchainDestructor(BlockchainPtr blockchain) {
   free(blockchain);
   return 0;
 }
 
+//Initialize Blockchain members
 int blockchainInitialize(BlockchainPtr blockchain) {
   blockchain->num_nodes = 0;
   blockchain->sync_state = 's';
@@ -33,19 +36,50 @@ int blockchainInitialize(BlockchainPtr blockchain) {
   return 0;
 }
 
+//Allocate memory for Node struct
+NodePtr nodeConstructor(void) {
+  NodePtr node = malloc(sizeof(Node));
+  nodeInitialize(node);
+  return node;
+}
+
+//Free allocated memory for Node struct
+int nodeDestructor(NodePtr node) {
+  free(node);
+  return 0;
+}
+
+//Initialize Node members
+int nodeInitialize(NodePtr node) {
+  node->nid = 0;
+  node->bid = "";
+  node->next_node = NULL;
+  node->prev_node = NULL;
+  return 0;
+}
+
 //main function to test above functions
-//  int main() {
-//    BlockchainPtr blockchain = blockchainConstructor();
+// int main() {
+//   BlockchainPtr blockchain = blockchainConstructor();
+//   NodePtr node = nodeConstructor();
 
-//    if(blockchain != NULL) {
-//      printf("Blockchain successfully created\n");
-//    }
-//    else {
-//      printf("Blockchain creation failed\n");
-//    }
+//   if(blockchain != NULL) {
+//     printf("Blockchain successfully created\n");
+//   } else {
+//     printf("Blockchain creation failed\n");
+//   }
+//   if(node != NULL) {
+//     printf("Node successfully created\n");
+//   } else {
+//     printf("Node creation failed\n");
+//   }
 
-//    printf("blockchain num nodes: %d\n", blockchain->getNumNodes(blockchain));
-//    printf("blockchain sync state: %c\n", blockchain->getSyncState(blockchain));
-//    blockchainDestructor(blockchain);
-//    return 0;
-//  }
+//   printf("blockchain num nodes: %d\n", blockchain->getNumNodes(blockchain));
+//   printf("blockchain sync state: %c\n", blockchain->getSyncState(blockchain));
+//   printf("node nid: %d\n", node->nid);
+//   printf("node bid: %s\n", node->bid);
+  
+//   blockchainDestructor(blockchain);
+//   nodeDestructor(node);
+//   return 0;
+// }

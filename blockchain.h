@@ -32,3 +32,12 @@ int blockchainDestructor(BlockchainPtr blockchain);
 
 //Initialize Blockchain members
 int blockchainInitialize(BlockchainPtr blockchain);
+
+//Allocate memory for Node struct
+NodePtr nodeConstructor(void);
+
+//Free allocated for Node struct
+int nodeDestructor(NodePtr node);
+
+//Initialize Node members
+int nodeInitialize(NodePtr node);
