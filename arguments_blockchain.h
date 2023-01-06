@@ -67,4 +67,4 @@ int parse_add_rm_args(string_array *args, commands command);
 int parse_ls_args(string_array *args);
 
 //Parse arguments read from stdin
-int parse_arguments(char *split_strings_array);
+int parse_arguments(string_array *split_strings_array);
