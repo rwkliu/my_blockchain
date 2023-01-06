@@ -12,11 +12,11 @@ typedef enum s_commands {
 typedef struct s_arguments {
   char *commands[5];
   char read_buffer[READ_BUFFER_SIZE];
-  struct s_string_array *split_read_buffer;
+  string_array *split_read_buffer;
 
   char *(*readInput)(char *);
   char *(*getReadBuffer)(struct s_arguments *);
-  struct s_string_array *(*splitInput)(char *, char *);
+  string_array *(*splitInput)(char *, char *);
 } Arguments;
 #endif
 
@@ -67,4 +67,4 @@ int parse_add_rm_args(string_array *args, commands command);
 int parse_ls_args(string_array *args);
 
 //Parse arguments read from stdin
-int parse_arguments(char *args_array);
+int parse_arguments(char *split_strings_array);
