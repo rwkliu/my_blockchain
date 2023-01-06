@@ -48,6 +48,7 @@ int argumentsInitialize(ArgumentsPtr args) {
   args->commands[3] = "sync";
   args->commands[4] = "quit";
   args->readInput = read_input;
+  args->getReadBuffer = getReadBuffer;
   args->splitInput = my_split;
 
   for(int i = 0; i < READ_BUFFER_SIZE; i++) {
@@ -56,7 +57,9 @@ int argumentsInitialize(ArgumentsPtr args) {
   return 0;
 }
 
-
+char *getReadBuffer(ArgumentsPtr args) {
+  return args->read_buffer;
+}
 
 //main function to test above functions
 // int main() {
