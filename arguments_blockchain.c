@@ -61,6 +61,164 @@ char *getReadBuffer(ArgumentsPtr args) {
   return args->read_buffer;
 }
 
+commands find_command(char *arg) {
+  if (strcmp(arg, "add") == 0) {
+    return ADD;
+  } else if (strcmp(arg, "rm") == 0) {
+    return RM;
+  } else if (strcmp(arg, "ls") == 0) {
+    return LS;
+  } else if (strcmp(arg, "sync") == 0) {
+    return SYNC;
+  } else if (strcmp(arg, "quit") == 0) {
+    return QUIT;
+  } else {
+    return NA;
+  }
+}
+
+//Return string_array that is a subarray of the input string array
+string_array *subarray(char **argv, int start_index, int end_index) {
+  string_array *subarray = malloc(sizeof(string_array));
+  subarray->size = end_index - start_index + 1;
+  subarray->array = malloc(subarray->size * sizeof(char *));
+  int index = 0;
+
+  for (int i = start_index; i <= end_index; i++) {
+    subarray->array[index] = argv[i];
+    index++;
+  }
+  return subarray;
+}
+
+int isAddBlock(string_array *args, commands command) {
+  if (strcmp(args->array[0], "block") == 0 && args->size == 3 && command == ADD) {
+    return 1;
+  }
+  return 0;
+}
+
+int isAddNode(string_array *args, commands command) {
+  if (strcmp(args->array[0], "node") == 0 && args->size == 2 && command == ADD) {
+    return 1;
+  }
+  return 0;
+}
+
+int isRmBlock(string_array *args, commands command) {
+  if (strcmp(args->array[0], "block") == 0 && args->size == 2 && command == RM) {
+    return 1;
+  }
+  return 0;
+}
+
+int isRmNode(string_array *args, commands command) {
+  if (strcmp(args->array[0], "node") == 0 && args->size == 2 && command == RM) {
+    return 1;
+  }
+  return 0;
+}
+
+//Check subsequent arguments for correct arguments following "block"
+int parse_block_args(char **block_args, commands command) {
+  int nid_arg = atoi(block_args[1]);
+
+  switch(command) {
+    case ADD: {
+      if (nid_arg != 0) {
+        printf("Add block bid: %s\n", block_args[0]); 
+        if (nid_arg == '*') {
+          printf("Add node nid: *\n");
+        } else {
+          printf("Add node nid: %d\n", nid_arg); 
+        }
+      } else {
+        printf("Invalid bid and nid arguments\n");
+      }
+      break;
+    }
+    case RM: {
+      printf("Remove block bid: %s\n", block_args[0]); 
+      break;
+    }
+    default:
+      printf("Invalid block arguments\n");
+  }
+  return 0;
+}
+
+//Check subsequent arguments for correct arguments following "node"
+int parse_node_args(char *node_args, commands command) {
+  int nid_arg = atoi(node_args);
+  switch(command) {
+    case ADD: {
+      if (isPosNum(node_args) == 0) {
+        printf("nid added: %d\n", nid_arg);
+      } else {
+        printf("invalid add nid argument\n"); 
+      }
+      break;
+    }
+    case RM: {
+      if (isPosNum(node_args) == 0) {
+        printf("nid removed: %d\n", nid_arg);
+      } else {
+        printf("invalid rm nid argument\n");
+      }
+      break;
+    }
+    default:
+      printf("Invalid node arguments\n");
+  }
+  return 0;
+}
+
+//if command = ADD or RM, check subsequent arguments for correct arguments
+int parse_add_rm_args(string_array *args, commands command) {
+  if (args->size < 2) {
+    printf("Not enough arguments\n");
+    return 1;
+  } else if (isAddBlock(args, command)) {
+    printf("Add parse_block_args entered\n");
+    char *block_args[2] = {args->array[1], args->array[2]};
+    parse_block_args(block_args, command);
+  } else if (isAddNode(args, command)) {
+    printf("Add parse_node_args entered\n");
+    char *node_args = args->array[1];
+    parse_node_args(node_args, command);
+  } else if (isRmBlock(args, command)) {
+    printf("rm parse_block_args entered\n"); 
+    char *block_args = args->array[1];
+    parse_block_args(&block_args, command);
+  } else if (isRmNode(args, command)) {
+    printf("rm parse_node_args entered\n"); 
+    char *node_args = args->array[1];
+    parse_node_args(node_args, command);
+  } else {
+    printf("Add arguments not recognized or too many arguments are entered\n");
+    return 1;
+  }
+  return 0;
+}
+
+//If command = LS, check subsequent arguments for no arguments or -l option
+int parse_ls_args(string_array *args) {
+  if (args->size == 0) {
+    printf("List all nodes by their nid\n");
+  } else if (strcmp(args->array[0], "-l") == 0) {
+    printf("List all nodes' nid and bid\n");
+  } else {
+    printf("ls arguments not recognized\n");
+    return 1;
+  }
+  return 0;
+}
+
+//Parse arguments read from stdin
+int parse_arguments(char *args_array) {
+  
+}
+
 //main function to test above functions
 // int main() {
 //   ArgumentsPtr args = argumentsConstructor();
