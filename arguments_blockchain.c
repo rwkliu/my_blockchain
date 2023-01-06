@@ -45,11 +45,6 @@ int argumentsDestructor(ArgumentsPtr args) {
 }
 
 int argumentsInitialize(ArgumentsPtr args) {
-  args->commands[0] = "add";
-  args->commands[1] = "rm";
-  args->commands[2] = "ls";
-  args->commands[3] = "sync";
-  args->commands[4] = "quit";
   args->readInput = read_input;
   args->getReadBuffer = getReadBuffer;
   args->splitInput = my_split;
