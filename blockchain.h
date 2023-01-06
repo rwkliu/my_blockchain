@@ -1,5 +1,5 @@
-#ifndef BLOCK
-#define BLOCK
+#ifndef STRUCT_BLOCK
+#define STRUCT_BLOCK
 typedef struct s_block {
   int nid;
   char *bid;
@@ -10,8 +10,8 @@ typedef struct s_block {
 
 typedef Block *BlockPtr;
 
-#ifndef BLOCKCHAIN
-#define BLOCKCHAIN
+#ifndef STRUCT_BLOCKCHAIN
+#define STRUCT_BLOCKCHAIN
 typedef struct s_blockchain {
   int num_nodes;
   char sync_state;
