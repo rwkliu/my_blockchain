@@ -53,6 +53,34 @@ args_array *subarray(char **argv, int start_index, int end_index) {
   return subarray;
 }
 
+int isAddBlock(args_array *args, commands command) {
+  if (strcmp(args->array[0], "block") == 0 && args->size == 3 && command == ADD) {
+    return 1;
+  }
+  return 0;
+}
+
+int isAddNode(args_array *args, commands command) {
+  if (strcmp(args->array[0], "node") == 0 && args->size == 2 && command == ADD) {
+    return 1;
+  }
+  return 0;
+}
+
+int isRmBlock(args_array *args, commands command) {
+  if (strcmp(args->array[0], "block") == 0 && args->size == 2 && command == RM) {
+    return 1;
+  }
+  return 0;
+}
+
+int isRmNode(args_array *args, commands command) {
+  if (strcmp(args->array[0], "node") == 0 && args->size == 2 && command == RM) {
+    return 1;
+  }
+  return 0;
+}
+
 //Check subsequent arguments for correct arguments following "block"
 int parse_block_args(char **block_args, commands command) {
   int nid_arg = atoi(block_args[1]);
@@ -110,23 +138,19 @@ int parse_add_rm_args(args_array *args, commands command) {
   if (args->size < 2) {
     printf("Not enough arguments\n");
     return 1;
-  } else if (strcmp(args->array[0], "block") == 0 && args->size == 3 &&
-             command == ADD) {
+  } else if (isAddBlock(args, command)) {
     printf("Add parse_block_args entered\n");
     char *block_args[2] = {args->array[1], args->array[2]};
     parse_block_args(block_args, command);
-  } else if (strcmp(args->array[0], "node") == 0 && args->size == 2 && 
-             command == ADD) {
+  } else if (isAddNode(args, command)) {
     printf("Add parse_node_args entered\n");
     char *node_args = args->array[1];
     parse_node_args(node_args, command);
-  } else if (strcmp(args->array[0], "block") == 0 && args->size == 2 &&
-             command == RM) {
+  } else if (isRmBlock(args, command)) {
     printf("rm parse_block_args entered\n"); 
     char *block_args = args->array[1];
     parse_block_args(&block_args, command);
-  } else if (strcmp(args->array[0], "node") == 0 && args->size == 2 && 
-             command == RM) {
+  } else if (isRmNode(args, command)) {
     printf("rm parse_node_args entered\n"); 
     char *node_args = args->array[1];
     parse_node_args(node_args, command);
