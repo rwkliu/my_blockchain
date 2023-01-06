@@ -23,8 +23,10 @@ int main() {
   for (int i = 0; i < args->split_read_buffer->size; i++) {
     printf("split string #%d: %s\n", i, args->split_read_buffer->array[i]);
   }
-
+  
+  //Parse the split string arguments
   args->parseArguments(args->split_read_buffer);
+  
   blockchainDestructor(blockchain);
   argumentsDestructor(args);
   return 0;
