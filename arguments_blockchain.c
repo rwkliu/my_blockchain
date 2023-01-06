@@ -5,6 +5,7 @@
 
 #include "arguments_blockchain.h"
 #include "helpers.h"
+#include "status.h"
 
 int my_getchar() {
   int char_buffer = 0;
@@ -244,13 +245,13 @@ int parse_arguments(string_array *split_strings_array) {
         break;
       }
       default:
-        printf("Command not found\n");
+        printf(NO_COMMAND_FOUND);
         break;
     }
     free(args->array);
     free(args);
   } else {
-    printf("No commands entered\n");
+    printf(NO_COMMAND_FOUND);
     return 1;
   }
   return 0;
