@@ -4,9 +4,16 @@
 #include "blockchain.h"
 #include "helpers.h"
 
-void add_node(BlockchainPtr blockchain, NodePtr *headref, int nid) {
+void add_node(BlockchainPtr blockchain, int nid) {
   NodePtr new_node = nodeConstructor();
+  NodePtr *headref;
   new_node->setNid(new_node, nid);
+
+  if (blockchain->blockchain_head == NULL) {
+    headref = &(blockchain->blockchain_head);
+  } else {
+    headref = &(blockchain->latest_node);
+  }
 
   new_node->next_node = NULL;
   new_node->prev_node = *headref;
@@ -29,19 +36,19 @@ int main() {
   //Add node routine
   int nid = 12;
   printf("first add node\n");
-  add_node(blockchain, &(blockchain->blockchain_head), nid);
+  add_node(blockchain, nid);
   printf("added node nid: %d\n", blockchain->blockchain_head->getNid(blockchain->blockchain_head));
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
   nid = 13;
   printf("second add node\n");
-  add_node(blockchain, &(blockchain->latest_node), nid);
+  add_node(blockchain, nid);
   printf("added node nid: %d\n", blockchain->blockchain_head->getNid(blockchain->latest_node));
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
   
   nid = 15;
   printf("third add node\n");
-  add_node(blockchain, &(blockchain->latest_node), nid);
+  add_node(blockchain, nid);
   printf("added node nid: %d\n", blockchain->blockchain_head->getNid(blockchain->latest_node));
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
