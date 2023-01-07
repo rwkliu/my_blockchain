@@ -57,6 +57,22 @@ int blockchainInitialize(BlockchainPtr blockchain) {
   return 0;
 }
 
+int getNid(NodePtr this) {
+  return this->nid;
+}
+
+char *getBid(NodePtr this) {
+  return this->bid;
+}
+
+void setNid(NodePtr this, int nid) {
+  this->nid = nid;
+}
+
+void setBid(NodePtr this, char *bid) {
+  this->bid = bid;
+}
+
 //Allocate memory for Node struct
 NodePtr nodeConstructor(void) {
   NodePtr node = malloc(sizeof(Node));
@@ -76,6 +92,10 @@ int nodeInitialize(NodePtr node) {
   node->bid = "";
   node->next_node = NULL;
   node->prev_node = NULL;
+  node->getNid = getNid;
+  node->getBid = getBid;
+  node->setNid = setNid;
+  node->setBid = setBid;
   return 0;
 }
 
@@ -97,10 +117,12 @@ int nodeInitialize(NodePtr node) {
 
 //   blockchain->setNumNodes(blockchain, 5);
 //   blockchain->setSyncState(blockchain, NOT_SYNCED);
+//   node->setNid(node, 10);
+//   node->setBid(node, "21");
 //   printf("blockchain num nodes: %d\n", blockchain->getNumNodes(blockchain));
 //   printf("blockchain sync state: %c\n", blockchain->getSyncState(blockchain));
-//   printf("node nid: %d\n", node->nid);
-//   printf("node bid: %s\n", node->bid);
+//   printf("node nid: %d\n", node->getNid(node));
+//   printf("node bid: %s\n", node->getBid(node));
   
 //   blockchainDestructor(blockchain);
 //   nodeDestructor(node);
