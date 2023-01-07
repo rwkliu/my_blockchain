@@ -12,6 +12,11 @@ typedef struct s_node{
   char *bid;
   struct s_node *next_node;
   struct s_node *prev_node;
+
+  int (*getNid)(struct s_node*);
+  char *(*getBid)(struct s_node*);
+  void (*setNid)(struct s_node*, int);
+  void (*setBid)(struct s_node*, char *);
 } Node;
 #endif
 
@@ -24,10 +29,10 @@ typedef struct s_blockchain {
   char sync_state;
   NodePtr blockchain_head;
 
-  int (*getNumNodes)(struct s_blockchain *Blockchain_ptr);
-  char (*getSyncState)(struct s_blockchain *Blockchain_ptr);
-  void (*setNumNodes)(struct s_blockchain *Blockchain_ptr, int);
-  void (*setSyncState)(struct s_blockchain *Blockchain_ptr, sync_state);
+  int (*getNumNodes)(struct s_blockchain *);
+  char (*getSyncState)(struct s_blockchain *);
+  void (*setNumNodes)(struct s_blockchain *, int);
+  void (*setSyncState)(struct s_blockchain *, sync_state);
 } Blockchain;
 #endif
 
