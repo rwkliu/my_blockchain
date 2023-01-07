@@ -20,7 +20,7 @@ void setNumNodes(BlockchainPtr this, int num) {
 void setSyncState(BlockchainPtr this, sync_state state) {
   switch(state) {
     case SYNCED: {
-      this->sync_state = 's'; 
+      this->sync_state = 's';
       break;
     }
     case NOT_SYNCED: {
@@ -50,6 +50,7 @@ int blockchainInitialize(BlockchainPtr blockchain) {
   blockchain->num_nodes = 0;
   blockchain->sync_state = 's';
   blockchain->blockchain_head = NULL;
+  blockchain->latest_node = blockchain->blockchain_head;
   blockchain->getNumNodes = getNumNodes;
   blockchain->getSyncState = getSyncState;
   blockchain->setNumNodes = setNumNodes;
@@ -100,31 +101,31 @@ int nodeInitialize(NodePtr node) {
 }
 
 //main function to test above functions
-// int main() {
-//   BlockchainPtr blockchain = blockchainConstructor();
-//   NodePtr node = nodeConstructor();
-
-//   if(blockchain != NULL) {
-//     printf("Blockchain successfully created\n");
-//   } else {
-//     printf("Blockchain creation failed\n");
-//   }
-//   if(node != NULL) {
-//     printf("Node successfully created\n");
-//   } else {
-//     printf("Node creation failed\n");
-//   }
-
-//   blockchain->setNumNodes(blockchain, 5);
-//   blockchain->setSyncState(blockchain, NOT_SYNCED);
-//   node->setNid(node, 10);
-//   node->setBid(node, "21");
-//   printf("blockchain num nodes: %d\n", blockchain->getNumNodes(blockchain));
-//   printf("blockchain sync state: %c\n", blockchain->getSyncState(blockchain));
-//   printf("node nid: %d\n", node->getNid(node));
-//   printf("node bid: %s\n", node->getBid(node));
-  
-//   blockchainDestructor(blockchain);
-//   nodeDestructor(node);
-//   return 0;
-// }
+//int main() {
+//  BlockchainPtr blockchain = blockchainConstructor();
+//  NodePtr node = nodeConstructor();
+//
+//  if(blockchain != NULL) {
+//    printf("Blockchain successfully created\n");
+//  } else {
+//    printf("Blockchain creation failed\n");
+//  }
+//  if(node != NULL) {
+//    printf("Node successfully created\n");
+//  } else {
+//    printf("Node creation failed\n");
+//  }
+//
+//  blockchain->setNumNodes(blockchain, 5);
+//  blockchain->setSyncState(blockchain, NOT_SYNCED);
+//  node->setNid(node, 10);
+//  node->setBid(node, "21");
+//  printf("blockchain num nodes: %d\n", blockchain->getNumNodes(blockchain));
+//  printf("blockchain sync state: %c\n", blockchain->getSyncState(blockchain));
+//  printf("node nid: %d\n", node->getNid(node));
+//  printf("node bid: %s\n", node->getBid(node));
+//  
+//  blockchainDestructor(blockchain);
+//  nodeDestructor(node);
+//  return 0;
+//}

@@ -28,6 +28,7 @@ typedef struct s_blockchain {
   int num_nodes;
   char sync_state;
   NodePtr blockchain_head;
+  NodePtr latest_node;
 
   int (*getNumNodes)(struct s_blockchain *);
   char (*getSyncState)(struct s_blockchain *);
