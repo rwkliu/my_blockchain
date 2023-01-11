@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "blockchain.h"
+#include "node.h"
 #include "helpers.h"
 
 void add_node(BlockchainPtr blockchain, int nid) {

@@ -5,6 +5,7 @@
 
 #include "helpers.h"
 #include "blockchain.h"
+#include "node.h"
 #include "arguments_blockchain.h"
 
 int main() {
