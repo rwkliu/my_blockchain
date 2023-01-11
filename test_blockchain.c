@@ -21,7 +21,14 @@ void add_node(BlockchainPtr blockchain, int nid) {
   *headref = new_node;
   
   blockchain->setNumNodes(blockchain, blockchain->getNumNodes(blockchain) + 1);
-  blockchain->latest_node = new_node;
+  blockchain->latest_node = *headref;
+}
+
+void list_nids(Node **headref) {
+  while((*headref)) {
+    printf("%d\n", (*headref)->getNid(*headref));
+    headref = &(*headref)->next_node;
+  }
 }
 
 void prompt(int num, char sync) {
@@ -52,6 +59,9 @@ int main() {
   add_node(blockchain, nid);
   printf("added node nid: %d\n", blockchain->blockchain_head->getNid(blockchain->latest_node));
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
+
+  printf("ls\n");
+  list_nids(&(blockchain->blockchain_head));
 
   nodeDestructor(blockchain->blockchain_head);
   blockchainDestructor(blockchain);
