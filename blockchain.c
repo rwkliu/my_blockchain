@@ -58,48 +58,6 @@ int blockchainInitialize(BlockchainPtr blockchain) {
   return 0;
 }
 
-int getNid(NodePtr this) {
-  return this->nid;
-}
-
-char *getBid(NodePtr this) {
-  return this->bid;
-}
-
-void setNid(NodePtr this, int nid) {
-  this->nid = nid;
-}
-
-void setBid(NodePtr this, char *bid) {
-  this->bid = bid;
-}
-
-//Allocate memory for Node struct
-NodePtr nodeConstructor(void) {
-  NodePtr node = malloc(sizeof(Node));
-  nodeInitialize(node);
-  return node;
-}
-
-//Free allocated memory for Node struct
-int nodeDestructor(NodePtr node) {
-  free(node);
-  return 0;
-}
-
-//Initialize Node members
-int nodeInitialize(NodePtr node) {
-  node->nid = 0;
-  node->bid = "";
-  node->next_node = NULL;
-  node->prev_node = NULL;
-  node->getNid = getNid;
-  node->getBid = getBid;
-  node->setNid = setNid;
-  node->setBid = setBid;
-  return 0;
-}
-
 //main function to test above functions
 //int main() {
 //  BlockchainPtr blockchain = blockchainConstructor();
