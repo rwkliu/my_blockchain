@@ -35,7 +35,6 @@ int nodeInitialize(NodePtr node) {
   node->nid = 0;
   node->bid = "";
   node->next_node = NULL;
-  node->prev_node = NULL;
   node->getNid = getNid;
   node->getBid = getBid;
   node->setNid = setNid;

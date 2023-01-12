@@ -4,7 +4,6 @@ typedef struct s_node{
   int nid;
   char *bid;
   struct s_node *next_node;
-  struct s_node *prev_node;
 
   int (*getNid)(struct s_node*);
   char *(*getBid)(struct s_node*);

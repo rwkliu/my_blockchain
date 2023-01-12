@@ -56,24 +56,23 @@ int main() {
   int nid = 12;
   printf("first add node\n");
   add_node(blockchain, nid);
-  printf("added node nid: %d\n", blockchain->blockchain_head->getNid(blockchain->blockchain_head));
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
   nid = 13;
   printf("second add node\n");
   add_node(blockchain, nid);
-  printf("added node nid: %d\n", blockchain->blockchain_head->getNid(blockchain->latest_node));
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
   
   nid = 15;
   printf("third add node\n");
   add_node(blockchain, nid);
-  printf("added node nid: %d\n", blockchain->blockchain_head->getNid(blockchain->latest_node));
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
+  //Print nid of all nodes in blockchain
   printf("ls\n");
   list_nids(&(blockchain->blockchain_head));
 
+  //Remove a node and print the remaining nodes
   nid = 13;
   printf("Remove node %d\n", nid);
   remove_nodes(blockchain, nid);
