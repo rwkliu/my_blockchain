@@ -10,22 +10,33 @@ void add_node(BlockchainPtr blockchain, int nid) {
   NodePtr *headref;
   new_node->setNid(new_node, nid);
 
-  if (blockchain->blockchain_head == NULL) {
-    headref = &(blockchain->blockchain_head);
-  } else {
-    headref = &(blockchain->latest_node);
+  while ((*headref)) {
+    headref = &((*headref)->next_node);
   }
 
-  new_node->next_node = NULL;
-  new_node->prev_node = *headref;
+  new_node->next_node = *headref;
   *headref = new_node;
   
   blockchain->setNumNodes(blockchain, blockchain->getNumNodes(blockchain) + 1);
   blockchain->latest_node = *headref;
 }
 
+void remove_nodes(BlockchainPtr blockchain, int nid) {
+  NodePtr *noderef = &(blockchain->blockchain_head);
+  
+  while ((*noderef) && (*noderef)->getNid(*noderef) != nid) {
+    noderef = &((*noderef)->next_node);
+  }
+
+  if (*noderef != NULL) {
+    NodePtr old = *noderef;
+    *noderef = (*noderef)->next_node;
+    nodeDestructor(old);
+  }
+}
+
 void list_nids(Node **headref) {
-  while((*headref)) {
+  while ((*headref)) {
     printf("%d\n", (*headref)->getNid(*headref));
     headref = &(*headref)->next_node;
   }
@@ -61,6 +72,11 @@ int main() {
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
   printf("ls\n");
+  list_nids(&(blockchain->blockchain_head));
+
+  nid = 13;
+  printf("Remove node %d\n", nid);
+  remove_nodes(blockchain, nid);
   list_nids(&(blockchain->blockchain_head));
 
   nodeDestructor(blockchain->blockchain_head);
