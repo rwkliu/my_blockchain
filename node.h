@@ -4,11 +4,14 @@
 #define STRUCT_NODE
 typedef struct s_node{
   int nid;
+  int num_blocks;
   BlockPtr bid_head;
   struct s_node *next_node;
 
   int (*getNid)(struct s_node*);
+  int (*getNumBlocks)(struct s_node*);
   void (*setNid)(struct s_node*, int);
+  void (*setNumBlocks)(struct s_node*, int);
 } Node;
 #endif
 
