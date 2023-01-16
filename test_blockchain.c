@@ -8,7 +8,7 @@
 
 void add_node(BlockchainPtr blockchain, int nid) {
   NodePtr new_node = nodeConstructor();
-  NodePtr *headref;
+  NodePtr *headref = &(blockchain->blockchain_head);
   new_node->setNid(new_node, nid);
 
   while ((*headref)) {
@@ -59,15 +59,15 @@ int main() {
   add_node(blockchain, nid);
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
-  // nid = 13;
-  // printf("second add node\n");
-  // add_node(blockchain, nid);
-  // prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
+  nid = 13;
+  printf("second add node\n");
+  add_node(blockchain, nid);
+  prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
   
-  // nid = 15;
-  // printf("third add node\n");
-  // add_node(blockchain, nid);
-  // prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
+  nid = 15;
+  printf("third add node\n");
+  add_node(blockchain, nid);
+  prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
   //Print nid of all nodes in blockchain
   printf("ls\n");
