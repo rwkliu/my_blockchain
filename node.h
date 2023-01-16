@@ -1,12 +1,13 @@
+#include "block.h"
+
 #ifndef STRUCT_NODE
 #define STRUCT_NODE
 typedef struct s_node{
   int nid;
-  char *bid;
+  BlockPtr bid_head;
   struct s_node *next_node;
 
   int (*getNid)(struct s_node*);
-  char *(*getBid)(struct s_node*);
   void (*setNid)(struct s_node*, int);
   void (*setBid)(struct s_node*, char *);
 } Node;

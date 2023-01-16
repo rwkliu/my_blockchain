@@ -5,8 +5,9 @@ typedef struct s_bid {
   struct s_bid *next_block;
 
   char *(*getBid)(struct s_bid *);
-  void (*addBid)(struct s_bid *);
-  void (*removeBid)(struct s_bid *);
+  void (*setBid)(struct s_bid *, char *);
+  void (*addBlock)(struct s_bid **, char *);
+  void (*removeBlock)(struct s_bid **, char *);
 } Block;
 #endif
 

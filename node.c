@@ -5,10 +5,6 @@ int getNid(NodePtr this) {
   return this->nid;
 }
 
-char *getBid(NodePtr this) {
-  return this->bid;
-}
-
 void setNid(NodePtr this, int nid) {
   this->nid = nid;
 }
@@ -29,10 +25,9 @@ int nodeDestructor(NodePtr node) {
 //Initialize Node members
 int nodeInitialize(NodePtr node) {
   node->nid = 0;
-  node->bid = "";
+  node->bid_head = NULL;
   node->next_node = NULL;
   node->getNid = getNid;
-  node->getBid = getBid;
   node->setNid = setNid;
   return 0;
 }

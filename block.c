@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "block.h"
 
 char *getBid(BlockPtr this) {
@@ -23,7 +24,7 @@ void addBlock(BlockPtr *block_head, char *bid) {
 }
 
 void removeBlock(BlockPtr *block_head, char *bid) {
-  BlockPtr *headref = blockhead;
+  BlockPtr *headref = block_head;
 
   while ((*headref) && strcmp((*headref)->getBid(*headref), bid) != 0) {
     headref = &((*headref)->next_block);
@@ -53,8 +54,11 @@ int blockDestructor(BlockPtr block) {
 //Initialize Block members
 int blockInitialize(BlockPtr block) {
   block->bid = NULL;
-  block->next_bid = NULL;
+  block->next_block = NULL;
   block->getBid = getBid;
+  block->setBid = setBid;
+  block->addBlock = addBlock;
+  block->removeBlock = removeBlock;
   
   return 0;
 }
