@@ -38,7 +38,7 @@ void remove_nodes(BlockchainPtr blockchain, int nid) {
 
 void list_nids(Node **noderef) {
   while ((*noderef)) {
-    printf("%d\n", (*noderef)->getNid(*noderef));
+    printf("%d", (*noderef)->getNid(*noderef));
     noderef = &(*noderef)->next_node;
   }
 }
@@ -48,7 +48,18 @@ void list_bids(Block **blockref) {
     printf("%s ", (*blockref)->getBid(*blockref));
     blockref = &(*blockref)->next_block;
   }
-  printf("\n");
+}
+
+void ls_blockchain(Node **noderef, int lflag) {
+  while ((*noderef)) {
+    printf("%d", (*noderef)->getNid((*noderef)));
+    if (lflag == 1) {
+      printf(": ");
+      list_bids((&(*noderef)->bid_head));
+    }
+    printf("\n");
+    *noderef = (*noderef)->next_node;
+  }
 }
 
 void prompt(int num, char sync) {
@@ -100,7 +111,10 @@ int main() {
   //Works
   addBlock(&(desired_node->bid_head), bid);
   addBlock(&(desired_node->bid_head), "world");
-  list_bids(&(desired_node->bid_head));
+
+  //Print nids and bids in blockchain
+  printf("Print all nids and bids\n");
+  ls_blockchain(&(blockchain->blockchain_head), 1);
 
   //Free all allocated memory
   nodeDestructor(blockchain->blockchain_head);
