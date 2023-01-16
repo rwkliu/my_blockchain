@@ -3,6 +3,7 @@
 #include <string.h>
 #include "blockchain.h"
 #include "node.h"
+#include "block.h"
 #include "helpers.h"
 
 void add_node(BlockchainPtr blockchain, int nid) {
@@ -52,21 +53,21 @@ int main() {
 
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
   
-  //Add node routine
+  //Add nodes
   int nid = 12;
   printf("first add node\n");
   add_node(blockchain, nid);
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
-  nid = 13;
-  printf("second add node\n");
-  add_node(blockchain, nid);
-  prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
+  // nid = 13;
+  // printf("second add node\n");
+  // add_node(blockchain, nid);
+  // prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
   
-  nid = 15;
-  printf("third add node\n");
-  add_node(blockchain, nid);
-  prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
+  // nid = 15;
+  // printf("third add node\n");
+  // add_node(blockchain, nid);
+  // prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
   //Print nid of all nodes in blockchain
   printf("ls\n");
@@ -78,6 +79,7 @@ int main() {
   remove_nodes(blockchain, nid);
   list_nids(&(blockchain->blockchain_head));
 
+  //Free all allocated memory
   nodeDestructor(blockchain->blockchain_head);
   blockchainDestructor(blockchain);
 
