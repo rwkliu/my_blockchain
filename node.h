@@ -9,7 +9,6 @@ typedef struct s_node{
 
   int (*getNid)(struct s_node*);
   void (*setNid)(struct s_node*, int);
-  void (*setBid)(struct s_node*, char *);
 } Node;
 #endif
 
