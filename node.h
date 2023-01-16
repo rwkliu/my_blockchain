@@ -22,3 +22,6 @@ int nodeDestructor(NodePtr node);
 
 //Initialize Node members
 int nodeInitialize(NodePtr node);
+
+//Return a pointer to the first Node with the input nid
+NodePtr findNode(NodePtr node_head, int nid);

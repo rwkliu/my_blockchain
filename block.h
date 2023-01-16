@@ -21,3 +21,5 @@ int blockDestructor(BlockPtr block);
 
 //Initialize Block members
 int blockInitialize(BlockPtr block);
+
+void addBlock(BlockPtr *block_head, char *bid);
