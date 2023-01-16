@@ -36,6 +36,20 @@ void remove_nodes(BlockchainPtr blockchain, int nid) {
   }
 }
 
+void update_numblocks(Node **noderef) {
+  (*noderef)->setNumBlocks((*noderef), (*noderef)->getNumBlocks(*noderef) + 1);
+}
+
+//Check all nodes for the same blocks as the first node
+int is_synchronized(Node **noderef) {
+
+}
+
+//Check if all nodes contain the same blocks and update the sync state
+void update_sync_state(BlockchainPtr blockchain) {
+
+}
+
 void list_nids(Node **noderef) {
   while ((*noderef)) {
     printf("%d", (*noderef)->getNid(*noderef));
@@ -110,7 +124,10 @@ int main() {
   
   //Works
   addBlock(&(desired_node->bid_head), bid);
+  update_numblocks(&(desired_node));
   addBlock(&(desired_node->bid_head), "world");
+  update_numblocks(&(desired_node));
+  printf("number of blocks in node: %d\n", desired_node->getNumBlocks(desired_node));
 
   //Print nids and bids in blockchain
   printf("Print all nids and bids\n");
