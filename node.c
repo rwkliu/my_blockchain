@@ -13,10 +13,6 @@ void setNid(NodePtr this, int nid) {
   this->nid = nid;
 }
 
-void setBid(NodePtr this, char *bid) {
-  this->bid = bid;
-}
-
 //Allocate memory for Node struct
 NodePtr nodeConstructor(void) {
   NodePtr node = malloc(sizeof(Node));
@@ -38,6 +34,5 @@ int nodeInitialize(NodePtr node) {
   node->getNid = getNid;
   node->getBid = getBid;
   node->setNid = setNid;
-  node->setBid = setBid;
   return 0;
 }
