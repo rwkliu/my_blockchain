@@ -9,6 +9,17 @@ void setNid(NodePtr this, int nid) {
   this->nid = nid;
 }
 
+//Return a pointer to the first Node with the input nid
+NodePtr findNode(NodePtr node_head, int nid) {
+  while(node_head) {
+    if (node_head->getNid(node_head) == nid) {
+      return node_head;
+    }
+    node_head = node_head->next_node;
+  }
+  return NULL;
+}
+
 //Allocate memory for Node struct
 NodePtr nodeConstructor(void) {
   NodePtr node = malloc(sizeof(Node));
