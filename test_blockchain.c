@@ -143,15 +143,15 @@ int main() {
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
   //Print nid of all nodes in blockchain
-  // printf("ls\n");
-  // list_nids(&(blockchain->blockchain_head));
+  printf("ls\n");
+  ls_blockchain(&(blockchain->blockchain_head), 0);
 
   //Remove a node and print the remaining nodes
-  // nid = 13;
-  // printf("Remove node %d\n", nid);
-  // remove_nodes(blockchain, nid);
-  // list_nids(&(blockchain->blockchain_head));
-  // prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
+  nid = 13;
+  printf("Remove node %d\n", nid);
+  remove_nodes(blockchain, nid);
+  ls_blockchain(&(blockchain->blockchain_head), 0);
+  prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
   char *bid = "223";
   // NodePtr desired_node = findNode(blockchain->blockchain_head, 15);
