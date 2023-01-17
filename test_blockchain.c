@@ -34,6 +34,8 @@ void remove_nodes(BlockchainPtr blockchain, int nid) {
     *noderef = (*noderef)->next_node;
     nodeDestructor(old);
   }
+
+  blockchain->setNumNodes(blockchain, blockchain->getNumNodes(blockchain) - 1);
 }
 
 void update_numblocks(Node **noderef) {
@@ -76,6 +78,43 @@ void ls_blockchain(Node **noderef, int lflag) {
   }
 }
 
+//Free all allocated memory (blocks, nodes, blockchain)
+void free_blockchain(BlockchainPtr blockchain) {
+  NodePtr current_node = blockchain->blockchain_head;
+  NodePtr free_node = current_node;
+  // printf("current_node nid: %d\n", blockchain->blockchain_head->nid);
+  BlockPtr current_block = current_node->bid_head;
+  BlockPtr free_block = current_block;
+  // printf("current block bid: %s\n", (*current_block)->getBid(*current_block));
+
+  printf("Before while loops\n");
+  while(current_node) {
+    printf("node while entered\n");
+    if (current_block != NULL) {
+      while (current_block) {
+        current_block = current_block->next_block;
+        printf("block while entered\n");
+        blockDestructor(free_block);
+        printf("block3 while entered\n");
+        free_block = current_block;
+      }
+    }
+    printf("After if statement\n");
+    current_node = current_node->next_node;
+    printf("After setting current_node\n");
+    if (current_node != NULL) {
+      current_block = current_node->bid_head;
+    }
+    printf("After setting current_block\n");
+    nodeDestructor(free_node);
+    printf("After freeing free_node\n");
+    free_node = current_node;
+    printf("After setting free_node\n");
+  }
+  printf("After while loops\n");
+  blockchainDestructor(blockchain);
+}
+
 void prompt(int num, char sync) {
   print_prompt(num, sync);
   printf("\n");
@@ -103,14 +142,15 @@ int main() {
   prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
   //Print nid of all nodes in blockchain
-  printf("ls\n");
-  list_nids(&(blockchain->blockchain_head));
+  // printf("ls\n");
+  // list_nids(&(blockchain->blockchain_head));
 
   //Remove a node and print the remaining nodes
-  nid = 13;
-  printf("Remove node %d\n", nid);
-  remove_nodes(blockchain, nid);
-  list_nids(&(blockchain->blockchain_head));
+  // nid = 13;
+  // printf("Remove node %d\n", nid);
+  // remove_nodes(blockchain, nid);
+  // list_nids(&(blockchain->blockchain_head));
+  // prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
   char *bid = "223";
   NodePtr desired_node = findNode(blockchain->blockchain_head, 15);
@@ -125,17 +165,18 @@ int main() {
   //Works
   addBlock(&(desired_node->bid_head), bid);
   update_numblocks(&(desired_node));
-  addBlock(&(desired_node->bid_head), "world");
-  update_numblocks(&(desired_node));
-  printf("number of blocks in node: %d\n", desired_node->getNumBlocks(desired_node));
+  // addBlock(&(desired_node->bid_head), "world");
+  // update_numblocks(&(desired_node));
+  // printf("number of blocks in node: %d\n", desired_node->getNumBlocks(desired_node));
 
   //Print nids and bids in blockchain
-  printf("Print all nids and bids\n");
-  ls_blockchain(&(blockchain->blockchain_head), 1);
+  // printf("Print all nids and bids\n");
+  // ls_blockchain(&(blockchain->blockchain_head), 1);
+  // printf("ls blocks again\n");
+  // ls_blockchain(&(blockchain->blockchain_head), 1);
 
-  //Free all allocated memory
-  nodeDestructor(blockchain->blockchain_head);
-  blockchainDestructor(blockchain);
-
+  printf("Free allocated memory\n");
+  free_blockchain(blockchain);
+  
   return 0;
 }

@@ -46,7 +46,7 @@ BlockPtr blockConstructor(void) {
 
 //Free allocated memory for Block struct
 int blockDestructor(BlockPtr block) {
-  free(block->bid);
+  // free(block->bid);
   free(block);
   return 0;
 }
