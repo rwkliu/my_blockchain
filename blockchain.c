@@ -5,18 +5,6 @@
 
 #include "blockchain.h"
 
-int getNumNodes(BlockchainPtr this) {
-  return this->num_nodes;
-}
-
-char getSyncState(BlockchainPtr this) {
-  return this->sync_state;
-}
-
-void setNumNodes(BlockchainPtr this, int num) {
-  this->num_nodes = num;
-}
-
 void setSyncState(BlockchainPtr this, sync_state state) {
   switch(state) {
     case SYNCED: {
@@ -38,22 +26,11 @@ BlockchainPtr blockchainConstructor(BlockchainPtr blockchain) {
   return blockchain;
 }
 
-//Free allocated memory for Blockchain struct
-int blockchainDestructor(BlockchainPtr blockchain) {
-  free(blockchain);
-  return 0;
-}
-
 //Initialize Blockchain members
 int blockchainInitialize(BlockchainPtr blockchain) {
   blockchain->num_nodes = 0;
   blockchain->sync_state = 's';
   blockchain->blockchain_head = NULL;
-  blockchain->latest_node = blockchain->blockchain_head;
-  blockchain->getNumNodes = getNumNodes;
-  blockchain->getSyncState = getSyncState;
-  blockchain->setNumNodes = setNumNodes;
-  blockchain->setSyncState = setSyncState;
   return 0;
 }
 

@@ -2,18 +2,10 @@
 #include <string.h>
 #include "block.h"
 
-char *getBid(BlockPtr this) {
-  return this->bid;
-}
-
-void setBid(BlockPtr this, char *bid) {
-  this->bid = bid;
-}
-
 void addBlock(BlockPtr *block_head, char *bid) {
   BlockPtr new_block = blockConstructor();
   BlockPtr *headref = block_head;
-  new_block->setBid(new_block, bid);
+  new_block->bid = bid;
 
   while((*headref)) {
     headref = &((*headref)->next_block);
@@ -26,7 +18,7 @@ void addBlock(BlockPtr *block_head, char *bid) {
 void removeBlock(BlockPtr *block_head, char *bid) {
   BlockPtr *headref = block_head;
 
-  while ((*headref) && strcmp((*headref)->getBid(*headref), bid) != 0) {
+  while ((*headref) && strcmp((*headref)->bid, bid) != 0) {
     headref = &((*headref)->next_block);
   }
 
@@ -55,8 +47,6 @@ int blockDestructor(BlockPtr block) {
 int blockInitialize(BlockPtr block) {
   block->bid = NULL;
   block->next_block = NULL;
-  block->getBid = getBid;
-  block->setBid = setBid;
   block->addBlock = addBlock;
   block->removeBlock = removeBlock;
   

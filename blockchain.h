@@ -13,12 +13,7 @@ typedef struct s_blockchain {
   int num_nodes;
   char sync_state;
   NodePtr blockchain_head;
-  NodePtr latest_node;
 
-  int (*getNumNodes)(struct s_blockchain *);
-  char (*getSyncState)(struct s_blockchain *);
-  void (*setNumNodes)(struct s_blockchain *, int);
-  void (*setSyncState)(struct s_blockchain *, sync_state);
 } Blockchain;
 #endif
 
@@ -32,4 +27,3 @@ int blockchainDestructor(BlockchainPtr blockchain);
 
 //Initialize Blockchain members
 int blockchainInitialize(BlockchainPtr blockchain);
-
