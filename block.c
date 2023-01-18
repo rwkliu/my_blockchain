@@ -2,9 +2,9 @@
 #include <string.h>
 #include "block.h"
 
-void addBlock(BlockPtr *block_head, char *bid) {
+void addBlock(Block **block_head, char *bid) {
   BlockPtr new_block = blockConstructor();
-  BlockPtr *headref = block_head;
+  Block **headref = block_head;
   new_block->bid = bid;
 
   while((*headref)) {
@@ -15,8 +15,8 @@ void addBlock(BlockPtr *block_head, char *bid) {
   *headref = new_block;
 }
 
-void removeBlock(BlockPtr *block_head, char *bid) {
-  BlockPtr *headref = block_head;
+void removeBlock(Block **block_head, char *bid) {
+  Block **headref = block_head;
 
   while ((*headref) && strcmp((*headref)->bid, bid) != 0) {
     headref = &((*headref)->next_block);
