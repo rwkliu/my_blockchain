@@ -22,8 +22,5 @@ typedef Blockchain *BlockchainPtr;
 //Allocate memory for Blockchain struct
 BlockchainPtr blockchainConstructor(BlockchainPtr blockchain);
 
-//Free allocated memory for Blockchain struct
-int blockchainDestructor(BlockchainPtr blockchain);
-
 //Initialize Blockchain members
 int blockchainInitialize(BlockchainPtr blockchain);

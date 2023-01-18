@@ -135,8 +135,6 @@ int main() {
 
   // char *bid = "223";
   // printf("add bid %s to node\n", bid);
-  
-  // //Works
   // addBlock(&blockchain->blockchain_head->bid_head, bid);
 
   //Print nids and bids in blockchain
