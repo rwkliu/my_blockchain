@@ -25,7 +25,7 @@ typedef struct s_blockchain {
 typedef Blockchain *BlockchainPtr;
 
 //Allocate memory for Blockchain struct
-BlockchainPtr blockchainConstructor(void);
+BlockchainPtr blockchainConstructor(BlockchainPtr blockchain);
 
 //Free allocated memory for Blockchain struct
 int blockchainDestructor(BlockchainPtr blockchain);
