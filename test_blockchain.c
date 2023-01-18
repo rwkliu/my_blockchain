@@ -104,51 +104,51 @@ void prompt(int num, char sync) {
 }
 
 int main() {
-  BlockchainPtr blockchain = blockchainConstructor();
+  Blockchain blockchain;
+  blockchainConstructor(&blockchain);
 
-  prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
+  prompt(blockchain.getNumNodes(&blockchain), blockchain.getSyncState(&blockchain));
   
-  //Add nodes
+  // //Add nodes
   int nid = 12;
   printf("first add node\n");
-  add_node(blockchain, nid);
-  prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
+  add_node(&blockchain, nid);
+  prompt(blockchain.getNumNodes(&blockchain), blockchain.getSyncState(&blockchain));
 
   nid = 13;
   printf("second add node\n");
-  add_node(blockchain, nid);
-  prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
+  add_node(&blockchain, nid);
+  prompt(blockchain.getNumNodes(&blockchain), blockchain.getSyncState(&blockchain));
   
   nid = 15;
   printf("third add node\n");
-  add_node(blockchain, nid);
-  prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
+  add_node(&blockchain, nid);
 
-  //Print nid of all nodes in blockchain
+  // //Print nid of all nodes in blockchain
   printf("ls\n");
-  ls_bids_nids(&(blockchain->blockchain_head), 0);
+  ls_bids_nids(&(blockchain.blockchain_head), 0);
 
-  //Remove a node and print the remaining nodes
-  nid = 13;
-  printf("Remove node %d\n", nid);
-  remove_nodes(blockchain, nid);
-  ls_bids_nids(&(blockchain->blockchain_head), 0);
-  prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
+  // //Remove a node and print the remaining nodes
+  // nid = 13;
+  // printf("Remove node %d\n", nid);
+  // remove_nodes(blockchain, nid);
+  // ls_bids_nids(&(blockchain->blockchain_head), 0);
+  // prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
 
-  char *bid = "223";
-  printf("add bid %s to node\n", bid);
+  // char *bid = "223";
+  // printf("add bid %s to node\n", bid);
   
-  //Works
-  addBlock(&blockchain->blockchain_head->bid_head, bid);
+  // //Works
+  // addBlock(&blockchain->blockchain_head->bid_head, bid);
 
-  //Print nids and bids in blockchain
-  printf("Print all nids and bids\n");
-  ls_bids_nids(&(blockchain->blockchain_head), 1);
-  printf("ls blocks again\n");
-  ls_bids_nids(&(blockchain->blockchain_head), 1);
+  // //Print nids and bids in blockchain
+  // printf("Print all nids and bids\n");
+  // ls_bids_nids(&(blockchain->blockchain_head), 1);
+  // printf("ls blocks again\n");
+  // ls_bids_nids(&(blockchain->blockchain_head), 1);
 
-  printf("Free allocated memory\n");
-  free_blockchain(blockchain);
+  // printf("Free allocated memory\n");
+  // free_blockchain(blockchain);
   
   return 0;
 }

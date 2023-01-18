@@ -33,8 +33,7 @@ void setSyncState(BlockchainPtr this, sync_state state) {
 }
 
 //Allocate memory for Blockchain struct
-BlockchainPtr blockchainConstructor(void) {
-  BlockchainPtr blockchain = malloc(sizeof(Blockchain));
+BlockchainPtr blockchainConstructor(BlockchainPtr blockchain) {
   blockchainInitialize(blockchain);
   return blockchain;
 }
