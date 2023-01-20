@@ -13,19 +13,17 @@ void update_num_nodes(BlockchainPtr blockchain) {
   blockchain->num_nodes += 1;
 }
 
-void add_node(BlockchainPtr blockchain, int nid) {
+void add_node(Node **noderef, int nid) {
+  Node **tracer = noderef;
   NodePtr new_node = nodeConstructor();
-  Node *headref = blockchain->blockchain_head;
   new_node->nid = nid;
 
-  while (headref) {
-    headref = headref->next_node;
+  while(*tracer) {
+    tracer = &(*tracer)->next_node;
   }
 
-  new_node->next_node =headref;
-  headref= new_node;
-
-  update_num_nodes(blockchain);
+  new_node->next_node = *tracer;
+  *tracer = new_node;
 }
 
 void remove_nodes(BlockchainPtr blockchain, int nid) {
@@ -129,17 +127,17 @@ int main() {
   //Add nodes
   int nid = 12;
   printf("first add node\n");
-  add_node(&blockchain, nid);
+  add_node(&(blockchain.blockchain_head), nid);
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   nid = 13;
   printf("second add node\n");
-  // add_node(&blockchain, nid);
+  add_node(&(blockchain.blockchain_head), nid);
   prompt(blockchain.num_nodes, blockchain.sync_state);
   
   nid = 15;
   printf("third add node\n");
-  // add_node(&blockchain, nid);
+  add_node(&(blockchain.blockchain_head), nid);
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   //Print nid of all nodes in blockchain
@@ -153,9 +151,9 @@ int main() {
   // ls_bids_nids(&(blockchain.blockchain_head), NO_BID);
   // prompt(blockchain.num_nodes, blockchain.sync_state);
 
-  char *bid = "223";
-  printf("add bid %s to node\n", bid);
-  add_block_to_node(&blockchain, bid, 12);
+  // char *bid = "223";
+  // printf("add bid %s to node\n", bid);
+  // add_block_to_node(&blockchain, bid, 12);
   // addBlock(&(blockchain.blockchain_head->bid_head), bid);
 
   //Print nids and bids in blockchain
