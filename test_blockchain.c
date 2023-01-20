@@ -58,7 +58,6 @@ void update_numblocks(Node **Noderef) {
 void add_block_to_node(Node **noderef, char *bid, int nid) {
   Node **tracer = noderef;
   while(*tracer) {
-    printf("while loop entered\n");
     if ((*tracer)->nid == nid) {
       addBlock(&(*tracer)->bid_head, bid);
       update_numblocks(&(*tracer));
@@ -71,21 +70,29 @@ void add_block_to_node(Node **noderef, char *bid, int nid) {
 int is_synchronized(Node **noderef) {
   Block *genesis_blocks = (*noderef)->bid_head;
   Node **tracer = &(*noderef)->next_node; 
-  
   while(*tracer) {
     if ((*tracer)->num_blocks != (*noderef)->num_blocks) {
       return 0;
     }
+    BlockPtr current_block = (*tracer)->bid_head;
+    while (current_block) {
+      if (strcmp(current_block->bid, (*genesis_blocks).bid) != 0) {
+        return 0;
+      }
+      current_block = (*tracer)->bid_head->next_block;
+      genesis_blocks = (*noderef)->bid_head->next_block;
+    }
+    tracer = &(*tracer)->next_node;
   }
 
   //print the genesis block bids
-  if (genesis_blocks != NULL) {
-    while(genesis_blocks) {
-      printf("bid in the genesis block: %s\n", genesis_blocks->bid);
-      genesis_blocks = genesis_blocks->next_block;
-    }
-  }
-  return 0;
+  //if (genesis_blocks != NULL) {
+  //  while(genesis_blocks) {
+  //    printf("bid in the genesis block: %s\n", genesis_blocks->bid);
+  //    genesis_blocks = genesis_blocks->next_block;
+  //  }
+  //}
+  return 1;
 }
 
 //Check if all nodes contain the same blocks and update the sync state
@@ -157,16 +164,19 @@ int main() {
   int nid = 12;
   printf("first add node\n");
   add_node(&(blockchain), &(blockchain.blockchain_head), nid);
+  update_sync_state(&(blockchain), &(blockchain.blockchain_head));
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   nid = 13;
   printf("second add node\n");
   add_node(&(blockchain), &(blockchain.blockchain_head), nid);
+  update_sync_state(&(blockchain), &(blockchain.blockchain_head));
   prompt(blockchain.num_nodes, blockchain.sync_state);
   
   nid = 15;
   printf("third add node\n");
   add_node(&(blockchain), &(blockchain.blockchain_head), nid);
+  update_sync_state(&(blockchain), &(blockchain.blockchain_head));
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   //Print nid of all nodes in blockchain
@@ -180,12 +190,14 @@ int main() {
   ls_bids_nids(&(blockchain.blockchain_head), NO_BID);
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
+  //Add a block 
   printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
   char *bid = "223";
   printf("add bid %s to node\n", bid);
   add_block_to_node(&(blockchain.blockchain_head), bid, 12);
+  update_sync_state(&(blockchain), &(blockchain.blockchain_head));
+  prompt(blockchain.num_nodes, blockchain.sync_state);
   printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
-  //addBlock(&(blockchain.blockchain_head->bid_head), bid);
 
   //Print nids and bids in blockchain
   printf("Print all nids and bids\n");
@@ -196,8 +208,5 @@ int main() {
   printf("Free allocated memory\n");
   // free_blockchain(&blockchain);
 
-  update_sync_state(&(blockchain), &(blockchain.blockchain_head));
-  prompt(blockchain.num_nodes, blockchain.sync_state);
-  
   return 0;
 }
