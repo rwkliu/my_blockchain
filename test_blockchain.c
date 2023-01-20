@@ -5,15 +5,23 @@
 #include "node.h"
 #include "block.h"
 #include "helpers.h"
+#include "arguments_blockchain.h"
 
 #define PRINT_BID 1
 #define NO_BID 0
 
-void update_num_nodes(BlockchainPtr blockchain) {
-  blockchain->num_nodes += 1;
+void update_num_nodes(BlockchainPtr blockchain, commands command) {
+  switch (command) {
+    case ADD:
+      blockchain->num_nodes += 1;
+      break;
+    case RM:
+      blockchain->num_nodes -= 1;
+      break;
+  }
 }
 
-void add_node(Node **noderef, int nid) {
+void add_node(BlockchainPtr blockchain, Node **noderef, int nid) {
   Node **tracer = noderef;
   NodePtr new_node = nodeConstructor();
   new_node->nid = nid;
@@ -24,37 +32,38 @@ void add_node(Node **noderef, int nid) {
 
   new_node->next_node = *tracer;
   *tracer = new_node;
+
+  update_num_nodes(blockchain, ADD);
 }
 
-void remove_nodes(BlockchainPtr blockchain, int nid) {
-  Node **noderef = &(blockchain->blockchain_head);
-  
-  while ((*noderef) && (*noderef)->nid != nid) {
-    noderef = &((*noderef)->next_node);
+void remove_nodes(BlockchainPtr blockchain, Node **noderef, int nid) {
+  Node **tracer = noderef; 
+  while ((*tracer) && (*tracer)->nid != nid) {
+    tracer = &((*tracer)->next_node);
   }
 
-  if (*noderef != NULL) {
-    NodePtr to_remove = *noderef;
-    *noderef = (*noderef)->next_node;
+  if (*tracer != NULL) {
+    NodePtr to_remove = *tracer;
+    *tracer = (*tracer)->next_node;
     nodeDestructor(to_remove);
   }
 
-  blockchain->num_nodes -= 1;
+  update_num_nodes(blockchain, RM);
 }
 
 void update_numblocks(Node **blockref) {
   (*blockref)->num_blocks += 1;
 }
 
-void add_block_to_node(BlockchainPtr blockchain, char *bid, int nid) {
-  Node **noderef = &(blockchain->blockchain_head);
-  while(*noderef) {
+void add_block_to_node(Node **noderef, char *bid, int nid) {
+  Node **tracer = noderef;
+  while(*tracer) {
     printf("while loop entered\n");
-    if ((*noderef)->nid == nid) {
-      addBlock(&(*noderef)->bid_head, bid);
-      update_numblocks(&(*noderef));
+    if ((*tracer)->nid == nid) {
+      addBlock(&(*tracer)->bid_head, bid);
+      update_numblocks(&(*tracer));
     }
-    *noderef = (*noderef)->next_node;
+    tracer = &(*tracer)->next_node;
   }
 }
 
@@ -127,17 +136,17 @@ int main() {
   //Add nodes
   int nid = 12;
   printf("first add node\n");
-  add_node(&(blockchain.blockchain_head), nid);
+  add_node(&(blockchain), &(blockchain.blockchain_head), nid);
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   nid = 13;
   printf("second add node\n");
-  add_node(&(blockchain.blockchain_head), nid);
+  add_node(&(blockchain), &(blockchain.blockchain_head), nid);
   prompt(blockchain.num_nodes, blockchain.sync_state);
   
   nid = 15;
   printf("third add node\n");
-  add_node(&(blockchain.blockchain_head), nid);
+  add_node(&(blockchain), &(blockchain.blockchain_head), nid);
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   //Print nid of all nodes in blockchain
@@ -145,16 +154,18 @@ int main() {
   ls_bids_nids(&(blockchain.blockchain_head), NO_BID);
 
   //Remove a node and print the remaining nodes
-  // nid = 13;
-  // printf("Remove node %d\n", nid);
-  // remove_nodes(&blockchain, nid);
-  // ls_bids_nids(&(blockchain.blockchain_head), NO_BID);
-  // prompt(blockchain.num_nodes, blockchain.sync_state);
+  nid = 13;
+  printf("Remove node %d\n", nid);
+  remove_nodes(&blockchain,&(blockchain.blockchain_head), nid);
+  ls_bids_nids(&(blockchain.blockchain_head), NO_BID);
+  prompt(blockchain.num_nodes, blockchain.sync_state);
 
-  // char *bid = "223";
-  // printf("add bid %s to node\n", bid);
-  // add_block_to_node(&blockchain, bid, 12);
-  // addBlock(&(blockchain.blockchain_head->bid_head), bid);
+  printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
+  char *bid = "223";
+  printf("add bid %s to node\n", bid);
+  add_block_to_node(&(blockchain.blockchain_head), bid, 12);
+  printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
+  //addBlock(&(blockchain.blockchain_head->bid_head), bid);
 
   //Print nids and bids in blockchain
   printf("Print all nids and bids\n");
