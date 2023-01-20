@@ -51,8 +51,8 @@ void remove_nodes(BlockchainPtr blockchain, Node **noderef, int nid) {
   update_num_nodes(blockchain, RM);
 }
 
-void update_numblocks(Node **blockref) {
-  (*blockref)->num_blocks += 1;
+void update_numblocks(Node **Noderef) {
+  (*Noderef)->num_blocks += 1;
 }
 
 void add_block_to_node(Node **noderef, char *bid, int nid) {
@@ -67,14 +67,34 @@ void add_block_to_node(Node **noderef, char *bid, int nid) {
   }
 }
 
-//Check all nodes for the same blocks as the first node
+//Check all nodes for the same blocks as the first node (genesis blocks)
 int is_synchronized(Node **noderef) {
+  Block *genesis_blocks = (*noderef)->bid_head;
+  Node **tracer = &(*noderef)->next_node; 
+  
+  while(*tracer) {
+    if ((*tracer)->num_blocks != (*noderef)->num_blocks) {
+      return 0;
+    }
+  }
 
+  //print the genesis block bids
+  if (genesis_blocks != NULL) {
+    while(genesis_blocks) {
+      printf("bid in the genesis block: %s\n", genesis_blocks->bid);
+      genesis_blocks = genesis_blocks->next_block;
+    }
+  }
+  return 0;
 }
 
 //Check if all nodes contain the same blocks and update the sync state
-void update_sync_state(BlockchainPtr blockchain) {
-
+void update_sync_state(BlockchainPtr blockchain, Node **noderef) {
+  if (is_synchronized(noderef)) {
+    blockchain->sync_state = SYNCED;
+  } else {
+    blockchain->sync_state = NOT_SYNCED;
+  }
 }
 
 void list_bids(Block **block_head) {
@@ -175,6 +195,9 @@ int main() {
 
   printf("Free allocated memory\n");
   // free_blockchain(&blockchain);
+
+  update_sync_state(&(blockchain), &(blockchain.blockchain_head));
+  prompt(blockchain.num_nodes, blockchain.sync_state);
   
   return 0;
 }
