@@ -1,9 +1,12 @@
 #include "node.h"
 
+#define SYNCED 's'
+#define NOT_SYNCED '-'
+
 #ifndef ENUM_SYNC_STATE
 #define ENUM_SYNC_STATE
 typedef enum e_sync_state {
-  SYNCED, NOT_SYNCED
+  IS_SYNCED, IS_NOT_SYNCED
 } sync_state;
 #endif
 
