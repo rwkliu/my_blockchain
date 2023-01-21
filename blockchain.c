@@ -121,6 +121,7 @@ void list_bids(Block **block_head) {
   }
 }
 
+//Print all nids and their bids
 void lsBidsNids(Node **node_head, int lflag) {
   Node **noderef = node_head;
   while ((*noderef)) {
@@ -134,3 +135,26 @@ void lsBidsNids(Node **node_head, int lflag) {
   }
 }
 
+//Free all allocated memory in blockchain (blocks, nodes)
+void free_blockchain(BlockchainPtr blockchain) {
+  NodePtr current_node = blockchain->blockchain_head;
+  NodePtr free_node = current_node;
+  BlockPtr current_block = current_node->bid_head;
+  BlockPtr free_block = current_block;
+
+  while(current_node) {
+    if (current_block != NULL) {
+      while (current_block) {
+        current_block = current_block->next_block;
+        blockDestructor(free_block);
+        free_block = current_block;
+      }
+    }
+    current_node = current_node->next_node;
+    if (current_node != NULL) {
+      current_block = current_node->bid_head;
+    }
+    nodeDestructor(free_node);
+    free_node = current_node;
+  }
+}
