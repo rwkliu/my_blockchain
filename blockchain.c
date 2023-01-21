@@ -143,25 +143,19 @@ void update_sync_state(BlockchainPtr blockchain, Node **noderef) {
 
 //Update the num_nodes variable
 void update_num_nodes(BlockchainPtr blockchain, commands command) {
-  switch (command) {
-    case ADD:
-      blockchain->num_nodes += 1;
-      break;
-    case RM:
-      blockchain->num_nodes -= 1;
-      break;
+  if (command == ADD) {
+    blockchain->num_nodes += 1;
+  } else if (command == RM) {
+    blockchain->num_nodes -= 1;
   }
 }
 
 //Update the num_blocks variable
 void update_numblocks(Node **Noderef, commands command) {
-  switch (command) {
-    case ADD:
-      (*Noderef)->num_blocks += 1;
-      break;
-    case RM:
-      (*Noderef)->num_blocks -= 1;
-      break;
+  if (command == ADD) {
+    (*Noderef)->num_blocks += 1;
+  } else if (command == RM) {
+    (*Noderef)->num_blocks -= 1;
   }
 }
 
@@ -174,7 +168,6 @@ void free_blockchain(BlockchainPtr blockchain) {
   NodePtr free_node = current_node;
 
   BlockPtr current_block = current_node->bid_head;
-  BlockPtr free_block = current_block;
 
   while(current_node) {
     printf("outer while loop entered\n");
