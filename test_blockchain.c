@@ -198,11 +198,16 @@ int main() {
   update_sync_state(&(blockchain), &(blockchain.blockchain_head));
   prompt(blockchain.num_nodes, blockchain.sync_state);
   printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
+  add_block_to_node(&(blockchain.blockchain_head), bid, 15);
+  update_sync_state(&(blockchain), &(blockchain.blockchain_head));
+  prompt(blockchain.num_nodes, blockchain.sync_state);
+  printf("number of blocks in nid 15: %d\n", blockchain.blockchain_head->next_node->num_blocks);
 
-  //Remove a block
+  //Remove block with same bid in all nodes
   printf("number of blocks in nid 12 before removal: %d\n", blockchain.blockchain_head->num_blocks);
   remove_block_from_nodes(&(blockchain.blockchain_head), bid);
   printf("number of blocks in nid 12 after removal: %d\n", blockchain.blockchain_head->num_blocks);
+  printf("number of blocks in nid 15 after removal: %d\n", blockchain.blockchain_head->next_node->num_blocks);
 
   //Print nids and bids in blockchain
   printf("Print all nids and bids\n");
