@@ -14,7 +14,7 @@ BlockchainPtr blockchainConstructor(BlockchainPtr blockchain) {
 //Initialize Blockchain members
 int blockchainInitialize(BlockchainPtr blockchain) {
   blockchain->num_nodes = 0;
-  blockchain->sync_state = 's';
+  blockchain->sync_state = SYNCED;
   blockchain->blockchain_head = NULL;
   blockchain->addNode = addNode;
   blockchain->removeNode = removeNode;
@@ -167,12 +167,17 @@ void update_numblocks(Node **Noderef, commands command) {
 
 //Free all allocated memory in blockchain (blocks, nodes)
 void free_blockchain(BlockchainPtr blockchain) {
+  if (blockchain->blockchain_head == NULL) {
+    return;
+  }
   NodePtr current_node = blockchain->blockchain_head;
   NodePtr free_node = current_node;
+
   BlockPtr current_block = current_node->bid_head;
   BlockPtr free_block = current_block;
 
   while(current_node) {
+    printf("outer while loop entered\n");
     if (current_block != NULL) {
       remove_all_blocks(&current_block);
     }
