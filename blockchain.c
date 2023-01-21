@@ -53,7 +53,7 @@ void removeNode(BlockchainPtr blockchain, Node **noderef, int nid) {
     *tracer = (*tracer)->next_node;
     nodeDestructor(to_remove);
   } else {
-    printf("Error message here: nid doesn't exist\n");
+    printf("Error: node doesn't exist\n");
   }
 
   update_num_nodes(blockchain, RM);
@@ -62,15 +62,18 @@ void removeNode(BlockchainPtr blockchain, Node **noderef, int nid) {
 //Add block to node with specified nid
 void addBlockToNode(BlockchainPtr blockchain, Node **noderef, char *bid, int nid) {
   Node **tracer = noderef;
-  while (*tracer) {
-    if ((*tracer)->nid == nid) {
-      addBlock(&(*tracer)->bid_head, bid);
-      update_numblocks(&(*tracer), ADD);
-    }
+
+  while ((*tracer) && (*tracer)->nid != nid) {
     tracer = &(*tracer)->next_node;
   }
-  update_sync_state(blockchain, noderef);
-  printf("OK\n");
+  if (*tracer == NULL) {
+    printf("Node doesn't exist\n");
+  } else if ((*tracer)->nid == nid) {
+    addBlock(&(*tracer)->bid_head, bid);
+    update_numblocks(&(*tracer), ADD);
+    update_sync_state(blockchain, noderef);
+    printf("OK\n");
+  }
 }
 
 //Remove blocks with specified nid
@@ -80,13 +83,15 @@ void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid, in
   while ((*tracer) && (*tracer)->nid != nid) {
     tracer = &(*tracer)->next_node;
   }
-
-  if (removeBlock(&(*tracer)->bid_head, bid) == 1) {
-    printf("if statement entered\n");
+  if (*tracer == NULL) {
+    printf("Error: Node doesn't exist\n");
+  } else if (removeBlock(&(*tracer)->bid_head, bid) == 1) {
     update_numblocks(&(*tracer), RM);
+    update_sync_state(blockchain, noderef);
+    printf("OK\n");
+  } else {
+    printf("Error: Block doesn't exist\n");
   }
-  update_sync_state(blockchain, noderef);
-  printf("OK\n");
 }
 
 void list_bids(Block **block_head) {

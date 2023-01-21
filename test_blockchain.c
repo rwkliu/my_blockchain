@@ -49,10 +49,12 @@ int main() {
   nid = 13;
   printf("Remove node %d\n", nid);
   blockchain.removeNode(&blockchain,&(blockchain.blockchain_head), nid);
+  printf("Remove node 12\n");
+  blockchain.removeNode(&blockchain,&(blockchain.blockchain_head), 12);
   blockchain.ls(&(blockchain.blockchain_head), NO_BID);
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
-  //Add a block 
+  //Add blocks
   char *bid = "223";
   printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
   printf("add bid %s to node 12\n", bid);
@@ -61,14 +63,14 @@ int main() {
   printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
   printf("Add bid %s to node 15\n", bid);
   blockchain.addBlock(&blockchain, &(blockchain.blockchain_head), bid, 15);
-  printf("number of blocks in nid 15: %d\n", blockchain.blockchain_head->next_node->num_blocks);
+  //printf("number of blocks in nid 15: %d\n", blockchain.blockchain_head->next_node->num_blocks);
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   //Remove block with same bid in all nodes
-  //printf("number of blocks in nid 12 before removal: %d\n", blockchain.blockchain_head->num_blocks);
+  printf("number of blocks in nid 12 before removal: %d\n", blockchain.blockchain_head->num_blocks);
   blockchain.removeBlock(&blockchain, &(blockchain.blockchain_head), bid, 12);
   printf("number of blocks in nid 12 after removal: %d\n", blockchain.blockchain_head->num_blocks);
-  printf("number of blocks in nid 15 after removal: %d\n", blockchain.blockchain_head->next_node->num_blocks);
+  //printf("number of blocks in nid 15 after removal: %d\n", blockchain.blockchain_head->next_node->num_blocks);
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   //Print nids and bids in blockchain
