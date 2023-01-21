@@ -7,50 +7,6 @@
 #include "helpers.h"
 #include "arguments_blockchain.h"
 
-#define PRINT_BID 1
-#define NO_BID 0
-
-void update_num_nodes(BlockchainPtr blockchain, commands command) {
-  switch (command) {
-    case ADD:
-      blockchain->num_nodes += 1;
-      break;
-    case RM:
-      blockchain->num_nodes -= 1;
-      break;
-  }
-}
-
-void add_node(BlockchainPtr blockchain, Node **noderef, int nid) {
-  Node **tracer = noderef;
-  NodePtr new_node = nodeConstructor();
-  new_node->nid = nid;
-
-  while(*tracer) {
-    tracer = &(*tracer)->next_node;
-  }
-
-  new_node->next_node = *tracer;
-  *tracer = new_node;
-
-  update_num_nodes(blockchain, ADD);
-}
-
-void remove_node(BlockchainPtr blockchain, Node **noderef, int nid) {
-  Node **tracer = noderef; 
-  while ((*tracer) && (*tracer)->nid != nid) {
-    tracer = &((*tracer)->next_node);
-  }
-
-  if (*tracer != NULL) {
-    NodePtr to_remove = *tracer;
-    *tracer = (*tracer)->next_node;
-    nodeDestructor(to_remove);
-  }
-
-  update_num_nodes(blockchain, RM);
-}
-
 //Check all nodes for the same blocks as the first node (genesis blocks)
 int is_synchronized(Node **noderef) {
   Block *genesis_blocks = (*noderef)->bid_head;
@@ -199,9 +155,9 @@ int main() {
   prompt(blockchain.num_nodes, blockchain.sync_state);
   printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
   add_block_to_node(&(blockchain.blockchain_head), bid, 15);
+  printf("number of blocks in nid 15: %d\n", blockchain.blockchain_head->next_node->num_blocks);
   update_sync_state(&(blockchain), &(blockchain.blockchain_head));
   prompt(blockchain.num_nodes, blockchain.sync_state);
-  printf("number of blocks in nid 15: %d\n", blockchain.blockchain_head->next_node->num_blocks);
 
   //Remove block with same bid in all nodes
   printf("number of blocks in nid 12 before removal: %d\n", blockchain.blockchain_head->num_blocks);

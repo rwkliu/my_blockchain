@@ -2,6 +2,8 @@
 
 #define SYNCED 's'
 #define NOT_SYNCED '-'
+#define PRINT_BID 1
+#define NO_BID 0
 
 #ifndef ENUM_SYNC_STATE
 #define ENUM_SYNC_STATE
@@ -27,3 +29,10 @@ BlockchainPtr blockchainConstructor(BlockchainPtr blockchain);
 
 //Initialize Blockchain members
 int blockchainInitialize(BlockchainPtr blockchain);
+
+//Add node to blockchain
+void add_node(BlockchainPtr blockchain, Node **noderef, int nid);
+
+void update_num_nodes(BlockchainPtr blockchain, commands command);
+
+void remove_node(BlockchainPtr blockchain, Node **noderef, int nid);
