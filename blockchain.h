@@ -39,9 +39,17 @@ int blockchainInitialize(BlockchainPtr blockchain);
 //Add node to blockchain
 void addNode(BlockchainPtr blockchain, Node **noderef, int nid);
 
-void update_num_nodes(BlockchainPtr blockchain, commands command);
-
 void removeNode(BlockchainPtr blockchain, Node **noderef, int nid);
+
+//Add block to node with specified nid
+void addBlockToNode(BlockchainPtr blockchain, Node **noderef, char *bid, int nid);
+
+//Remove blocks with specified nid from all nodes with that block
+void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid);
+
+//Print all nids and their bids
+void lsBidsNids(Node **node_head, int lflag); 
+
 
 //Check all nodes for the same blocks as the first node (genesis blocks)
 int is_synchronized(Node **noderef);
@@ -49,17 +57,10 @@ int is_synchronized(Node **noderef);
 //Check if all nodes contain the same blocks and update the sync state
 void update_sync_state(BlockchainPtr blockchain, Node **noderef);
 
-//Print all nids and their bids
-void lsBidsNids(Node **node_head, int lflag); 
-
-//Free all allocated memory in blockchain (blocks, nodes)
-void free_blockchain(BlockchainPtr blockchain);
+void update_num_nodes(BlockchainPtr blockchain, commands command);
 
 //Update the num_blocks variable
 void update_numblocks(Node **Noderef, commands command);
 
-//Add block to node with specified nid
-void addBlockToNode(BlockchainPtr blockchain, Node **noderef, char *bid, int nid);
-
-//Remove blocks with specified nid from all nodes with that block
-void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid);
+//Free all allocated memory in blockchain (blocks, nodes)
+void free_blockchain(BlockchainPtr blockchain);
