@@ -21,30 +21,6 @@ void synchronize_nodes(BlockchainPtr blockchain, Node **noderef) {
   }
 }
 
-//Free all allocated memory in blockchain (blocks, nodes)
-void free_blockchain(BlockchainPtr blockchain) {
-  NodePtr current_node = blockchain->blockchain_head;
-  NodePtr free_node = current_node;
-  BlockPtr current_block = current_node->bid_head;
-  BlockPtr free_block = current_block;
-
-  while(current_node) {
-    if (current_block != NULL) {
-      while (current_block) {
-        current_block = current_block->next_block;
-        blockDestructor(free_block);
-        free_block = current_block;
-      }
-    }
-    current_node = current_node->next_node;
-    if (current_node != NULL) {
-      current_block = current_node->bid_head;
-    }
-    nodeDestructor(free_node);
-    free_node = current_node;
-  }
-}
-
 void prompt(int num, char sync) {
   print_prompt(num, sync);
   printf("\n");
@@ -111,8 +87,8 @@ int main() {
 
   //Syncrhonize nodes
   synchronize_nodes(&blockchain, &(blockchain.blockchain_head));
-  //printf("Free allocated memory\n");
-  // free_blockchain(&blockchain);
+  printf("Free allocated memory\n");
+  free_blockchain(&blockchain);
 
   return 0;
 }

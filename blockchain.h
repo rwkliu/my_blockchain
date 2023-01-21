@@ -47,4 +47,8 @@ int is_synchronized(Node **noderef);
 //Check if all nodes contain the same blocks and update the sync state
 void update_sync_state(BlockchainPtr blockchain, Node **noderef);
 
+//Print all nids and their bids
 void lsBidsNids(Node **node_head, int lflag); 
+
+//Free all allocated memory in blockchain (blocks, nodes)
+void free_blockchain(BlockchainPtr blockchain);
