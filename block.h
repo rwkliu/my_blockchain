@@ -19,4 +19,6 @@ int blockDestructor(BlockPtr block);
 int blockInitialize(BlockPtr block);
 
 //Remove block from Block linked list
-void removeBlock(Block **block_head, char *bid);
+int removeBlock(Block **block_head, char *bid);
+
+int remove_all_blocks(Block **block_head);

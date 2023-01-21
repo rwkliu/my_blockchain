@@ -33,6 +33,8 @@ int blockchainInitialize(BlockchainPtr blockchain) {
   blockchain->blockchain_head = NULL;
   blockchain->addNode = addNode;
   blockchain->removeNode = removeNode;
+  blockchain->addBlock = addBlockToNode;
+  blockchain->removeBlock = removeBlockFromNode;
   blockchain->ls = lsBidsNids;
   return 0;
 }
@@ -144,11 +146,7 @@ void free_blockchain(BlockchainPtr blockchain) {
 
   while(current_node) {
     if (current_block != NULL) {
-      while (current_block) {
-        current_block = current_block->next_block;
-        blockDestructor(free_block);
-        free_block = current_block;
-      }
+      remove_all_blocks(&current_block);
     }
     current_node = current_node->next_node;
     if (current_node != NULL) {
@@ -157,4 +155,43 @@ void free_blockchain(BlockchainPtr blockchain) {
     nodeDestructor(free_node);
     free_node = current_node;
   }
+}
+
+//Update the num_blocks variable
+void update_numblocks(Node **Noderef, commands command) {
+  switch (command) {
+    case ADD:
+      (*Noderef)->num_blocks += 1;
+      break;
+    case RM:
+      (*Noderef)->num_blocks -= 1;
+      break;
+  }
+}
+
+//Add block to node with specified nid
+void addBlockToNode(BlockchainPtr blockchain, Node **noderef, char *bid, int nid) {
+  Node **tracer = noderef;
+  while (*tracer) {
+    if ((*tracer)->nid == nid) {
+      addBlock(&(*tracer)->bid_head, bid);
+      update_numblocks(&(*tracer), ADD);
+    }
+    tracer = &(*tracer)->next_node;
+  }
+  update_sync_state(blockchain, noderef);
+}
+
+//Remove blocks with specified nid from all nodes with that block
+void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid) {
+  Node **tracer = noderef;
+
+  while (*tracer) {
+    removeBlock(&(*tracer)->bid_head, bid);
+    if (removeBlock(&(*tracer)->bid_head, bid)) {
+      update_numblocks(&(*tracer), RM);
+    }
+    tracer = &(*tracer)->next_node;
+  }
+  update_sync_state(blockchain, noderef);
 }

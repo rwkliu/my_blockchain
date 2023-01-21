@@ -60,33 +60,32 @@ int main() {
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   //Add a block 
-  printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
   char *bid = "223";
+  printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
   printf("add bid %s to node 12\n", bid);
-  add_block_to_node(&(blockchain.blockchain_head), bid, 12);
-  update_sync_state(&(blockchain), &(blockchain.blockchain_head));
+  blockchain.addBlock(&blockchain, &(blockchain.blockchain_head), bid, 12);
   prompt(blockchain.num_nodes, blockchain.sync_state);
   printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
   printf("Add bid %s to node 15\n", bid);
-  add_block_to_node(&(blockchain.blockchain_head), bid, 15);
+  blockchain.addBlock(&blockchain, &(blockchain.blockchain_head), bid, 15);
   printf("number of blocks in nid 15: %d\n", blockchain.blockchain_head->next_node->num_blocks);
-  update_sync_state(&(blockchain), &(blockchain.blockchain_head));
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   //Remove block with same bid in all nodes
-  printf("number of blocks in nid 12 before removal: %d\n", blockchain.blockchain_head->num_blocks);
-  remove_block_from_nodes(&(blockchain.blockchain_head), bid);
+  //printf("number of blocks in nid 12 before removal: %d\n", blockchain.blockchain_head->num_blocks);
+  blockchain.removeBlock(&blockchain, &(blockchain.blockchain_head), bid);
   printf("number of blocks in nid 12 after removal: %d\n", blockchain.blockchain_head->num_blocks);
   printf("number of blocks in nid 15 after removal: %d\n", blockchain.blockchain_head->next_node->num_blocks);
+  prompt(blockchain.num_nodes, blockchain.sync_state);
 
   //Print nids and bids in blockchain
   printf("Print all nids and bids\n");
-  blockchain.ls(&(blockchain.blockchain_head), NO_BID);
+  blockchain.ls(&(blockchain.blockchain_head), PRINT_BID);
   printf("ls blocks again\n");
-  blockchain.ls(&(blockchain.blockchain_head), NO_BID);
+  blockchain.ls(&(blockchain.blockchain_head), PRINT_BID);
 
   //Syncrhonize nodes
-  synchronize_nodes(&blockchain, &(blockchain.blockchain_head));
+  //synchronize_nodes(&blockchain, &(blockchain.blockchain_head));
   printf("Free allocated memory\n");
   free_blockchain(&blockchain);
 

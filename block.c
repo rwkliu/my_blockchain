@@ -16,7 +16,22 @@ void addBlock(Block **block_head, char *bid) {
   *headref = new_block;
 }
 
-void removeBlock(Block **block_head, char *bid) {
+int remove_all_blocks(Block **block_head) {
+  Block **headref = block_head;
+
+  while ((*headref)) {
+    if (*headref != NULL) {
+      BlockPtr to_delete = *headref;
+      *headref = (*headref)->next_block;
+      blockDestructor(to_delete);
+      return 1;
+    }
+    headref = &((*headref)->next_block);
+  }
+  return 0;
+}
+
+int removeBlock(Block **block_head, char *bid) {
   Block **headref = block_head;
 
   while ((*headref) && strcmp((*headref)->bid, bid) != 0) {
@@ -27,7 +42,9 @@ void removeBlock(Block **block_head, char *bid) {
     BlockPtr to_delete = *headref;
     *headref = (*headref)->next_block;
     blockDestructor(to_delete);
+    return 1;
   }
+  return 0;
 }
 
 //Allocate memory for Block struct
@@ -39,7 +56,6 @@ BlockPtr blockConstructor(void) {
 
 //Free allocated memory for Block struct
 int blockDestructor(BlockPtr block) {
-  // free(block->bid);
   free(block);
   return 0;
 }
