@@ -50,6 +50,7 @@ void add_node(BlockchainPtr blockchain, Node **noderef, int nid) {
   update_num_nodes(blockchain, ADD);
 }
 
+//Update the num_nodes variable
 void update_num_nodes(BlockchainPtr blockchain, commands command) {
   switch (command) {
     case ADD:
@@ -61,6 +62,7 @@ void update_num_nodes(BlockchainPtr blockchain, commands command) {
   }
 }
 
+//Remove node from blockchain
 void remove_node(BlockchainPtr blockchain, Node **noderef, int nid) {
   Node **tracer = noderef; 
   while ((*tracer) && (*tracer)->nid != nid) {
@@ -76,3 +78,33 @@ void remove_node(BlockchainPtr blockchain, Node **noderef, int nid) {
   update_num_nodes(blockchain, RM);
 }
 
+//Check all nodes for the same blocks as the first node (genesis blocks)
+int is_synchronized(Node **noderef) {
+  Block *genesis_blocks = (*noderef)->bid_head;
+  Node **tracer = &(*noderef)->next_node; 
+  
+  while(*tracer) {
+    if ((*tracer)->num_blocks != (*noderef)->num_blocks) {
+      return 0;
+    }
+    BlockPtr current_block = (*tracer)->bid_head;
+    while (current_block) {
+      if (strcmp(current_block->bid, (*genesis_blocks).bid) != 0) {
+        return 0;
+      }
+      current_block = (*tracer)->bid_head->next_block;
+      genesis_blocks = (*noderef)->bid_head->next_block;
+    }
+    tracer = &(*tracer)->next_node;
+  }
+  return 1;
+}
+
+//Check if all nodes contain the same blocks and update the sync state
+void update_sync_state(BlockchainPtr blockchain, Node **noderef) {
+  if (is_synchronized(noderef)) {
+    blockchain->sync_state = SYNCED;
+  } else {
+    blockchain->sync_state = NOT_SYNCED;
+  }
+}

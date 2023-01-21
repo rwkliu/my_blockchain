@@ -36,3 +36,9 @@ void add_node(BlockchainPtr blockchain, Node **noderef, int nid);
 void update_num_nodes(BlockchainPtr blockchain, commands command);
 
 void remove_node(BlockchainPtr blockchain, Node **noderef, int nid);
+
+//Check all nodes for the same blocks as the first node (genesis blocks)
+int is_synchronized(Node **noderef);
+
+//Check if all nodes contain the same blocks and update the sync state
+void update_sync_state(BlockchainPtr blockchain, Node **noderef);
