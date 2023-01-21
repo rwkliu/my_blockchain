@@ -19,9 +19,7 @@ void addBlock(Block **block_head, char *bid) {
 void removeBlock(Block **block_head, char *bid) {
   Block **headref = block_head;
 
-  printf("block head bid: %s\n", (*headref)->bid);
   while ((*headref) && strcmp((*headref)->bid, bid) != 0) {
-    printf("removeBlock while loop\n");
     headref = &((*headref)->next_block);
   }
 
@@ -30,8 +28,6 @@ void removeBlock(Block **block_head, char *bid) {
     *headref = (*headref)->next_block;
     blockDestructor(to_delete);
   }
- 
-  printf("Remove block function end\n");
 }
 
 //Allocate memory for Block struct

@@ -48,6 +48,11 @@ void add_block_to_node(Node **noderef, char *bid, int nid) {
 }
 
 void remove_block_from_nodes(Node **noderef, char *bid) {
-  removeBlock(&(*noderef)->bid_head, bid);
-  update_numblocks(&(*noderef), RM);
+  Node **tracer = noderef;
+
+  while (*tracer) {
+    removeBlock(&(*tracer)->bid_head, bid);
+    update_numblocks(&(*tracer), RM);
+    tracer = &(*tracer)->next_node;
+  }
 }
