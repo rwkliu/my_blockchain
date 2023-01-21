@@ -36,7 +36,7 @@ void add_node(BlockchainPtr blockchain, Node **noderef, int nid) {
   update_num_nodes(blockchain, ADD);
 }
 
-void remove_nodes(BlockchainPtr blockchain, Node **noderef, int nid) {
+void remove_node(BlockchainPtr blockchain, Node **noderef, int nid) {
   Node **tracer = noderef; 
   while ((*tracer) && (*tracer)->nid != nid) {
     tracer = &((*tracer)->next_node);
@@ -51,25 +51,11 @@ void remove_nodes(BlockchainPtr blockchain, Node **noderef, int nid) {
   update_num_nodes(blockchain, RM);
 }
 
-void update_numblocks(Node **Noderef) {
-  (*Noderef)->num_blocks += 1;
-}
-
-void add_block_to_node(Node **noderef, char *bid, int nid) {
-  Node **tracer = noderef;
-  while(*tracer) {
-    if ((*tracer)->nid == nid) {
-      addBlock(&(*tracer)->bid_head, bid);
-      update_numblocks(&(*tracer));
-    }
-    tracer = &(*tracer)->next_node;
-  }
-}
-
 //Check all nodes for the same blocks as the first node (genesis blocks)
 int is_synchronized(Node **noderef) {
   Block *genesis_blocks = (*noderef)->bid_head;
   Node **tracer = &(*noderef)->next_node; 
+  
   while(*tracer) {
     if ((*tracer)->num_blocks != (*noderef)->num_blocks) {
       return 0;
@@ -101,6 +87,20 @@ void update_sync_state(BlockchainPtr blockchain, Node **noderef) {
     blockchain->sync_state = SYNCED;
   } else {
     blockchain->sync_state = NOT_SYNCED;
+  }
+}
+
+void synchronize_nodes(BlockchainPtr blockchain, Node **noderef) {
+  if (blockchain->sync_state == SYNCED) {
+    printf("OK\n");
+  } else {
+    printf("Nodes not synced: resyncing now\n");
+     
+
+
+
+
+    printf("OK\n");
   }
 }
 
@@ -186,7 +186,7 @@ int main() {
   //Remove a node and print the remaining nodes
   nid = 13;
   printf("Remove node %d\n", nid);
-  remove_nodes(&blockchain,&(blockchain.blockchain_head), nid);
+  remove_node(&blockchain,&(blockchain.blockchain_head), nid);
   ls_bids_nids(&(blockchain.blockchain_head), NO_BID);
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
@@ -199,13 +199,20 @@ int main() {
   prompt(blockchain.num_nodes, blockchain.sync_state);
   printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
 
+  //Remove a block
+  printf("number of blocks in nid 12 before removal: %d\n", blockchain.blockchain_head->num_blocks);
+  remove_block_from_nodes(&(blockchain.blockchain_head), bid);
+  printf("number of blocks in nid 12 after removal: %d\n", blockchain.blockchain_head->num_blocks);
+
   //Print nids and bids in blockchain
   printf("Print all nids and bids\n");
   ls_bids_nids(&(blockchain.blockchain_head), PRINT_BID);
   printf("ls blocks again\n");
   ls_bids_nids(&(blockchain.blockchain_head), PRINT_BID);
 
-  printf("Free allocated memory\n");
+  //Syncrhonize nodes
+  synchronize_nodes(&blockchain, &(blockchain.blockchain_head));
+  //printf("Free allocated memory\n");
   // free_blockchain(&blockchain);
 
   return 0;
