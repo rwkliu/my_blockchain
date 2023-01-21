@@ -7,45 +7,6 @@
 #include "helpers.h"
 #include "arguments_blockchain.h"
 
-//Check all nodes for the same blocks as the first node (genesis blocks)
-int is_synchronized(Node **noderef) {
-  Block *genesis_blocks = (*noderef)->bid_head;
-  Node **tracer = &(*noderef)->next_node; 
-  
-  while(*tracer) {
-    if ((*tracer)->num_blocks != (*noderef)->num_blocks) {
-      return 0;
-    }
-    BlockPtr current_block = (*tracer)->bid_head;
-    while (current_block) {
-      if (strcmp(current_block->bid, (*genesis_blocks).bid) != 0) {
-        return 0;
-      }
-      current_block = (*tracer)->bid_head->next_block;
-      genesis_blocks = (*noderef)->bid_head->next_block;
-    }
-    tracer = &(*tracer)->next_node;
-  }
-
-  //print the genesis block bids
-  //if (genesis_blocks != NULL) {
-  //  while(genesis_blocks) {
-  //    printf("bid in the genesis block: %s\n", genesis_blocks->bid);
-  //    genesis_blocks = genesis_blocks->next_block;
-  //  }
-  //}
-  return 1;
-}
-
-//Check if all nodes contain the same blocks and update the sync state
-void update_sync_state(BlockchainPtr blockchain, Node **noderef) {
-  if (is_synchronized(noderef)) {
-    blockchain->sync_state = SYNCED;
-  } else {
-    blockchain->sync_state = NOT_SYNCED;
-  }
-}
-
 void synchronize_nodes(BlockchainPtr blockchain, Node **noderef) {
   if (blockchain->sync_state == SYNCED) {
     printf("OK\n");
