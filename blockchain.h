@@ -21,6 +21,8 @@ typedef struct s_blockchain {
 
   void (*addNode)(struct s_blockchain *, Node**, int);
   void (*removeNode)(struct s_blockchain *, Node**, int);
+  void (*addBlock)(struct s_blockchain *, Node **, char *, int);
+  void (*removeBlock)(struct s_blockchain *, Node **, char *);
   void (*ls)(Node**, int);
 
 } Blockchain;
@@ -52,3 +54,12 @@ void lsBidsNids(Node **node_head, int lflag);
 
 //Free all allocated memory in blockchain (blocks, nodes)
 void free_blockchain(BlockchainPtr blockchain);
+
+//Update the num_blocks variable
+void update_numblocks(Node **Noderef, commands command);
+
+//Add block to node with specified nid
+void addBlockToNode(BlockchainPtr blockchain, Node **noderef, char *bid, int nid);
+
+//Remove blocks with specified nid from all nodes with that block
+void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid);
