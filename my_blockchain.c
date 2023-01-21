@@ -6,14 +6,16 @@
 #include "helpers.h"
 #include "blockchain.h"
 #include "node.h"
+#include "block.h"
 #include "arguments_blockchain.h"
 
 int main() {
-  BlockchainPtr blockchain = blockchainConstructor();
+  Blockchain blockchain;
+  blockchainConstructor(&blockchain);
   ArgumentsPtr args = argumentsConstructor();
 
   //Print the prompt, get stdin input, and print the read_buffer
-  print_prompt(blockchain->getNumNodes(blockchain), blockchain->getSyncState(blockchain));
+  print_prompt(blockchain.num_nodes, blockchain.sync_state);
   args->readInput(args->getReadBuffer(args));
   // if(args->read_buffer[0] != '\0') {
   //   printf("Input read into buffer: %s\n", args->read_buffer);
@@ -28,7 +30,7 @@ int main() {
   //Parse the split string arguments
   args->parseArguments(args->split_read_buffer);
   
-  blockchainDestructor(blockchain);
+  free_blockchain(&blockchain);
   argumentsDestructor(args);
   return 0;
 }
