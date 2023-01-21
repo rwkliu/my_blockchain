@@ -21,27 +21,6 @@ void synchronize_nodes(BlockchainPtr blockchain, Node **noderef) {
   }
 }
 
-void list_bids(Block **block_head) {
-  Block **blockref = block_head;
-  while((*blockref)) {
-    printf("%s ", (*blockref)->bid);
-    blockref = &(*blockref)->next_block;
-  }
-}
-
-void ls_bids_nids(Node **node_head, int lflag) {
-  Node **noderef = node_head;
-  while ((*noderef)) {
-    printf("%d", (*noderef)->nid);
-    if (lflag == PRINT_BID) {
-      printf(": ");
-      list_bids((&(*noderef)->bid_head));
-    }
-    printf("\n");
-    noderef = &(*noderef)->next_node;
-  }
-}
-
 //Free all allocated memory in blockchain (blocks, nodes)
 void free_blockchain(BlockchainPtr blockchain) {
   NodePtr current_node = blockchain->blockchain_head;
@@ -110,11 +89,12 @@ int main() {
   //Add a block 
   printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
   char *bid = "223";
-  printf("add bid %s to node\n", bid);
+  printf("add bid %s to node 12\n", bid);
   add_block_to_node(&(blockchain.blockchain_head), bid, 12);
   update_sync_state(&(blockchain), &(blockchain.blockchain_head));
   prompt(blockchain.num_nodes, blockchain.sync_state);
   printf("number of blocks in nid 12: %d\n", blockchain.blockchain_head->num_blocks);
+  printf("Add bid %s to node 15\n", bid);
   add_block_to_node(&(blockchain.blockchain_head), bid, 15);
   printf("number of blocks in nid 15: %d\n", blockchain.blockchain_head->next_node->num_blocks);
   update_sync_state(&(blockchain), &(blockchain.blockchain_head));
