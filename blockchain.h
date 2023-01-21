@@ -42,3 +42,5 @@ int is_synchronized(Node **noderef);
 
 //Check if all nodes contain the same blocks and update the sync state
 void update_sync_state(BlockchainPtr blockchain, Node **noderef);
+
+void ls_bids_nids(Node **node_head, int lflag); 

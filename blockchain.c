@@ -108,3 +108,25 @@ void update_sync_state(BlockchainPtr blockchain, Node **noderef) {
     blockchain->sync_state = NOT_SYNCED;
   }
 }
+
+void list_bids(Block **block_head) {
+  Block **blockref = block_head;
+  while((*blockref)) {
+    printf("%s ", (*blockref)->bid);
+    blockref = &(*blockref)->next_block;
+  }
+}
+
+void ls_bids_nids(Node **node_head, int lflag) {
+  Node **noderef = node_head;
+  while ((*noderef)) {
+    printf("%d", (*noderef)->nid);
+    if (lflag == PRINT_BID) {
+      printf(": ");
+      list_bids((&(*noderef)->bid_head));
+    }
+    printf("\n");
+    noderef = &(*noderef)->next_node;
+  }
+}
+
