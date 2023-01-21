@@ -16,7 +16,6 @@ typedef struct s_arguments {
   string_array *split_read_buffer;
 
   char *(*readInput)(char *);
-  char *(*getReadBuffer)(struct s_arguments *);
   string_array *(*splitInput)(char *, char *);
   int (*parseArguments)(string_array *);
 } Arguments;
