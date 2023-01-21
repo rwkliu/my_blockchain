@@ -31,11 +31,14 @@ int blockchainInitialize(BlockchainPtr blockchain) {
   blockchain->num_nodes = 0;
   blockchain->sync_state = 's';
   blockchain->blockchain_head = NULL;
+  blockchain->addNode = addNode;
+  blockchain->removeNode = removeNode;
+  blockchain->ls = lsBidsNids;
   return 0;
 }
 
 //Add node to blockchain
-void add_node(BlockchainPtr blockchain, Node **noderef, int nid) {
+void addNode(BlockchainPtr blockchain, Node **noderef, int nid) {
   Node **tracer = noderef;
   NodePtr new_node = nodeConstructor();
   new_node->nid = nid;
@@ -48,6 +51,7 @@ void add_node(BlockchainPtr blockchain, Node **noderef, int nid) {
   *tracer = new_node;
 
   update_num_nodes(blockchain, ADD);
+  update_sync_state(blockchain, noderef);
 }
 
 //Update the num_nodes variable
@@ -63,7 +67,7 @@ void update_num_nodes(BlockchainPtr blockchain, commands command) {
 }
 
 //Remove node from blockchain
-void remove_node(BlockchainPtr blockchain, Node **noderef, int nid) {
+void removeNode(BlockchainPtr blockchain, Node **noderef, int nid) {
   Node **tracer = noderef; 
   while ((*tracer) && (*tracer)->nid != nid) {
     tracer = &((*tracer)->next_node);
@@ -117,7 +121,7 @@ void list_bids(Block **block_head) {
   }
 }
 
-void ls_bids_nids(Node **node_head, int lflag) {
+void lsBidsNids(Node **node_head, int lflag) {
   Node **noderef = node_head;
   while ((*noderef)) {
     printf("%d", (*noderef)->nid);
