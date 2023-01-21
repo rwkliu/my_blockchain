@@ -5,21 +5,6 @@
 
 #include "blockchain.h"
 
-void setSyncState(BlockchainPtr this, sync_state state) {
-  switch(state) {
-    case SYNCED: {
-      this->sync_state = 's';
-      break;
-    }
-    case NOT_SYNCED: {
-      this->sync_state = '-';  
-      break;
-    }
-    default:
-      printf("Incorrect sync_state input parameter\n");
-  }
-}
-
 //Allocate memory for Blockchain struct
 BlockchainPtr blockchainConstructor(BlockchainPtr blockchain) {
   blockchainInitialize(blockchain);
@@ -56,18 +41,6 @@ void addNode(BlockchainPtr blockchain, Node **noderef, int nid) {
   update_sync_state(blockchain, noderef);
 }
 
-//Update the num_nodes variable
-void update_num_nodes(BlockchainPtr blockchain, commands command) {
-  switch (command) {
-    case ADD:
-      blockchain->num_nodes += 1;
-      break;
-    case RM:
-      blockchain->num_nodes -= 1;
-      break;
-  }
-}
-
 //Remove node from blockchain
 void removeNode(BlockchainPtr blockchain, Node **noderef, int nid) {
   Node **tracer = noderef; 
@@ -79,9 +52,62 @@ void removeNode(BlockchainPtr blockchain, Node **noderef, int nid) {
     NodePtr to_remove = *tracer;
     *tracer = (*tracer)->next_node;
     nodeDestructor(to_remove);
+  } else {
+    printf("Error message here: nid doesn't exist\n");
   }
 
   update_num_nodes(blockchain, RM);
+}
+
+//Add block to node with specified nid
+void addBlockToNode(BlockchainPtr blockchain, Node **noderef, char *bid, int nid) {
+  Node **tracer = noderef;
+  while (*tracer) {
+    if ((*tracer)->nid == nid) {
+      addBlock(&(*tracer)->bid_head, bid);
+      update_numblocks(&(*tracer), ADD);
+    }
+    tracer = &(*tracer)->next_node;
+  }
+  update_sync_state(blockchain, noderef);
+  printf("OK\n");
+}
+
+//Remove blocks with specified nid from all nodes with that block
+void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid) {
+  Node **tracer = noderef;
+
+  while (*tracer) {
+    removeBlock(&(*tracer)->bid_head, bid);
+    if (removeBlock(&(*tracer)->bid_head, bid)) {
+      update_numblocks(&(*tracer), RM);
+    }
+    tracer = &(*tracer)->next_node;
+  }
+  update_sync_state(blockchain, noderef);
+  printf("OK\n");
+}
+
+void list_bids(Block **block_head) {
+  Block **blockref = block_head;
+  while((*blockref)) {
+    printf("%s ", (*blockref)->bid);
+    blockref = &(*blockref)->next_block;
+  }
+}
+
+//Print all nids and their bids
+void lsBidsNids(Node **node_head, int lflag) {
+  Node **noderef = node_head;
+  while ((*noderef)) {
+    printf("%d", (*noderef)->nid);
+    if (lflag == PRINT_BID) {
+      printf(": ");
+      list_bids((&(*noderef)->bid_head));
+    }
+    printf("\n");
+    noderef = &(*noderef)->next_node;
+  }
 }
 
 //Check all nodes for the same blocks as the first node (genesis blocks)
@@ -115,25 +141,27 @@ void update_sync_state(BlockchainPtr blockchain, Node **noderef) {
   }
 }
 
-void list_bids(Block **block_head) {
-  Block **blockref = block_head;
-  while((*blockref)) {
-    printf("%s ", (*blockref)->bid);
-    blockref = &(*blockref)->next_block;
+//Update the num_nodes variable
+void update_num_nodes(BlockchainPtr blockchain, commands command) {
+  switch (command) {
+    case ADD:
+      blockchain->num_nodes += 1;
+      break;
+    case RM:
+      blockchain->num_nodes -= 1;
+      break;
   }
 }
 
-//Print all nids and their bids
-void lsBidsNids(Node **node_head, int lflag) {
-  Node **noderef = node_head;
-  while ((*noderef)) {
-    printf("%d", (*noderef)->nid);
-    if (lflag == PRINT_BID) {
-      printf(": ");
-      list_bids((&(*noderef)->bid_head));
-    }
-    printf("\n");
-    noderef = &(*noderef)->next_node;
+//Update the num_blocks variable
+void update_numblocks(Node **Noderef, commands command) {
+  switch (command) {
+    case ADD:
+      (*Noderef)->num_blocks += 1;
+      break;
+    case RM:
+      (*Noderef)->num_blocks -= 1;
+      break;
   }
 }
 
@@ -155,43 +183,4 @@ void free_blockchain(BlockchainPtr blockchain) {
     nodeDestructor(free_node);
     free_node = current_node;
   }
-}
-
-//Update the num_blocks variable
-void update_numblocks(Node **Noderef, commands command) {
-  switch (command) {
-    case ADD:
-      (*Noderef)->num_blocks += 1;
-      break;
-    case RM:
-      (*Noderef)->num_blocks -= 1;
-      break;
-  }
-}
-
-//Add block to node with specified nid
-void addBlockToNode(BlockchainPtr blockchain, Node **noderef, char *bid, int nid) {
-  Node **tracer = noderef;
-  while (*tracer) {
-    if ((*tracer)->nid == nid) {
-      addBlock(&(*tracer)->bid_head, bid);
-      update_numblocks(&(*tracer), ADD);
-    }
-    tracer = &(*tracer)->next_node;
-  }
-  update_sync_state(blockchain, noderef);
-}
-
-//Remove blocks with specified nid from all nodes with that block
-void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid) {
-  Node **tracer = noderef;
-
-  while (*tracer) {
-    removeBlock(&(*tracer)->bid_head, bid);
-    if (removeBlock(&(*tracer)->bid_head, bid)) {
-      update_numblocks(&(*tracer), RM);
-    }
-    tracer = &(*tracer)->next_node;
-  }
-  update_sync_state(blockchain, noderef);
 }
