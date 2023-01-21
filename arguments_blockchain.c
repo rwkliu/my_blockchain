@@ -49,7 +49,6 @@ int argumentsDestructor(ArgumentsPtr args) {
 
 int argumentsInitialize(ArgumentsPtr args) {
   args->readInput = read_input;
-  args->getReadBuffer = getReadBuffer;
   args->splitInput = my_split;
   args->parseArguments = parse_arguments;
 
@@ -57,10 +56,6 @@ int argumentsInitialize(ArgumentsPtr args) {
     args->read_buffer[i] = '\0';
   }
   return 0;
-}
-
-char *getReadBuffer(ArgumentsPtr args) {
-  return args->read_buffer;
 }
 
 commands find_command(char *arg) {
