@@ -4,8 +4,6 @@ typedef struct s_bid {
   char *bid;
   struct s_bid *next_block;
 
-  void (*addBlock)(struct s_bid **, char *);
-  void (*removeBlock)(struct s_bid **, char *);
 } Block;
 #endif
 
@@ -20,4 +18,5 @@ int blockDestructor(BlockPtr block);
 //Initialize Block members
 int blockInitialize(BlockPtr block);
 
-void addBlock(BlockPtr *block_head, char *bid);
+//Remove block from Block linked list
+void removeBlock(Block **block_head, char *bid);

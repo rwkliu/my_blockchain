@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "block.h"
@@ -18,15 +19,19 @@ void addBlock(Block **block_head, char *bid) {
 void removeBlock(Block **block_head, char *bid) {
   Block **headref = block_head;
 
+  printf("block head bid: %s\n", (*headref)->bid);
   while ((*headref) && strcmp((*headref)->bid, bid) != 0) {
+    printf("removeBlock while loop\n");
     headref = &((*headref)->next_block);
   }
 
-  if (*headref == NULL) {
+  if (*headref != NULL) {
     BlockPtr to_delete = *headref;
     *headref = (*headref)->next_block;
     blockDestructor(to_delete);
   }
+ 
+  printf("Remove block function end\n");
 }
 
 //Allocate memory for Block struct
@@ -47,8 +52,6 @@ int blockDestructor(BlockPtr block) {
 int blockInitialize(BlockPtr block) {
   block->bid = NULL;
   block->next_block = NULL;
-  block->addBlock = addBlock;
-  block->removeBlock = removeBlock;
   
   return 0;
 }
