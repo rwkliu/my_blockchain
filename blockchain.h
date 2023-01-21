@@ -22,7 +22,7 @@ typedef struct s_blockchain {
   void (*addNode)(struct s_blockchain *, Node**, int);
   void (*removeNode)(struct s_blockchain *, Node**, int);
   void (*addBlock)(struct s_blockchain *, Node **, char *, int);
-  void (*removeBlock)(struct s_blockchain *, Node **, char *);
+  void (*removeBlock)(struct s_blockchain *, Node **, char *, int);
   void (*ls)(Node**, int);
 
 } Blockchain;
@@ -45,11 +45,10 @@ void removeNode(BlockchainPtr blockchain, Node **noderef, int nid);
 void addBlockToNode(BlockchainPtr blockchain, Node **noderef, char *bid, int nid);
 
 //Remove blocks with specified nid from all nodes with that block
-void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid);
+void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid, int nid);
 
 //Print all nids and their bids
 void lsBidsNids(Node **node_head, int lflag); 
-
 
 //Check all nodes for the same blocks as the first node (genesis blocks)
 int is_synchronized(Node **noderef);

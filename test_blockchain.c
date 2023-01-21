@@ -8,17 +8,10 @@
 #include "arguments_blockchain.h"
 
 void synchronize_nodes(BlockchainPtr blockchain, Node **noderef) {
-  if (blockchain->sync_state == SYNCED) {
-    printf("OK\n");
-  } else {
-    printf("Nodes not synced: resyncing now\n");
-     
-
-
-
-
-    printf("OK\n");
+  if (blockchain->sync_state == NOT_SYNCED) {
+    
   }
+  printf("OK\n");
 }
 
 void prompt(int num, char sync) {
@@ -73,7 +66,7 @@ int main() {
 
   //Remove block with same bid in all nodes
   //printf("number of blocks in nid 12 before removal: %d\n", blockchain.blockchain_head->num_blocks);
-  blockchain.removeBlock(&blockchain, &(blockchain.blockchain_head), bid);
+  blockchain.removeBlock(&blockchain, &(blockchain.blockchain_head), bid, 12);
   printf("number of blocks in nid 12 after removal: %d\n", blockchain.blockchain_head->num_blocks);
   printf("number of blocks in nid 15 after removal: %d\n", blockchain.blockchain_head->next_node->num_blocks);
   prompt(blockchain.num_nodes, blockchain.sync_state);
