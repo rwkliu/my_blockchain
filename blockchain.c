@@ -73,16 +73,17 @@ void addBlockToNode(BlockchainPtr blockchain, Node **noderef, char *bid, int nid
   printf("OK\n");
 }
 
-//Remove blocks with specified nid from all nodes with that block
-void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid) {
+//Remove blocks with specified nid
+void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid, int nid) {
   Node **tracer = noderef;
 
-  while (*tracer) {
-    removeBlock(&(*tracer)->bid_head, bid);
-    if (removeBlock(&(*tracer)->bid_head, bid)) {
-      update_numblocks(&(*tracer), RM);
-    }
+  while ((*tracer) && (*tracer)->nid != nid) {
     tracer = &(*tracer)->next_node;
+  }
+
+  if (removeBlock(&(*tracer)->bid_head, bid) == 1) {
+    printf("if statement entered\n");
+    update_numblocks(&(*tracer), RM);
   }
   update_sync_state(blockchain, noderef);
   printf("OK\n");
@@ -170,7 +171,6 @@ void free_blockchain(BlockchainPtr blockchain) {
   BlockPtr current_block = current_node->bid_head;
 
   while(current_node) {
-    printf("outer while loop entered\n");
     if (current_block != NULL) {
       remove_all_blocks(&current_block);
     }
