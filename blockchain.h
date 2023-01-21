@@ -19,6 +19,10 @@ typedef struct s_blockchain {
   char sync_state;
   NodePtr blockchain_head;
 
+  void (*addNode)(struct s_blockchain *, Node**, int);
+  void (*removeNode)(struct s_blockchain *, Node**, int);
+  void (*ls)(Node**, int);
+
 } Blockchain;
 #endif
 
@@ -31,11 +35,11 @@ BlockchainPtr blockchainConstructor(BlockchainPtr blockchain);
 int blockchainInitialize(BlockchainPtr blockchain);
 
 //Add node to blockchain
-void add_node(BlockchainPtr blockchain, Node **noderef, int nid);
+void addNode(BlockchainPtr blockchain, Node **noderef, int nid);
 
 void update_num_nodes(BlockchainPtr blockchain, commands command);
 
-void remove_node(BlockchainPtr blockchain, Node **noderef, int nid);
+void removeNode(BlockchainPtr blockchain, Node **noderef, int nid);
 
 //Check all nodes for the same blocks as the first node (genesis blocks)
 int is_synchronized(Node **noderef);
@@ -43,4 +47,4 @@ int is_synchronized(Node **noderef);
 //Check if all nodes contain the same blocks and update the sync state
 void update_sync_state(BlockchainPtr blockchain, Node **noderef);
 
-void ls_bids_nids(Node **node_head, int lflag); 
+void lsBidsNids(Node **node_head, int lflag); 

@@ -55,35 +55,32 @@ int main() {
   blockchainConstructor(&blockchain);
 
   prompt(blockchain.num_nodes, blockchain.sync_state);
-  
+
   //Add nodes
   int nid = 12;
   printf("first add node\n");
-  add_node(&(blockchain), &(blockchain.blockchain_head), nid);
-  update_sync_state(&(blockchain), &(blockchain.blockchain_head));
+  blockchain.addNode(&blockchain, &(blockchain.blockchain_head), nid);
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   nid = 13;
   printf("second add node\n");
-  add_node(&(blockchain), &(blockchain.blockchain_head), nid);
-  update_sync_state(&(blockchain), &(blockchain.blockchain_head));
+  blockchain.addNode(&blockchain, &(blockchain.blockchain_head), nid);
   prompt(blockchain.num_nodes, blockchain.sync_state);
   
   nid = 15;
   printf("third add node\n");
-  add_node(&(blockchain), &(blockchain.blockchain_head), nid);
-  update_sync_state(&(blockchain), &(blockchain.blockchain_head));
+  blockchain.addNode(&blockchain, &(blockchain.blockchain_head), nid);
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   //Print nid of all nodes in blockchain
   printf("ls\n");
-  ls_bids_nids(&(blockchain.blockchain_head), NO_BID);
+  blockchain.ls(&(blockchain.blockchain_head), NO_BID);
 
   //Remove a node and print the remaining nodes
   nid = 13;
   printf("Remove node %d\n", nid);
-  remove_node(&blockchain,&(blockchain.blockchain_head), nid);
-  ls_bids_nids(&(blockchain.blockchain_head), NO_BID);
+  blockchain.removeNode(&blockchain,&(blockchain.blockchain_head), nid);
+  blockchain.ls(&(blockchain.blockchain_head), NO_BID);
   prompt(blockchain.num_nodes, blockchain.sync_state);
 
   //Add a block 
@@ -108,9 +105,9 @@ int main() {
 
   //Print nids and bids in blockchain
   printf("Print all nids and bids\n");
-  ls_bids_nids(&(blockchain.blockchain_head), PRINT_BID);
+  blockchain.ls(&(blockchain.blockchain_head), NO_BID);
   printf("ls blocks again\n");
-  ls_bids_nids(&(blockchain.blockchain_head), PRINT_BID);
+  blockchain.ls(&(blockchain.blockchain_head), NO_BID);
 
   //Syncrhonize nodes
   synchronize_nodes(&blockchain, &(blockchain.blockchain_head));
