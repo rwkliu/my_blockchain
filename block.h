@@ -1,3 +1,6 @@
+#ifndef BLOCK_INCLUDE_H
+#define BLOCK_INCLUDE_H
+
 #ifndef STRUCT_BLOCK
 #define STRUCT_BLOCK
 typedef struct s_bid {
@@ -22,3 +25,5 @@ int blockInitialize(BlockPtr block);
 int removeBlock(Block **block_head, char *bid);
 
 int remove_all_blocks(Block **block_head);
+
+#endif

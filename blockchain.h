@@ -1,3 +1,6 @@
+#ifndef BLOCKCHAIN_INCLUDE_H
+#define BLOCKCHAIN_INCLUDE_H
+
 #include "node.h"
 
 #define SYNCED 's'
@@ -39,6 +42,7 @@ int blockchainInitialize(BlockchainPtr blockchain);
 //Add node to blockchain
 void addNode(BlockchainPtr blockchain, Node **noderef, int nid);
 
+//Remove node from blockchain
 void removeNode(BlockchainPtr blockchain, Node **noderef, int nid);
 
 //Add block to node with specified nid
@@ -63,3 +67,5 @@ void update_numblocks(Node **Noderef, commands command);
 
 //Free all allocated memory in blockchain (blocks, nodes)
 void free_blockchain(BlockchainPtr blockchain);
+
+#endif

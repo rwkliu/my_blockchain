@@ -1,3 +1,5 @@
+#ifndef ARGUMENTS_BLOCKCHAIN_H
+#define ARGUMENTS_BLOCKCHAIN_H
 #include "helpers.h"
 
 #define READ_BUFFER_SIZE 21
@@ -71,3 +73,5 @@ int parse_ls_args(string_array *args);
 
 //Parse arguments read from stdin
 int parse_arguments(string_array *split_strings_array);
+
+#endif
