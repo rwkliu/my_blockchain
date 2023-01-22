@@ -16,20 +16,17 @@ int main() {
 
   while (is_not_quit(args)) {
     args->clearBuffers(args);
-    //Print the prompt, get stdin input, and print the read_buffer
     print_prompt(blockchain.num_nodes, blockchain.sync_state);
     args->readInput(args->read_buffer);
     // if(args->read_buffer[0] != '\0') {
     //   printf("Input read into buffer: %s\n", args->read_buffer);
     // }
 
-    //Print the split strings in the split_read_buffer array
     args->split_read_buffer = args->splitInput(args->read_buffer, " ");
     // for (int i = 0; i < args->split_read_buffer->size; i++) {
     //   printf("split string #%d: %s\n", i, args->split_read_buffer->array[i]);
     // }
-    
-    //Parse the split string arguments
+
     args->parseArguments(args->split_read_buffer);
   }
 

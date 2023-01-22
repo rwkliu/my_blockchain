@@ -51,6 +51,7 @@ void removeNode(BlockchainPtr blockchain, Node **noderef, int nid) {
   if (*tracer != NULL) {
     NodePtr to_remove = *tracer;
     *tracer = (*tracer)->next_node;
+    remove_all_blocks(&(to_remove)->bid_head);
     nodeDestructor(to_remove);
   } else {
     printf("Error: node doesn't exist\n");
