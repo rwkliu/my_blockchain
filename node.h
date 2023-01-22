@@ -1,3 +1,6 @@
+#ifndef NODE_INCLUDE_H
+#define NODE_INCLUDE_H
+
 #include "block.h"
 #include "arguments_blockchain.h"
 
@@ -34,3 +37,5 @@ void add_block_to_node(Node **noderef, char *bid, int nid);
 
 //Remove block from nodes
 void remove_block_from_nodes(Node **noderef, char *bid);
+
+#endif
