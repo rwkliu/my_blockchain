@@ -5,12 +5,49 @@
 #include "helpers.h"
 #include "status.h"
 
-void block(BlockchainPtr blockchain, string_array *split_read_buffer, char *arg) {
-  printf("block function reached\n");
+int is_remove(char *prev_cmd) {
+  return strcmp(prev_cmd, "remove");
 }
 
-void node(BlockchainPtr blockchain, string_array *split_read_buffer, char *arg) {
+int is_add(char *prev_cmd) {
+  return strcmp(prev_cmd, "add");
+}
+
+int is_block(char *component) {
+  return strcmp(component, "block");
+}
+
+int is_node(char *component) {
+  return strcmp(component, "node");
+}
+
+void nid(BlockchainPtr blockchain, char *prev_cmd, char *component, char *nid) {
+  printf("nid function reached\n");
+  int int_nid = atoi(nid); 
+  
+  if (is_add(prev_cmd) == 0 && is_node(component) == 0) {
+    blockchain->addNode(blockchain, &(blockchain->blockchain_head), int_nid);
+  }
+}
+
+void bid() {
+
+}
+
+void block(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_cmd) {
+  printf("block function reached\n");
+
+}
+
+void node(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_cmd) {
   printf("node function reached\n");
+  void (*args)(BlockchainPtr, char *, char *, char *) = nid;
+  char *subsequent_arg = split_read_buffer->array[3];
+  char *char_nid = split_read_buffer->array[2];
+
+  if (subsequent_arg == NULL) {
+    (*args)(blockchain, prev_cmd, "node", char_nid);
+  }
 }
 
 void add(BlockchainPtr blockchain, string_array *split_read_buffer) {
