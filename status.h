@@ -8,4 +8,3 @@
 
 //Status messages
 #define COMMAND_SUCCESS "OK\n"
-
