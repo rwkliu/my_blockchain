@@ -73,6 +73,13 @@ int clearBuffers(ArgumentsPtr args) {
   return 0;
 }
 
+int is_not_quit(ArgumentsPtr args) {
+  if (strncmp(args->read_buffer, "quit", 4) != 0) {
+    return 1;
+  }
+  return 0;
+}
+
 commands find_command(char *arg) {
   if (strcmp(arg, "add") == 0) {
     return ADD;
@@ -126,13 +133,6 @@ int isRmBlock(string_array *args, commands command) {
 
 int isRmNode(string_array *args, commands command) {
   if (strcmp(args->array[0], "node") == 0 && args->size == 2 && command == RM) {
-    return 1;
-  }
-  return 0;
-}
-
-int is_not_quit(ArgumentsPtr args) {
-  if (strncmp(args->read_buffer, "quit", 4) != 0) {
     return 1;
   }
   return 0;

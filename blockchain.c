@@ -114,6 +114,7 @@ void lsBidsNids(Node **node_head, int lflag) {
     printf("\n");
     noderef = &(*noderef)->next_node;
   }
+  printf("OK\n");
 }
 
 //Check all nodes for the same blocks as the first node (genesis blocks)
