@@ -7,5 +7,5 @@
 #define NO_MORE_RESOURCES "No more resources available on the computer\n"
 
 //Status messages
-#define COMMAND_SUCCESS "OK"
+#define COMMAND_SUCCESS "OK\n"
 

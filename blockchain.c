@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
 #include "blockchain.h"
+#include "status.h"
 
 //Allocate memory for Blockchain struct
 BlockchainPtr blockchainConstructor(BlockchainPtr blockchain) {
@@ -54,7 +54,7 @@ void removeNode(BlockchainPtr blockchain, Node **noderef, int nid) {
     remove_all_blocks(&(to_remove)->bid_head);
     nodeDestructor(to_remove);
   } else {
-    printf("Error: node doesn't exist\n");
+    printf(NODE_NOT_FOUND);
   }
 
   update_num_nodes(blockchain, RM);
@@ -68,12 +68,12 @@ void addBlockToNode(BlockchainPtr blockchain, Node **noderef, char *bid, int nid
     tracer = &(*tracer)->next_node;
   }
   if (*tracer == NULL) {
-    printf("Node doesn't exist\n");
+    printf(NODE_NOT_FOUND);
   } else if ((*tracer)->nid == nid) {
     addBlock(&(*tracer)->bid_head, bid);
     update_numblocks(&(*tracer), ADD);
     update_sync_state(blockchain, noderef);
-    printf("OK\n");
+    printf(COMMAND_SUCCESS);
   }
 }
 
@@ -85,13 +85,13 @@ void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid, in
     tracer = &(*tracer)->next_node;
   }
   if (*tracer == NULL) {
-    printf("Error: Node doesn't exist\n");
+    printf(NODE_NOT_FOUND);
   } else if (removeBlock(&(*tracer)->bid_head, bid) == 1) {
     update_numblocks(&(*tracer), RM);
     update_sync_state(blockchain, noderef);
-    printf("OK\n");
+    printf(COMMAND_SUCCESS);
   } else {
-    printf("Error: Block doesn't exist\n");
+    printf(BLOCK_NOT_FOUND);
   }
 }
 
@@ -115,7 +115,7 @@ void lsBidsNids(Node **node_head, int lflag) {
     printf("\n");
     noderef = &(*noderef)->next_node;
   }
-  printf("OK\n");
+  printf(COMMAND_SUCCESS);
 }
 
 //Check all nodes for the same blocks as the first node (genesis blocks)
