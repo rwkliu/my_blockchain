@@ -18,6 +18,7 @@ typedef struct s_arguments {
   char *(*readInput)(char *);
   string_array *(*splitInput)(char *, char *);
   int (*parseArguments)(string_array *);
+  int (*clearBuffers)(struct s_arguments *);
 } Arguments;
 #endif
 
@@ -38,8 +39,7 @@ int argumentsDestructor(ArgumentsPtr args);
 //Initialize Arguments members
 int argumentsInitialize(ArgumentsPtr args);
 
-//Return pointer to read_buffer
-char *getReadBuffer(ArgumentsPtr args);
+int clearBuffers(ArgumentsPtr);
 
 //Return enum corresponding to arg
 commands find_command(char *arg);
@@ -54,6 +54,8 @@ int isAddNode(string_array *args, commands command);
 int isRmBlock(string_array *args, commands command);
 
 int isRmNode(string_array *args, commands command);
+
+int is_not_quit(ArgumentsPtr args);
 
 //Check subsequent arguments for correct arguments following "block"
 int parse_block_args(char **block_args, commands command);

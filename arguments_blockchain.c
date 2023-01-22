@@ -51,10 +51,25 @@ int argumentsInitialize(ArgumentsPtr args) {
   args->readInput = read_input;
   args->splitInput = my_split;
   args->parseArguments = parse_arguments;
+  args->clearBuffers = clearBuffers;
+  args->split_read_buffer = NULL;
 
   for(int i = 0; i < READ_BUFFER_SIZE; i++) {
     args->read_buffer[i] = '\0';
   }
+  return 0;
+}
+
+int clearBuffers(ArgumentsPtr args) {
+  if (args->split_read_buffer != NULL) {
+    free(args->split_read_buffer->array[0]);
+    free(args->split_read_buffer->array);
+  }
+  for(int i = 0; i < READ_BUFFER_SIZE; i++) {
+    args->read_buffer[i] = '\0';
+  }
+  free(args->split_read_buffer);
+  args->split_read_buffer = NULL;
   return 0;
 }
 
@@ -111,6 +126,13 @@ int isRmBlock(string_array *args, commands command) {
 
 int isRmNode(string_array *args, commands command) {
   if (strcmp(args->array[0], "node") == 0 && args->size == 2 && command == RM) {
+    return 1;
+  }
+  return 0;
+}
+
+int is_not_quit(ArgumentsPtr args) {
+  if (strncmp(args->read_buffer, "quit", 4) != 0) {
     return 1;
   }
   return 0;
