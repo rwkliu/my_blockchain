@@ -38,6 +38,9 @@ ArgumentsPtr argumentsConstructor(void) {
 }
 
 int argumentsDestructor(ArgumentsPtr args) {
+  if (args->split_read_buffer == NULL) {
+    return 1;
+  }
   if (args->split_read_buffer->array != NULL) {
     free(args->split_read_buffer->array[0]);
     free(args->split_read_buffer->array);
