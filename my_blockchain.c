@@ -8,6 +8,7 @@
 #include "node.h"
 #include "block.h"
 #include "arguments_blockchain.h"
+#include "execute_command.h"
 
 int main() {
   Blockchain blockchain;
@@ -27,7 +28,8 @@ int main() {
     //   printf("split string #%d: %s\n", i, args->split_read_buffer->array[i]);
     // }
 
-    args->parseArguments(args->split_read_buffer);
+    // args->parseArguments(args->split_read_buffer);
+    execute_command(&blockchain, args->split_read_buffer);
   }
 
   free_blockchain(&blockchain);
