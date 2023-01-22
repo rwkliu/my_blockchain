@@ -36,7 +36,16 @@ void bid() {
 
 void block(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_cmd) {
   printf("block function reached\n");
+  void (*args)(BlockchainPtr, string_array *, char *, char *, char *) = bid;
+  char *subsequent_arg = split_read_buffer->array[4];
+  char *char_nid = split_read_buffer->array[3];
+  char *char_bid = split_read_buffer->array[2];
 
+  if (subsequent_arg == NULL && char_nid != NULL) {
+    (*args)(blockchain, split_read_buffer, prev_cmd, "bid", char_bid);
+  } else {
+    printf(NO_COMMAND_FOUND);
+  }
 }
 
 void node(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_cmd) {
