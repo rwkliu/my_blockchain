@@ -16,19 +16,11 @@ int main() {
   ArgumentsPtr args = argumentsConstructor();
 
   while (is_not_quit(args)) {
-    args->clearBuffers(args);
+    argumentsDestructor(args);
+    ArgumentsPtr args = argumentsConstructor();
     print_prompt(blockchain.num_nodes, blockchain.sync_state);
     args->readInput(args->read_buffer);
-    // if(args->read_buffer[0] != '\0') {
-    //   printf("Input read into buffer: %s\n", args->read_buffer);
-    // }
-
     args->split_read_buffer = args->splitInput(args->read_buffer, " ");
-    // for (int i = 0; i < args->split_read_buffer->size; i++) {
-    //   printf("split string #%d: %s\n", i, args->split_read_buffer->array[i]);
-    // }
-
-    // args->parseArguments(args->split_read_buffer);
     execute_command(&blockchain, args->split_read_buffer);
   }
 
