@@ -33,7 +33,7 @@ int my_getchar();
 char *read_input(char *read_buffer);
 
 //Allocate memory for Arguments struct
-ArgumentsPtr argumentsConstructor(void);
+ArgumentsPtr argumentsConstructor(ArgumentsPtr args);
 
 //Free allocated memory for Arguments struct
 int argumentsDestructor(ArgumentsPtr args);

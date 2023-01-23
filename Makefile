@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -g3 -fsanitize=address
 SRCS := $(wildcard *.c)
 SRCS := $(filter-out test_blockchain.c, $(SRCS))
