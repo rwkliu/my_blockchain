@@ -21,7 +21,8 @@ int main() {
     args.clearBuffers(&args);
     print_prompt(blockchain.num_nodes, blockchain.sync_state);
     char *readline = my_readline(0);
-    if (readline == NULL) {
+    if (readline == NULL || readline[0] == '\0') {
+      free(readline);
       break;
     }
     strncpy(args.read_buffer, readline, 20);
