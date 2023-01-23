@@ -31,8 +31,7 @@ char *read_input(char *read_buffer) {
   return read_buffer;
 }
 
-ArgumentsPtr argumentsConstructor(void) {
-  ArgumentsPtr args = malloc(sizeof(Arguments));
+ArgumentsPtr argumentsConstructor(ArgumentsPtr args) {
   argumentsInitialize(args);
   return args;
 }
@@ -46,7 +45,6 @@ int argumentsDestructor(ArgumentsPtr args) {
     free(args->split_read_buffer->array);
   }
   free(args->split_read_buffer);
-  free(args);
   return 0;
 }
 

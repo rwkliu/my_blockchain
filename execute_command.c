@@ -23,17 +23,21 @@ int is_node(char *component) {
 
 void nid(BlockchainPtr blockchain, char *prev_cmd, char *component, char *bid, char *nid) {
   printf("nid function reached\n");
-  int int_nid = atoi(nid); 
+  int int_nid = atoi(nid);
+  char *block_id = malloc(strlen(bid) + 1 * sizeof(char));
+  strncpy(block_id, bid, strlen(bid) + 1);
   
   if (is_add(prev_cmd) == 0 && is_node(component) == 0) {
+    free(block_id);
     blockchain->addNode(blockchain, &(blockchain->blockchain_head), int_nid);
   } else if (is_add(prev_cmd) == 0 && is_block(component) == 0) {
-    printf("add block function reached\n");
-    blockchain->addBlock(blockchain, &(blockchain->blockchain_head), bid, int_nid);
+    blockchain->addBlock(blockchain, &(blockchain->blockchain_head), block_id, int_nid);
   } else if (is_remove(prev_cmd) == 0 && is_node(component) == 0) {
+    free(block_id);
     blockchain->removeNode(blockchain, &(blockchain->blockchain_head), int_nid);
   } else if (is_remove(prev_cmd) == 0 && is_block(component) == 0) {
-    blockchain->removeBlock(blockchain, &(blockchain->blockchain_head), bid, int_nid);
+    blockchain->removeBlock(blockchain, &(blockchain->blockchain_head), block_id, int_nid);
+    free(block_id);
   } else {
     printf(NO_COMMAND_FOUND);
   }
@@ -155,7 +159,6 @@ void execute_command(BlockchainPtr blockchain, string_array *split_read_buffer) 
     }
     i++;
   }
-
   if (i == 5) {
     printf(NO_COMMAND_FOUND);
   }
