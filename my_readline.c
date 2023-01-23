@@ -72,14 +72,14 @@ char *my_readline(int fd) {
   }
   init_my_readline();
 
-  //Copy result string into readline
-  if(strlen(result_string) > 0) {
-    if(strlen(readline) < strlen(result_string)) {
-      free(readline);
-      readline = calloc_string(strlen(result_string) + 1);
-    }
-    strncpy(readline, result_string, strlen(result_string));
-  }
+//   //Copy result string into readline
+//   if(strlen(result_string) > 0) {
+//     if(strlen(readline) < strlen(result_string)) {
+//       free(readline);
+//       readline = calloc_string(strlen(result_string) + 1);
+//     }
+//     strncpy(readline, result_string, strlen(result_string));
+//   }
 
   read(fd, &readline[readline_index], READLINE_READ_SIZE);
 
