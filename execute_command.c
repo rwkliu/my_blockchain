@@ -46,11 +46,10 @@ void nid(BlockchainPtr blockchain, char *prev_cmd, char *component, char *bid, c
 void bid(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_cmd, char *component, char *bid) {
 //   printf("bid function reached\n");
   void (*args)(BlockchainPtr, char *, char *, char *, char *) = nid;
-  char *subsequent_arg = split_read_buffer->array[4];
   char *char_nid = split_read_buffer->array[3];
 
   //Check for extra arguments after the expected last argument
-  if (subsequent_arg == NULL) {
+  if (char_nid != NULL) {
     (*args)(blockchain, prev_cmd, component, bid, char_nid);
   } else {
     printf(NO_COMMAND_FOUND);
@@ -60,11 +59,10 @@ void bid(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_c
 void block(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_cmd) {
 //   printf("block function reached\n");
   void (*args)(BlockchainPtr, string_array *, char *, char *, char *) = bid;
-  char *subsequent_arg = split_read_buffer->array[4];
   char *char_nid = split_read_buffer->array[3];
   char *char_bid = split_read_buffer->array[2];
 
-  if (subsequent_arg == NULL && char_nid != NULL) {
+  if (char_nid != NULL) {
     (*args)(blockchain, split_read_buffer, prev_cmd, "block", char_bid);
   } else {
     printf(NO_COMMAND_FOUND);
