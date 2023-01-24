@@ -27,7 +27,7 @@ int main() {
     }
     strncpy(args.read_buffer, readline, 20);
     free(readline);
-    printf("%s\n", args.read_buffer);
+    // printf("%s\n", args.read_buffer);
     args.split_read_buffer = args.splitInput(args.read_buffer, " ");
     execute_command(&blockchain, args.split_read_buffer);
   }

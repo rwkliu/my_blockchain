@@ -39,6 +39,7 @@ void addNode(BlockchainPtr blockchain, Node **noderef, int nid) {
 
   update_num_nodes(blockchain, ADD);
   update_sync_state(blockchain, noderef);
+  printf(COMMAND_SUCCESS);
 }
 
 //Remove node from blockchain

@@ -74,11 +74,10 @@ void block(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev
 void node(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_cmd) {
 //   printf("node function reached\n");
   void (*args)(BlockchainPtr, char *, char *, char *, char *) = nid;
-  char *subsequent_arg = split_read_buffer->array[3];
   char *char_nid = split_read_buffer->array[2];
 
   //Check for extra arguments after the expected last argument
-  if (subsequent_arg == NULL) {
+  if (char_nid != NULL) {
     (*args)(blockchain, prev_cmd, "node", "", char_nid);
   } else {
     printf(NO_COMMAND_FOUND);
@@ -100,6 +99,7 @@ void add(BlockchainPtr blockchain, string_array *split_read_buffer) {
     i++;
   }
   if (i == 2) {
+    printf("a\n");
     printf(NO_COMMAND_FOUND);
   }
 }
@@ -125,11 +125,9 @@ void remove_(BlockchainPtr blockchain, string_array *split_read_buffer) {
 
 void list(BlockchainPtr blockchain, string_array *split_read_buffer) {
   char *lflag = split_read_buffer->array[1];
-  char *subsequent_args = split_read_buffer->array[2];
+//   char *subsequent_args = split_read_buffer->array[2];
 //   printf("List function entered\n");
-  if (split_read_buffer->array[2] != NULL) {
-    printf(NO_COMMAND_FOUND);
-  } else if (lflag != NULL && strncmp(lflag, "-l", 2) == 0 && subsequent_args == NULL) {
+  if (lflag != NULL && strncmp(lflag, "-l", 2) == 0 ) {
     // printf("else if statement entered\n");
     blockchain->ls(&(blockchain->blockchain_head), PRINT_BID);
   } else if (lflag == NULL) {
