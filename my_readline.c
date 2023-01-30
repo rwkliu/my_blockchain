@@ -43,10 +43,14 @@ int my_string_index(char* param_1, char param_2){
 char *find_second_string(char *str) {
   int index = 0;
 
-  if((index = my_string_index(str, '\n')) != -1) {
+ if ((index = my_string_index(str, '\\')) != -1) {
+    if (str[index + 1] == 'n') {
+      str += index + 2;
+    }
+  }
+  else if((index = my_string_index(str, '\n')) != -1) {
     str += index + 1;
   }
-
   return str;
 }
 
@@ -56,6 +60,19 @@ void extend_readline() {
   strncpy(temp, readline, strlen(readline));
   free(readline);
   readline = temp;
+}
+
+int find_new_line(char *str) {
+  int index = 0;
+
+  if ((index = my_string_index(str, '\\')) != -1) {
+    if (str[index + 1] == 'n') {
+      return index;
+    }
+  } else if ((index = my_string_index(str, '\n')) != -1) {
+    return index;
+  } 
+  return -1;
 }
 
 char *my_readline(int fd) {
@@ -68,23 +85,26 @@ char *my_readline(int fd) {
   //If readline != NULL, copy all text except first string into result
   //Then free and malloc readline
   if(readline != NULL) {
-    result_string = strcpy(result_string, find_second_string(readline));
+    char *second_string = find_second_string(readline);
+    // printf("second_string: %s\n", second_string);
+    result_string = strcpy(result_string, second_string);
   }
   init_my_readline();
 
-//   //Copy result string into readline
-//   if(strlen(result_string) > 0) {
-//     if(strlen(readline) < strlen(result_string)) {
-//       free(readline);
-//       readline = calloc_string(strlen(result_string) + 1);
-//     }
-//     strncpy(readline, result_string, strlen(result_string));
-//   }
+  //Copy result string into readline
+  if(strlen(result_string) > 0) {
+    if(strlen(readline) < strlen(result_string)) {
+      free(readline);
+      readline = calloc_string(strlen(result_string) + 1);
+    }
+    strncpy(readline, result_string, strlen(result_string));
+  }
 
   read(fd, &readline[readline_index], READLINE_READ_SIZE);
 
   //Find the index of the first newline character
-  ln_index = my_string_index(readline, '\n');
+  ln_index = find_new_line(readline);
+  // printf("ln_index: %d\n", ln_index);
   if(ln_index == -1) {
     free(result_string);
     return NULL;
