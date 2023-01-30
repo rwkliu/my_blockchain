@@ -17,19 +17,12 @@ typedef struct s_arguments {
   char read_buffer[READ_BUFFER_SIZE];
   string_array *split_read_buffer;
 
-  char *(*readInput)(char *);
   string_array *(*splitInput)(char *, char *);
   int (*clearBuffers)(struct s_arguments *);
 } Arguments;
 #endif
 
 typedef Arguments *ArgumentsPtr;
-
-//Read one char from stdin
-int my_getchar();
-
-//Read from stdin
-char *read_input(char *read_buffer);
 
 //Allocate memory for Arguments struct
 ArgumentsPtr argumentsConstructor(ArgumentsPtr args);

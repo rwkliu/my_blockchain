@@ -7,30 +7,6 @@
 #include "helpers.h"
 #include "status.h"
 
-int my_getchar() {
-  int char_buffer = 0;
-  read(0, &char_buffer, 1);
-  return char_buffer;
-}
-
-char *read_input(char *read_buffer) {
-  int ch;
-  int index = 0;
-
-  while((ch = my_getchar()) != '\n' && ch != EOF) {
-    if(ch == 0) {
-      read_buffer[0] = '\0';
-      return read_buffer;
-    }
-    if(index == READ_BUFFER_SIZE - 1) {
-      continue;
-    }
-    read_buffer[index] = ch;
-    index++;
-  }
-  return read_buffer;
-}
-
 ArgumentsPtr argumentsConstructor(ArgumentsPtr args) {
   argumentsInitialize(args);
   return args;
@@ -49,7 +25,6 @@ int argumentsDestructor(ArgumentsPtr args) {
 }
 
 int argumentsInitialize(ArgumentsPtr args) {
-  args->readInput = read_input;
   args->splitInput = my_split;
   args->clearBuffers = clearBuffers;
   args->split_read_buffer = NULL;
