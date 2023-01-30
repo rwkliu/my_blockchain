@@ -22,7 +22,6 @@ int is_node(char *component) {
 }
 
 void nid(BlockchainPtr blockchain, char *prev_cmd, char *component, char *bid, char *nid) {
-//   printf("nid function reached\n");
   int int_nid = atoi(nid);
   char *block_id = malloc(strlen(bid) + 1 * sizeof(char));
   strncpy(block_id, bid, strlen(bid) + 1);
@@ -44,11 +43,10 @@ void nid(BlockchainPtr blockchain, char *prev_cmd, char *component, char *bid, c
 }
 
 void bid(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_cmd, char *component, char *bid) {
-//   printf("bid function reached\n");
   void (*args)(BlockchainPtr, char *, char *, char *, char *) = nid;
   char *char_nid = split_read_buffer->array[3];
 
-  //Check for extra arguments after the expected last argument
+
   if (char_nid != NULL) {
     (*args)(blockchain, prev_cmd, component, bid, char_nid);
   } else {
@@ -57,7 +55,6 @@ void bid(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_c
 }
 
 void block(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_cmd) {
-//   printf("block function reached\n");
   void (*args)(BlockchainPtr, string_array *, char *, char *, char *) = bid;
   char *char_nid = split_read_buffer->array[3];
   char *char_bid = split_read_buffer->array[2];
@@ -70,11 +67,9 @@ void block(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev
 }
 
 void node(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_cmd) {
-//   printf("node function reached\n");
   void (*args)(BlockchainPtr, char *, char *, char *, char *) = nid;
   char *char_nid = split_read_buffer->array[2];
 
-  //Check for extra arguments after the expected last argument
   if (char_nid != NULL) {
     (*args)(blockchain, prev_cmd, "node", "", char_nid);
   } else {
@@ -83,7 +78,6 @@ void node(BlockchainPtr blockchain, string_array *split_read_buffer, char *prev_
 }
 
 void add(BlockchainPtr blockchain, string_array *split_read_buffer) {
-//   printf("add\n");
   void (*args[])(BlockchainPtr, string_array *, char *) = {block, node};
   char *arg_strings[] = {"block", "node"};
   char *add_arg = split_read_buffer->array[1];
@@ -103,7 +97,6 @@ void add(BlockchainPtr blockchain, string_array *split_read_buffer) {
 }
 
 void remove_(BlockchainPtr blockchain, string_array *split_read_buffer) {
-//   printf("remove\n");
   void (*args[])(BlockchainPtr, string_array *, char *) = {block, node};
   char *arg_strings[] = {"block", "node"};
   char *add_arg = split_read_buffer->array[1];
@@ -123,9 +116,7 @@ void remove_(BlockchainPtr blockchain, string_array *split_read_buffer) {
 
 void list(BlockchainPtr blockchain, string_array *split_read_buffer) {
   char *lflag = split_read_buffer->array[1];
-//   printf("List function entered\n");
   if (lflag != NULL && strncmp(lflag, "-l", 2) == 0 ) {
-    // printf("if statement entered\n");
     blockchain->ls(&(blockchain->blockchain_head), PRINT_BID);
   } else {
     blockchain->ls(&(blockchain->blockchain_head), NO_BID);
@@ -151,7 +142,6 @@ void execute_command(BlockchainPtr blockchain, string_array *split_read_buffer) 
   char *command_strings[] = {"add", "rm", "ls", "sync", "quit"};
   char *command_arg = split_read_buffer->array[0];
   int i = 0;
-//   printf("Start execution_command\n");
   while (i < 5) {
     if (strcmp(command_strings[i], command_arg) == 0) {
       (*command[i])(blockchain, split_read_buffer);
