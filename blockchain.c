@@ -59,6 +59,7 @@ void removeNode(BlockchainPtr blockchain, Node **noderef, int nid) {
   }
 
   update_num_nodes(blockchain, RM);
+  printf(COMMAND_SUCCESS);
 }
 
 //Add block to node with specified nid
