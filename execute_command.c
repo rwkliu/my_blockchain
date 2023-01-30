@@ -121,7 +121,6 @@ void list(BlockchainPtr blockchain, string_array *split_read_buffer) {
   } else {
     blockchain->ls(&(blockchain->blockchain_head), NO_BID);
   }
-
 }
 
 void sync(BlockchainPtr blockchain, string_array *split_read_buffer) {
