@@ -16,6 +16,11 @@ TODO - How does it work?
 ./my_project argument1 argument2
 ```
 
+### Things to Improve
+*Point args.read_buffer to output of my_readline
+*Combine command array and command_strings into hash map
+*Reduce if-else statements in nid function
+
 ### The Core Team
 
 
