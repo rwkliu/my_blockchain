@@ -28,8 +28,12 @@ int main() {
     }
     args.split_read_buffer = args.splitInput(args.read_buffer, " ");
     execute_command(&blockchain, args.split_read_buffer);
-    args.clearBuffers(&args);
-    print_prompt(blockchain.num_nodes, blockchain.sync_state);
+    if (is_not_quit(&args)) {
+      args.clearBuffers(&args);
+      print_prompt(blockchain.num_nodes, blockchain.sync_state);
+    } else {
+      break;
+    }
   }
 
   free_blockchain(&blockchain);
