@@ -125,14 +125,11 @@ void list(BlockchainPtr blockchain, string_array *split_read_buffer) {
   char *lflag = split_read_buffer->array[1];
 //   printf("List function entered\n");
   if (lflag != NULL && strncmp(lflag, "-l", 2) == 0 ) {
-    printf("if statement entered\n");
-    lsBidsNids(&(blockchain->blockchain_head), PRINT_BID);
-    // blockchain->ls(&(blockchain->blockchain_head), PRINT_BID);
-  } else if (lflag == NULL) {
-    printf("else if statement entered\n");
-    // blockchain->ls(&(blockchain->blockchain_head), NO_BID);
+    // printf("if statement entered\n");
+    blockchain->ls(&(blockchain->blockchain_head), PRINT_BID);
+  } else {
+    blockchain->ls(&(blockchain->blockchain_head), NO_BID);
   }
-lsBidsNids(&(blockchain->blockchain_head), NO_BID);
 
 }
 
