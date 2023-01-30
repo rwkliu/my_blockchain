@@ -4,7 +4,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#define RESULT_SIZE 100000
+#define RESULT_SIZE 100
 
 int READLINE_READ_SIZE = 100;
 char *readline = NULL;
@@ -42,8 +42,8 @@ int my_string_index(char* param_1, char param_2){
 //Return a pointer to the second string in str 
 char *find_second_string(char *str) {
   int index = 0;
-    // printf("str: %s\n", str);
- if ((index = my_string_index(str, '\\')) != -1) {
+
+  if ((index = my_string_index(str, '\\')) != -1) {
     if (str[index + 1] == 'n') {
       str += index + 2;
     }
@@ -51,16 +51,7 @@ char *find_second_string(char *str) {
   else if((index = my_string_index(str, '\n')) != -1) {
     str += index + 1;
   }
-//   printf("index: %d\n", index);
   return str;
-}
-
-//Allocate more memory to readline
-void extend_readline() {
-  char *temp = calloc_string(strlen(readline) + 1 + READLINE_READ_SIZE);
-  strncpy(temp, readline, strlen(readline));
-  free(readline);
-  readline = temp;
 }
 
 int find_new_line(char *str) {
@@ -87,7 +78,6 @@ char *my_readline(int fd) {
   //Then free and malloc readline
   if(readline != NULL) {
     char *second_string = find_second_string(readline);
-    // printf("second_string: %s\n", second_string);
     result_string = strcpy(result_string, second_string);
   }
   init_my_readline();
@@ -102,11 +92,9 @@ char *my_readline(int fd) {
   }
 
   read(fd, &readline[readline_index], READLINE_READ_SIZE);
-//   printf("readline: %s\n", readline);
 
   //Find the index of the first newline character
   ln_index = find_new_line(readline);
-  // printf("ln_index: %d\n", ln_index);
   if(ln_index == -1) {
     free(result_string);
     return NULL;
