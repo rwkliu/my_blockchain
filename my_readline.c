@@ -43,12 +43,9 @@ int my_string_index(char* param_1, char param_2){
 char *find_second_string(char *str) {
   int index = 0;
 
-  if ((index = my_string_index(str, '\\')) != -1) {
-    if (str[index + 1] == 'n') {
+  if ((index = my_string_index(str, '\\')) != -1 && str[index + 1] == 'n') {
       str += index + 2;
-    }
-  }
-  else if((index = my_string_index(str, '\n')) != -1) {
+  } else if((index = my_string_index(str, '\n')) != -1) {
     str += index + 1;
   }
   return str;
@@ -57,10 +54,8 @@ char *find_second_string(char *str) {
 int find_new_line(char *str) {
   int index = 0;
 
-  if ((index = my_string_index(str, '\\')) != -1) {
-    if (str[index + 1] == 'n') {
+  if ((index = my_string_index(str, '\\')) != -1 && str[index + 1] == 'n') {
       return index;
-    }
   } else if ((index = my_string_index(str, '\n')) != -1) {
     return index;
   } 
