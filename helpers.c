@@ -41,7 +41,7 @@ void print_prompt(int num_nodes, char sync_status) {
   write(1, "[", 1);
   write(1, &sync_status, 1);
   write(1, char_num_nodes, num_digits);
-  write(1, "]> ", 3);
+  write(1, "]>", 2);
 
   free(char_num_nodes);
 }
