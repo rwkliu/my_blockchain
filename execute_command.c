@@ -123,14 +123,17 @@ void remove_(BlockchainPtr blockchain, string_array *split_read_buffer) {
 
 void list(BlockchainPtr blockchain, string_array *split_read_buffer) {
   char *lflag = split_read_buffer->array[1];
-//   char *subsequent_args = split_read_buffer->array[2];
 //   printf("List function entered\n");
   if (lflag != NULL && strncmp(lflag, "-l", 2) == 0 ) {
-    // printf("else if statement entered\n");
-    blockchain->ls(&(blockchain->blockchain_head), PRINT_BID);
+    printf("if statement entered\n");
+    lsBidsNids(&(blockchain->blockchain_head), PRINT_BID);
+    // blockchain->ls(&(blockchain->blockchain_head), PRINT_BID);
   } else if (lflag == NULL) {
-    blockchain->ls(&(blockchain->blockchain_head), NO_BID);
+    printf("else if statement entered\n");
+    // blockchain->ls(&(blockchain->blockchain_head), NO_BID);
   }
+lsBidsNids(&(blockchain->blockchain_head), NO_BID);
+
 }
 
 void sync(BlockchainPtr blockchain, string_array *split_read_buffer) {
