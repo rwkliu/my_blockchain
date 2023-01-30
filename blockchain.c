@@ -99,7 +99,7 @@ void removeBlockFromNode(BlockchainPtr blockchain, Node **noderef, char *bid, in
 void list_bids(Block **block_head) {
   Block **blockref = block_head;
   while((*blockref)) {
-    printf("%s ", (*blockref)->bid);
+    printf(" %s", (*blockref)->bid);
     blockref = &(*blockref)->next_block;
   }
 }
@@ -111,7 +111,7 @@ void lsBidsNids(Node **node_head, int lflag) {
     // printf("entered lsBidsNids\n");
     printf("%d", (*noderef)->nid);
     if (lflag == PRINT_BID) {
-      printf(": ");
+      printf(":");
       list_bids((&(*noderef)->bid_head));
     }
     printf("\n");

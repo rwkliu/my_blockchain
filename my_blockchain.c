@@ -20,7 +20,6 @@ int main() {
   print_prompt(blockchain.num_nodes, blockchain.sync_state);
   while ((read_str = my_readline(0)) != NULL) {
     strncpy(args.read_buffer, read_str, strlen(read_str));
-    // printf("%s\n", args.read_buffer);
     // printf("args buffer: %s\n", args.read_buffer);
     if (args.read_buffer[0] == '\0') {
       continue;
