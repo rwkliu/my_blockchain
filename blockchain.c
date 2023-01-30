@@ -31,6 +31,10 @@ void addNode(BlockchainPtr blockchain, Node **noderef, int nid) {
   new_node->nid = nid;
 
   while(*tracer) {
+    if ((*tracer)->nid == nid) {
+      printf(NODE_EXISTS);
+      return;
+    }
     tracer = &(*tracer)->next_node;
   }
 
