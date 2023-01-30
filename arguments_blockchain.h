@@ -19,7 +19,6 @@ typedef struct s_arguments {
 
   char *(*readInput)(char *);
   string_array *(*splitInput)(char *, char *);
-  int (*parseArguments)(string_array *);
   int (*clearBuffers)(struct s_arguments *);
 } Arguments;
 #endif
@@ -49,29 +48,5 @@ commands find_command(char *arg);
 //Return string_array that is a subarray of the input string array
 string_array *subarray(char **argv, int start_index, int end_index);
 
-int isAddBlock(string_array *args, commands command);
-
-int isAddNode(string_array *args, commands command);
-
-int isRmBlock(string_array *args, commands command);
-
-int isRmNode(string_array *args, commands command);
-
 int is_not_quit(ArgumentsPtr args);
-
-//Check subsequent arguments for correct arguments following "block"
-int parse_block_args(char **block_args, commands command);
-
-//Check subsequent arguments for correct arguments following "node"
-int parse_node_args(char *node_args, commands command);
-
-//if command = ADD or RM, check subsequent arguments for correct arguments
-int parse_add_rm_args(string_array *args, commands command);
-
-//If command = LS, check subsequent arguments for no arguments or -l option
-int parse_ls_args(string_array *args);
-
-//Parse arguments read from stdin
-int parse_arguments(string_array *split_strings_array);
-
 #endif

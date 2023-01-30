@@ -57,6 +57,9 @@ void lsBidsNids(Node **node_head, int lflag);
 //Check all nodes for the same blocks as the first node (genesis blocks)
 int is_synchronized(Node **noderef);
 
+//Synchronize blockchain
+void synchronize(BlockchainPtr blockchain, Node **noderef);
+
 //Check if all nodes contain the same blocks and update the sync state
 void update_sync_state(BlockchainPtr blockchain, Node **noderef);
 
