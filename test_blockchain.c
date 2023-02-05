@@ -49,17 +49,15 @@ int main() {
   blockchain.addNode(&blockchain, &(blockchain.blockchain_head), 13);
 
   //add blocks
-  char *bid1 = malloc(3 * sizeof(char));
-  char *bid2 = malloc(3 * sizeof(char));
-  strncpy(bid1, "21", 3);
-  strncpy(bid2, "22", 3);
+  char *bid1 = "21";
+  char *bid2 = "22";
   blockchain.addBlock(&blockchain, &(blockchain.blockchain_head), bid1, 12);
   blockchain.addBlock(&blockchain, &(blockchain.blockchain_head), bid2, 15);
 
   //Print the blockchain
   blockchain.ls(&(blockchain.blockchain_head), PRINT_BID);
-  synchronize_nodes(&blockchain, &(blockchain.blockchain_head));
-  blockchain.ls(&(blockchain.blockchain_head), PRINT_BID);
+  // synchronize_nodes(&blockchain, &(blockchain.blockchain_head));
+  // blockchain.ls(&(blockchain.blockchain_head), PRINT_BID);
   
   free_blockchain(&blockchain);
 
