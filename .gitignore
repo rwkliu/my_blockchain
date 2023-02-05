@@ -9,3 +9,10 @@ args
 test
 num
 testblock
+arguments_blockchain.o
+block.o
+blockchain.o
+helpers.o
+node.o
+test_blockchain
+test_blockchain.o
