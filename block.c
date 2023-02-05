@@ -6,7 +6,7 @@
 void addBlock(Block **block_head, char *bid) {
   BlockPtr new_block = blockConstructor();
   Block **headref = block_head;
-  new_block->bid = bid;
+  new_block->bid = strdup(bid);
 
   while((*headref)) {
     headref = &((*headref)->next_block);
