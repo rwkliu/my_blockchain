@@ -145,12 +145,12 @@ int is_synchronized(Node **noderef) {
   return 1;
 }
 
-void synchronize(BlockchainPtr blockchain, Node **noderef) {
-  if (blockchain->sync_state == NOT_SYNCED) {
-
-  }
-  printf(COMMAND_SUCCESS);
-}
+//void synchronize(BlockchainPtr blockchain, Node **noderef) {
+//  if (blockchain->sync_state == NOT_SYNCED) {
+//
+//  }
+//  printf(COMMAND_SUCCESS);
+//}
 
 //Check if all nodes contain the same blocks and update the sync state
 void update_sync_state(BlockchainPtr blockchain, Node **noderef) {
