@@ -17,9 +17,12 @@ TODO - How does it work?
 ```
 
 ### Things to Improve
-*Point args.read_buffer to output of my_readline
-*Combine command array and command_strings into hash map
-*Reduce if-else statements in nid function
+* Point args.read_buffer to output of my_readline
+* Combine command array and command_strings into hash map
+* Reduce if-else statements in nid function
+* Create generic linked list function library 
+* Try implementing an array of pointers to a linked list of bids
+* Implement loading from backup file
 
 ### The Core Team
 
