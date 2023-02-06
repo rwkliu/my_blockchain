@@ -27,14 +27,13 @@ void synchronize_nodes(BlockchainPtr blockchain, Node **noderef) {
     while (*node_to_check) {
       while (*block_tracer) {
         if (!block_found(&(*node_tracer)->bid_head, (*block_tracer)->bid)) {
-          blockchain->addBlock(blockchain, node_tracer, (*block_tracer)->bid, (*node_tracer)->nid);
+          addBlock(&(*node_tracer)->bid_head, (*block_tracer)->bid);
         }
         block_tracer = &(*block_tracer)->next_block;
       }
       node_to_check = &(*node_to_check)->next_node;
       block_tracer = &(*node_to_check)->bid_head;
     }
-
   }
   printf("OK\n");
 }
@@ -56,8 +55,8 @@ int main() {
 
   //Print the blockchain
   blockchain.ls(&(blockchain.blockchain_head), PRINT_BID);
-  // synchronize_nodes(&blockchain, &(blockchain.blockchain_head));
-  // blockchain.ls(&(blockchain.blockchain_head), PRINT_BID);
+  synchronize_nodes(&blockchain, &(blockchain.blockchain_head));
+  blockchain.ls(&(blockchain.blockchain_head), PRINT_BID);
   
   free_blockchain(&blockchain);
 
