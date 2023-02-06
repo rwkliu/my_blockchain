@@ -19,20 +19,37 @@ int block_found(Block **blockref, char *bid) {
 
 void synchronize_nodes(BlockchainPtr blockchain, Node **noderef) {
   if (blockchain->sync_state == NOT_SYNCED) {
-    Node **node_tracer = noderef;
+    Node **node_to_sync = noderef;
     Node **node_to_check = &(*noderef)->next_node;
     Block **block_tracer = &(*node_to_check)->bid_head;
 
     //Synchronize first node
     while (*node_to_check) {
       while (*block_tracer) {
-        if (!block_found(&(*node_tracer)->bid_head, (*block_tracer)->bid)) {
-          addBlock(&(*node_tracer)->bid_head, (*block_tracer)->bid);
+        if (!block_found(&(*node_to_sync)->bid_head, (*block_tracer)->bid)) {
+          addBlock(&(*node_to_sync)->bid_head, (*block_tracer)->bid);
         }
         block_tracer = &(*block_tracer)->next_block;
       }
       node_to_check = &(*node_to_check)->next_node;
       block_tracer = &(*node_to_check)->bid_head;
+    }
+    //Syncrhonize subsequent nodes. Add missing blocks to node if it has blocks.
+    //Otherwise, add all the blocks from the previous node
+    node_to_sync = &(*noderef)->next_node;
+    node_to_check = noderef;
+    block_tracer = &(*node_to_check)->bid_head;
+
+    while (*node_to_check && *node_to_sync) {
+      while (*block_tracer) {
+        if (!block_found(&(*node_to_sync)->bid_head, (*block_tracer)->bid)) {
+          addBlock(&(*node_to_sync)->bid_head, (*block_tracer)->bid);
+        }
+        block_tracer = &(*block_tracer)->next_block;
+      }
+      node_to_check = &(*node_to_check)->next_node;
+      block_tracer = &(*node_to_check)->bid_head;
+      node_to_sync = &(*node_to_sync)->next_node;
     }
   }
   printf("OK\n");
