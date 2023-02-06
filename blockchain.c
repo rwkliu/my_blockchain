@@ -148,7 +148,6 @@ int is_synchronized(Node **noderef) {
         return 0;
       }
       current_block = current_block->next_block;
-      genesis_blocks = &(*noderef)->bid_head->next_block;
     }
     genesis_blocks = &(*noderef)->bid_head;
     tracer = &(*tracer)->next_node;
