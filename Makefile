@@ -16,8 +16,8 @@ clean:
 	rm -rvf $(OBJFILES)
 
 fclean: clean
-	rm my_blockchain
-	rm test_blockchain
+	rm -f my_blockchain
+	rm -f test_blockchain
 
 re: all clean
 
