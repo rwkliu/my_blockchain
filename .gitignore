@@ -16,3 +16,4 @@ helpers.o
 node.o
 test_blockchain
 test_blockchain.o
+*.o
