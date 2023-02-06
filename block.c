@@ -22,9 +22,7 @@ int remove_all_blocks(Block **block_head) {
   while ((*headref)) {
     if (*headref != NULL) {
       BlockPtr to_delete = *headref;
-      *headref = (*headref)->next_block;
       blockDestructor(to_delete);
-      return 1;
     }
     headref = &((*headref)->next_block);
   }
