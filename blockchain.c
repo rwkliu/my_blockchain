@@ -135,7 +135,7 @@ int block_found(Block **blockref, char *bid) {
 
 //Check all nodes for the same blocks as the first node (genesis blocks)
 int is_synchronized(Node **noderef) {
-  Block *genesis_blocks = (*noderef)->bid_head;
+  Block **genesis_blocks = &(*noderef)->bid_head;
   Node **tracer = &(*noderef)->next_node; 
   
   while(*tracer) {
@@ -144,12 +144,13 @@ int is_synchronized(Node **noderef) {
     }
     BlockPtr current_block = (*tracer)->bid_head;
     while (current_block) {
-      if (strcmp(current_block->bid, (*genesis_blocks).bid) != 0) {
+      if (!block_found(genesis_blocks, current_block->bid)) {
         return 0;
       }
-      current_block = (*tracer)->bid_head->next_block;
-      genesis_blocks = (*noderef)->bid_head->next_block;
+      current_block = current_block->next_block;
+      genesis_blocks = &(*noderef)->bid_head->next_block;
     }
+    genesis_blocks = &(*noderef)->bid_head;
     tracer = &(*tracer)->next_node;
   }
   return 1;
@@ -178,7 +179,7 @@ void synchronize_nodes(BlockchainPtr blockchain, Node **noderef) {
       node_to_check = &(*node_to_check)->next_node;
       block_tracer = &(*node_to_check)->bid_head;
     }
-    //Syncrhonize subsequent nodes. Add missing blocks to node if it has blocks.
+    //Synchronize subsequent nodes. Add missing blocks to node if it has blocks.
     //Otherwise, add all the blocks from the previous node
     node_to_sync = &(*noderef)->next_node;
     node_to_check = noderef;
