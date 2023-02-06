@@ -119,9 +119,10 @@ void list(BlockchainPtr blockchain, string_array *split_read_buffer) {
 }
 
 void sync(BlockchainPtr blockchain, string_array *split_read_buffer) {
-  printf("sync\n");
-  printf("%d\n", blockchain->num_nodes);
-  printf("%d\n", split_read_buffer->size);
+  synchronize_nodes(blockchain, &(blockchain->blockchain_head));
+  if (split_read_buffer->array[0] == NULL) {
+    printf(NO_COMMAND_FOUND);
+  }
 }
 
 void quit(BlockchainPtr blockchain, string_array *split_read_buffer) {
