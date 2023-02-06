@@ -123,6 +123,16 @@ void lsBidsNids(Node **node_head, int lflag) {
   }
 }
 
+int block_found(Block **blockref, char *bid) {
+  while (*blockref) {
+    if (strncmp((*blockref)->bid, bid, strlen(bid)) == 0) {
+      return 1;
+    }
+    blockref = &(*blockref)->next_block;
+  }
+  return 0;
+}
+
 //Check all nodes for the same blocks as the first node (genesis blocks)
 int is_synchronized(Node **noderef) {
   Block *genesis_blocks = (*noderef)->bid_head;
@@ -145,12 +155,44 @@ int is_synchronized(Node **noderef) {
   return 1;
 }
 
-//void synchronize(BlockchainPtr blockchain, Node **noderef) {
-//  if (blockchain->sync_state == NOT_SYNCED) {
-//
-//  }
-//  printf(COMMAND_SUCCESS);
-//}
+void add_missing_blocks(BlockchainPtr blockchain, Block **block_tracer, Node **node_to_sync) {
+  while (*block_tracer) {
+    if (!block_found(&(*node_to_sync)->bid_head, (*block_tracer)->bid)) {
+      addBlock(&(*node_to_sync)->bid_head, (*block_tracer)->bid);
+      update_numblocks(node_to_sync, ADD);
+      update_sync_state(blockchain, &(blockchain->blockchain_head));
+    }
+    block_tracer = &(*block_tracer)->next_block;
+  }
+}
+
+void synchronize_nodes(BlockchainPtr blockchain, Node **noderef) {
+  if (blockchain->sync_state == NOT_SYNCED) {
+    Node **node_to_sync = noderef;
+    Node **node_to_check = &(*noderef)->next_node;
+    Block **block_tracer = &(*node_to_check)->bid_head;
+
+    //Synchronize first node
+    while (*node_to_check) {
+      add_missing_blocks(blockchain, block_tracer, node_to_sync);
+      node_to_check = &(*node_to_check)->next_node;
+      block_tracer = &(*node_to_check)->bid_head;
+    }
+    //Syncrhonize subsequent nodes. Add missing blocks to node if it has blocks.
+    //Otherwise, add all the blocks from the previous node
+    node_to_sync = &(*noderef)->next_node;
+    node_to_check = noderef;
+    block_tracer = &(*node_to_check)->bid_head;
+
+    while (*node_to_check && *node_to_sync) {
+      add_missing_blocks(blockchain, block_tracer, node_to_sync);
+      node_to_check = &(*node_to_check)->next_node;
+      block_tracer = &(*node_to_check)->bid_head;
+      node_to_sync = &(*node_to_sync)->next_node;
+    }
+  }
+  printf("OK\n");
+}
 
 //Check if all nodes contain the same blocks and update the sync state
 void update_sync_state(BlockchainPtr blockchain, Node **noderef) {
