@@ -2,19 +2,25 @@
 ***
 
 ## Task
-TODO - What is the problem? And where is the challenge?
+The task is to implement a blockchain - a chain of nodes that contains a chain of blocks.
 
 ## Description
-TODO - How have you solved the problem?
+The high level execution sequence is as follows:
+1. Prompt user for input
+2. Parse the input
+3. Execute the command
+4. Repeat 1. unless the quit command is entered
 
 ## Installation
-TODO - How to install your project? npm install? make? make re?
+To compile the program, run make to generate the executable file my_blockchain.
 
 ## Usage
-TODO - How does it work?
-```
-./my_project argument1 argument2
-```
+The my_blockchain program has the following set of commands available:
+* add: add node or block to the blockchain
+* rm: remove node or block from the blockchain
+* ls: list all nodes by their identifiers (nid). If -l is specified, all blocks associated with the node is listed
+* sync: synchronize all of the nodes such that all nodes are composed of the same blocks. 
+* quit: save the blockchain to a backup file and quit the program.
 
 ### Things to Improve
 * Point args.read_buffer to output of my_readline
@@ -22,7 +28,8 @@ TODO - How does it work?
 * Reduce if-else statements in nid function
 * Create generic linked list function library 
 * Try implementing an array of pointers to a linked list of bids
-* Implement loading from backup file
+* Implement loading a blockchain from a backup file
+* Implement '*' functionality
 
 ### The Core Team
 
