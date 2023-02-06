@@ -17,6 +17,15 @@ int block_found(Block **blockref, char *bid) {
   return 0;
 }
 
+void add_missing_blocks(Block **block_tracer, Node **node_to_sync) {
+  while (*block_tracer) {
+    if (!block_found(&(*node_to_sync)->bid_head, (*block_tracer)->bid)) {
+      addBlock(&(*node_to_sync)->bid_head, (*block_tracer)->bid);
+    }
+    block_tracer = &(*block_tracer)->next_block;
+  }
+}
+
 void synchronize_nodes(BlockchainPtr blockchain, Node **noderef) {
   if (blockchain->sync_state == NOT_SYNCED) {
     Node **node_to_sync = noderef;
@@ -25,12 +34,7 @@ void synchronize_nodes(BlockchainPtr blockchain, Node **noderef) {
 
     //Synchronize first node
     while (*node_to_check) {
-      while (*block_tracer) {
-        if (!block_found(&(*node_to_sync)->bid_head, (*block_tracer)->bid)) {
-          addBlock(&(*node_to_sync)->bid_head, (*block_tracer)->bid);
-        }
-        block_tracer = &(*block_tracer)->next_block;
-      }
+      add_missing_blocks(block_tracer, node_to_sync);
       node_to_check = &(*node_to_check)->next_node;
       block_tracer = &(*node_to_check)->bid_head;
     }
@@ -41,12 +45,7 @@ void synchronize_nodes(BlockchainPtr blockchain, Node **noderef) {
     block_tracer = &(*node_to_check)->bid_head;
 
     while (*node_to_check && *node_to_sync) {
-      while (*block_tracer) {
-        if (!block_found(&(*node_to_sync)->bid_head, (*block_tracer)->bid)) {
-          addBlock(&(*node_to_sync)->bid_head, (*block_tracer)->bid);
-        }
-        block_tracer = &(*block_tracer)->next_block;
-      }
+      add_missing_blocks(block_tracer, node_to_sync);
       node_to_check = &(*node_to_check)->next_node;
       block_tracer = &(*node_to_check)->bid_head;
       node_to_sync = &(*node_to_sync)->next_node;
