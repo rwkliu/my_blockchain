@@ -17,3 +17,4 @@ node.o
 test_blockchain
 test_blockchain.o
 *.o
+blockchain_backup.txt

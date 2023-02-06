@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include "blockchain.h"
 #include "status.h"
 
@@ -222,6 +223,30 @@ void update_numblocks(Node **Noderef, commands command) {
   } else if (command == RM) {
     (*Noderef)->num_blocks -= 1;
   }
+}
+
+void save_blockchain(Node **noderef) {
+  int file_descriptor;
+  Block **block_tracer = &(*noderef)->bid_head;
+  file_descriptor = open("blockchain_backup.txt", O_RDWR | O_CREAT, 
+                        ((S_IWUSR | S_IRUSR) | (S_IRGRP | S_IWGRP) | S_IROTH));
+  
+  while ((*noderef)) {
+    char *nid_string = signed_decimal((*noderef)->nid);
+    write(file_descriptor, nid_string, strlen(nid_string));
+    write(file_descriptor, ": ", 2);
+    while (*block_tracer) {
+      write(file_descriptor, (*block_tracer)->bid, strlen((*block_tracer)->bid));
+      if ((*noderef)->num_blocks > 1 && (*block_tracer)->next_block != NULL) {
+        write(file_descriptor, ", ", 2);
+      }
+      block_tracer = &(*block_tracer)->next_block;
+    }
+    write(file_descriptor, "\n", 1);
+    free(nid_string);
+    noderef = &(*noderef)->next_node;
+  }
+  close(file_descriptor);
 }
 
 //Free all allocated memory in blockchain (blocks, nodes)

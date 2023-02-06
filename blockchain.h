@@ -74,6 +74,9 @@ void update_num_nodes(BlockchainPtr blockchain, commands command);
 //Update the num_blocks variable
 void update_numblocks(Node **Noderef, commands command);
 
+//Save the blockchain to a backup file
+void save_blockchain(Node **noderef);
+
 //Free all allocated memory in blockchain (blocks, nodes)
 void free_blockchain(BlockchainPtr blockchain);
 

@@ -21,7 +21,7 @@ int get_int_len(int n) {
 
 char *signed_decimal(int s_int) {
   int n_len = get_int_len(s_int);
-  char *decimal = malloc(n_len *sizeof(char));
+  char *decimal = malloc(n_len+1*sizeof(char));
 
   if(s_int < 0) {
     s_int = -s_int;
@@ -31,6 +31,7 @@ char *signed_decimal(int s_int) {
     decimal[i] = (s_int % 10) + '0';
     s_int = s_int / 10;
   }
+  decimal[n_len] = '\0';
   return decimal;
 }
 
