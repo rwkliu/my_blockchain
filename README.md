@@ -22,15 +22,6 @@ The my_blockchain program has the following set of commands available:
 * sync: synchronize all of the nodes such that all nodes are composed of the same blocks. 
 * quit: save the blockchain to a backup file and quit the program.
 
-### Things to Improve
-* Point args.read_buffer to output of my_readline
-* Combine command array and command_strings into hash map
-* Reduce if-else statements in nid function
-* Create generic linked list function library 
-* Try implementing an array of pointers to a linked list of bids
-* Implement loading a blockchain from a backup file
-* Implement '*' functionality
-
 ### The Core Team
 
 
