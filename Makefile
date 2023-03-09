@@ -1,28 +1,23 @@
+TARGET_EXEC := my_blockchain
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -g3 -fsanitize=address
-SRCS := $(wildcard *.c)
-SRCS := $(filter-out test_blockchain.c, $(SRCS))
-BINS := $(SRCS:%.c=%)
-OBJFILES := $(BINS:%=%.o)
-TARGET = my_blockchain
+BUILD_DIR := ./build
+SRC_DIRS := ./src
 
-all: $(TARGET)
+# Find all the C files we want to compile
+SRCS := $(wildcard $(SRC_DIRS)/*.c)
 
-$(TARGET): $(OBJFILES)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJFILES)
+# Prepends BUILD_DIR and appends .o to every src file
+OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 
+# The final build step.
+$(TARGET_EXEC): $(OBJS)
+	$(CC) $(OBJS) -o $@ $(LDFLAGS)
+
+# Build step for C source
+$(BUILD_DIR)/%.c.o: %.c
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+.PHONY: clean
 clean:
-	rm -rvf $(OBJFILES)
-
-fclean: clean
-	rm -f my_blockchain
-	rm -f test_blockchain
-
-re: all clean
-
-debug: $(TARGET)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJFILES) $(LDFLAGS)
-
-test_blockchain: test_blockchain.o blockchain.o node.o block.o helpers.o arguments_blockchain.o 
-	gcc -o test_blockchain test_blockchain.o blockchain.o node.o block.o helpers.o arguments_blockchain.o $(CFLAGS) $(LDFLAGS)
+	rm -r $(BUILD_DIR)
