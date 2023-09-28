@@ -18,6 +18,7 @@ int main() {
   
   blockchainConstructor(&blockchain);
   argumentsConstructor(&args);
+  printf("Starting New Blockchain\n");
   print_prompt(blockchain.num_nodes, blockchain.sync_state);
   
   while ((read_str = my_readline(0)) != NULL) {

@@ -116,6 +116,7 @@ void list_bids(Block **block_head, int num_blocks) {
 //Print all nids and their bids
 void lsBidsNids(Node **node_head, int lflag) {
   Node **noderef = node_head;
+  printf("Nodes : Blocks\n");
   while ((*noderef)) {
     printf("%d", (*noderef)->nid);
     if (lflag == PRINT_BID) {
