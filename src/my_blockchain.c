@@ -32,6 +32,7 @@ int main() {
       args.clearBuffers(&args);
       print_prompt(blockchain.num_nodes, blockchain.sync_state);
     } else {
+      printf("Backing up blockchain to file\n");
       break;
     }
   }
