@@ -1,18 +1,20 @@
 # Welcome to My Blockchain
 ***
+<p align="center"><img src='images/Program.png'></p>
 
-## Task
-The task is to implement a blockchain - a chain of nodes that contains a chain of blocks.
+## Summary 
+This program is a simplified blockchain creation and management tool. A blockchain is a linked list of nodes that contain a linked list of blocks. 
 
 ## Description
 The high level execution sequence is as follows:
 1. Prompt user for input
 2. Parse the input
 3. Execute the command
-4. Repeat 1. unless the quit command is entered
+4. Repeat 1. until the quit command is entered
 
 ## Installation
-To compile the program, run make to generate the executable file my_blockchain.
+To compile the program, run **make** to generate the executable file my_blockchain.
+To remove the object files, run **make clean**.
 
 ## Usage
 The my_blockchain program has the following set of commands available:
@@ -21,18 +23,3 @@ The my_blockchain program has the following set of commands available:
 * ls: list all nodes by their identifiers (nid). If -l is specified, all blocks associated with the node is listed
 * sync: synchronize all of the nodes such that all nodes are composed of the same blocks. 
 * quit: save the blockchain to a backup file and quit the program.
-
-### Things to Improve
-* Point args.read_buffer to output of my_readline
-* Combine command array and command_strings into hash map
-* Reduce if-else statements in nid function
-* Create generic linked list function library 
-* Try implementing an array of pointers to a linked list of bids
-* Implement loading a blockchain from a backup file
-* Implement '*' functionality
-
-### The Core Team
-
-
-<span><i>Made at <a href='https://qwasar.io'>Qwasar SV -- Software Engineering School</a></i></span>
-<span><img alt='Qwasar SV -- Software Engineering School's Logo' src='https://storage.googleapis.com/qwasar-public/qwasar-logo_50x50.png' width='20px'></span>
