@@ -1,7 +1,9 @@
 TARGET_EXEC := my_blockchain
-CC = gcc
 BUILD_DIR := ./build
 SRC_DIRS := ./src
+INCLUDE_DIR := ./include
+CC = gcc
+CFLAGS += -I $(INCLUDE_DIR)
 
 # Find all the C files we want to compile
 SRCS := $(wildcard $(SRC_DIRS)/*.c)
